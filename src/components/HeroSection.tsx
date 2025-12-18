@@ -68,8 +68,8 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Social icons - desktop */}
-        <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2">
+        {/* Social icons - visible on all devices */}
+        <div className="flex absolute bottom-8 left-1/2 -translate-x-1/2">
           <SocialIcons />
         </div>
       </div>
