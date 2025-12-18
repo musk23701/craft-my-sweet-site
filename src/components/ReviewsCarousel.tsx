@@ -1,40 +1,73 @@
-import { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { Instagram, Star } from "lucide-react";
 
-const videoSources = [
-  "/videos/instagram/1.mp4",
-  "/videos/instagram/2.mp4",
-  "/videos/instagram/3.mp4",
-  "/videos/instagram/4.mp4",
-  "/videos/instagram/5.mp4",
-  "/videos/instagram/6.mp4",
-  "/videos/instagram/7.mp4",
-  "/videos/instagram/8.mp4",
+const reviewItems = [
+  {
+    type: "review",
+    name: "Sarah Chen",
+    role: "Startup Founder",
+    content: "Working with Automind was fantastic. Great margins and their operations experience is huge!",
+    avatar: "SC",
+  },
+  {
+    type: "stat",
+    title: "Plumber Automation",
+    value: "$599 / month",
+    description: "Full workflow automation",
+  },
+  {
+    type: "review",
+    name: "Mike Johnson",
+    role: "Agency Owner",
+    content: "POSITIVE: Send thank you email with future discount and a link to Google review",
+    avatar: "MJ",
+  },
+  {
+    type: "stat",
+    title: "Realtor Automation",
+    value: "$750/month",
+    description: "Lead generation & follow-up",
+  },
+  {
+    type: "review",
+    name: "Emily Davis",
+    role: "SaaS CEO",
+    content: "The AI agents handle customer inquiries 24/7. Our response time went from hours to seconds.",
+    avatar: "ED",
+  },
+  {
+    type: "stat",
+    title: "Dental Clinic",
+    value: "$25,000 / year",
+    description: "Complete practice automation",
+  },
+  {
+    type: "review",
+    name: "Alex Rivera",
+    role: "E-commerce Director",
+    content: "Data systems gave us one source of truth. Decision-making is now instant.",
+    avatar: "AR",
+  },
+  {
+    type: "stat",
+    title: "Restaurant System",
+    value: "$12,500 / year",
+    description: "Reservations & marketing",
+  },
 ];
 
 const ReviewsCarousel = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const buttonY = useTransform(scrollYProgress, [0, 1], [0, 500]);
+  const [activeButton, setActiveButton] = useState<'instagram' | 'youtube'>('instagram');
 
   useEffect(() => {
-    let rotation = 141;
+    let rotation = 0;
     let animationId: number;
 
     const animate = () => {
       rotation += 0.15;
       if (carouselRef.current) {
-        const cards = carouselRef.current.querySelectorAll('.carousel-card');
-        cards.forEach((card, index) => {
-          const angle = rotation + (index * 22.5);
-          (card as HTMLElement).style.transform = `rotateY(${angle}deg) translateZ(-900px)`;
-        });
+        carouselRef.current.style.transform = `rotateY(${rotation}deg)`;
       }
       animationId = requestAnimationFrame(animate);
     };
@@ -43,89 +76,91 @@ const ReviewsCarousel = () => {
     return () => cancelAnimationFrame(animationId);
   }, []);
 
-  // Create 16 video cards (8 videos repeated twice)
-  const allVideos = [...videoSources, ...videoSources];
+  const itemCount = reviewItems.length * 2;
+  const angleStep = 360 / itemCount;
+  const radius = 900;
 
   return (
-    <div ref={containerRef} className="mt-10 h-[750px] relative">
-      {/* Instagram Button */}
-      <motion.div 
-        style={{ y: buttonY }}
-        className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 pt-3 mx-auto z-0 relative bg-primary font-extrabold mb-4 text-center cursor-pointer"
-      >
-        <img 
-          alt="instagram" 
-          loading="lazy" 
-          width="1200" 
-          height="288" 
-          decoding="async"
-          className="w-full h-auto object-contain"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/800px-Instagram_logo.svg.png"
-          style={{ filter: "brightness(0) invert(1)" }}
-        />
-      </motion.div>
+    <section className="py-20 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Platform buttons */}
+        <div className="flex justify-center mb-8">
+          <button
+            onClick={() => setActiveButton('instagram')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-extrabold transition-all duration-300 ${
+              activeButton === 'instagram'
+                ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30'
+                : 'bg-secondary text-foreground hover:bg-secondary/80'
+            }`}
+          >
+            <Instagram className="w-5 h-5" />
+            Instagram
+          </button>
+        </div>
 
-      {/* Mask Gradient Container */}
-      <div className="mask-gradient">
-        <div className="flex items-center justify-center w-full h-full overflow-hidden">
-          {/* 3D Carousel */}
-          <div 
+        {/* 3D Carousel Container */}
+        <div className="relative h-[600px] flex items-center justify-center mask-gradient-vertical">
+          <div
             ref={carouselRef}
-            className="relative w-[320px] h-[568px] -rotate-6"
+            className="relative w-[320px] h-[468px] -rotate-6"
             style={{
               transformStyle: "preserve-3d",
               perspective: "1500px",
               willChange: "transform"
             }}
           >
-            {allVideos.map((videoSrc, index) => {
-              const initialAngle = 141 + (index * 22.5);
+            {[...reviewItems, ...reviewItems].map((item, index) => {
+              const angle = index * angleStep;
               return (
                 <div
                   key={index}
-                  className="carousel-card absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl"
+                  className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-2xl"
                   style={{
-                    transform: `rotateY(${initialAngle}deg) translateZ(-900px)`,
+                    transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                     transformStyle: "preserve-3d",
-                    willChange: "transform",
                     backfaceVisibility: "hidden",
+                    willChange: "transform",
                   }}
                 >
-                  <video
-                    src={videoSrc}
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="w-full h-full bg-card border border-border p-6 flex flex-col">
+                    {item.type === 'review' ? (
+                      <>
+                        {/* Review card */}
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                            {item.avatar}
+                          </div>
+                          <div>
+                            <p className="font-semibold">{item.name}</p>
+                            <p className="text-sm text-muted-foreground">{item.role}</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-1 mb-4">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                          ))}
+                        </div>
+                        <p className="text-muted-foreground flex-1">{item.content}</p>
+                      </>
+                    ) : (
+                      <>
+                        {/* Stat card */}
+                        <div className="flex-1 flex flex-col justify-center">
+                          <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse mb-4" />
+                          <p className="text-sm text-muted-foreground mb-2">{item.title}</p>
+                          <p className="text-3xl font-black text-primary mb-2">{item.value}</p>
+                          <p className="text-muted-foreground">{item.description}</p>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
         </div>
       </div>
-
-      <style>{`
-        .mask-gradient {
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            black 10%,
-            black 90%,
-            transparent 100%
-          );
-          mask-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            black 10%,
-            black 90%,
-            transparent 100%
-          );
-          height: calc(100% - 60px);
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
 
