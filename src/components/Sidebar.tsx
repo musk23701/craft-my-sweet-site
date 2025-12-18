@@ -8,7 +8,7 @@ const menuItems = [
   { icon: FileText, label: "Blog", href: "/blog" },
   { icon: Mail, label: "Contact", href: "/contact" },
   { icon: Calendar, label: "Book Call", href: "/booking" },
-  { icon: Users, label: "Skool", href: "https://www.skool.com/automind", external: true },
+  { icon: Users, label: "Skool Community", href: "https://www.skool.com/automind", external: true },
 ];
 
 const Sidebar = () => {
@@ -27,7 +27,7 @@ const Sidebar = () => {
       <div className="flex flex-col items-center gap-6">
         {menuItems.map((item, index) => {
           const isActive = !item.external && location.pathname === item.href;
-          
+
           if (item.external) {
             return (
               <a
@@ -45,7 +45,7 @@ const Sidebar = () => {
               </a>
             );
           }
-          
+
           return (
             <Link
               key={item.label}
@@ -53,7 +53,9 @@ const Sidebar = () => {
               className={`flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group ${isActive ? "text-primary" : ""}`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <item.icon className={`w-5 h-5 group-hover:text-primary transition-colors ${isActive ? "text-primary" : ""}`} />
+              <item.icon
+                className={`w-5 h-5 group-hover:text-primary transition-colors ${isActive ? "text-primary" : ""}`}
+              />
               <span className="text-[10px] tracking-wide text-center whitespace-pre-line leading-tight">
                 {item.label}
               </span>
