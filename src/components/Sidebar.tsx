@@ -1,14 +1,13 @@
-import { Home, User, Images, FileText, Grid3X3, Users, Bot } from "lucide-react";
+import { Home, User, Images, FileText, Mail, Calendar } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
   { icon: Home, label: "Home", href: "/" },
-  { icon: User, label: "About", href: "/#about" },
+  { icon: User, label: "About", href: "/about" },
   { icon: Images, label: "Portfolio", href: "/portfolio" },
   { icon: FileText, label: "Blog", href: "/blog" },
-  { icon: Grid3X3, label: "Hexona\nSystems", href: "#hexona" },
-  { icon: Users, label: "Skool\nCommunity", href: "#skool" },
-  { icon: Bot, label: "AI Automation\nInstitute", href: "#ai-institute" },
+  { icon: Mail, label: "Contact", href: "/contact" },
+  { icon: Calendar, label: "Book Call", href: "/booking" },
 ];
 
 const Sidebar = () => {
@@ -26,32 +25,13 @@ const Sidebar = () => {
       {/* Menu */}
       <div className="flex flex-col items-center gap-6">
         {menuItems.map((item, index) => {
-          const isExternal = item.href.startsWith("#");
-          const isActive = location.pathname === item.href || (item.href === "/" && location.pathname === "/");
+          const isActive = location.pathname === item.href;
           
-          const linkClasses = `flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group ${isActive ? "text-primary" : ""}`;
-
-          if (isExternal) {
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                className={linkClasses}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <item.icon className={`w-5 h-5 group-hover:text-primary transition-colors ${isActive ? "text-primary" : ""}`} />
-                <span className="text-[10px] tracking-wide text-center whitespace-pre-line leading-tight">
-                  {item.label}
-                </span>
-              </a>
-            );
-          }
-
           return (
             <Link
               key={item.label}
               to={item.href}
-              className={linkClasses}
+              className={`flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group ${isActive ? "text-primary" : ""}`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <item.icon className={`w-5 h-5 group-hover:text-primary transition-colors ${isActive ? "text-primary" : ""}`} />

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { ArrowRight, Mail, Phone, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -60,14 +61,16 @@ const CTASection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <Button
-            size="lg"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-base rounded-full animate-pulse-glow hover:scale-105 transition-transform"
-          >
-            <Phone className="mr-2 w-5 h-5" />
-            Book Your Free Strategy Call
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+          <Link to="/booking">
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-base rounded-full animate-pulse-glow hover:scale-105 transition-transform"
+            >
+              <Phone className="mr-2 w-5 h-5" />
+              Book Your Free Strategy Call
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
         </div>
 
         <a

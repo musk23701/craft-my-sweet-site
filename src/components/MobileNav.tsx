@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { Home, User, Images, FileText, Grid3X3, Users, Bot, X } from "lucide-react";
+import { Home, User, Images, FileText, Mail, Calendar, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
   { icon: Home, label: "Home", href: "/" },
-  { icon: User, label: "About", href: "/#about" },
+  { icon: User, label: "About", href: "/about" },
   { icon: Images, label: "Portfolio", href: "/portfolio" },
   { icon: FileText, label: "Blog", href: "/blog" },
-  { icon: Grid3X3, label: "Hexona", href: "#hexona" },
-  { icon: Users, label: "Skool", href: "#skool" },
-  { icon: Bot, label: "AI Inst.", href: "#ai-institute" },
+  { icon: Mail, label: "Contact", href: "/contact" },
+  { icon: Calendar, label: "Book Call", href: "/booking" },
 ];
 
 const MobileNav = () => {
@@ -71,24 +70,7 @@ const MobileNav = () => {
 
           <div className="grid grid-cols-3 gap-5">
             {menuItems.map((item) => {
-              const isExternal = item.href.startsWith("#");
               const isActive = location.pathname === item.href;
-
-              if (isExternal) {
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="flex flex-col items-center gap-2 text-foreground"
-                  >
-                    <div className={`w-[34px] h-[34px] rounded-full flex items-center justify-center ${isActive ? "bg-primary/20" : "bg-foreground/5"}`}>
-                      <item.icon className={`w-5 h-5 ${isActive ? "text-primary" : ""}`} />
-                    </div>
-                    <span className="text-xs leading-tight">{item.label}</span>
-                  </a>
-                );
-              }
 
               return (
                 <Link
