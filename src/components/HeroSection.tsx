@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import TypingText from "./TypingText";
 import SocialIcons from "./SocialIcons";
 import Sidebar from "./Sidebar";
@@ -55,13 +56,15 @@ const HeroSection = () => {
 
           {/* CTA */}
           <div className="opacity-0 animate-fade-up delay-500">
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-base rounded-full animate-pulse-glow"
-            >
-              Book a Free AI Strategy Call
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
+            <Link to="/booking">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-base rounded-full animate-pulse-glow"
+              >
+                Book a Free AI Strategy Call
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
           </div>
         </div>
 
