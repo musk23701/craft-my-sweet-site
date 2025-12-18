@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import AboutUsSection from "@/components/AboutUsSection";
 import FeaturedSection from "@/components/FeaturedSection";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
 import WhoWeHelp from "@/components/WhoWeHelp";
@@ -17,6 +18,7 @@ const Index = () => {
 
       {/* Rest of content - full width without sidebar */}
       <main>
+        <AboutUsSection />
         <FeaturedSection />
         <ReviewsCarousel />
         <WhoWeHelp />

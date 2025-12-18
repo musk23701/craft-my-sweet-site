@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Home, User, Images, FileText, Grid3X3, Users, Bot, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
-  { icon: Home, label: "Home", href: "#home" },
-  { icon: User, label: "About", href: "#about" },
-  { icon: Images, label: "Portfolio", href: "#portfolio" },
-  { icon: FileText, label: "Blog", href: "#blog" },
+  { icon: Home, label: "Home", href: "/" },
+  { icon: User, label: "About", href: "/#about" },
+  { icon: Images, label: "Portfolio", href: "/portfolio" },
+  { icon: FileText, label: "Blog", href: "/blog" },
   { icon: Grid3X3, label: "Hexona", href: "#hexona" },
   { icon: Users, label: "Skool", href: "#skool" },
   { icon: Bot, label: "AI Inst.", href: "#ai-institute" },
@@ -13,16 +14,17 @@ const menuItems = [
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
       {/* Top Bar */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-[70px] flex items-center justify-between px-5 bg-background/95 backdrop-blur-sm border-b border-border z-50">
-        <a href="#home">
+        <Link to="/">
           <div className="h-12 flex items-center">
             <span className="text-2xl font-black text-primary">Automind Labs</span>
           </div>
-        </a>
+        </Link>
 
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -68,19 +70,40 @@ const MobileNav = () => {
           </div>
 
           <div className="grid grid-cols-3 gap-5">
-            {menuItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="flex flex-col items-center gap-2 text-foreground"
-              >
-                <div className="w-[34px] h-[34px] rounded-full bg-foreground/5 flex items-center justify-center">
-                  <item.icon className="w-5 h-5" />
-                </div>
-                <span className="text-xs leading-tight">{item.label}</span>
-              </a>
-            ))}
+            {menuItems.map((item) => {
+              const isExternal = item.href.startsWith("#");
+              const isActive = location.pathname === item.href;
+
+              if (isExternal) {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center gap-2 text-foreground"
+                  >
+                    <div className={`w-[34px] h-[34px] rounded-full flex items-center justify-center ${isActive ? "bg-primary/20" : "bg-foreground/5"}`}>
+                      <item.icon className={`w-5 h-5 ${isActive ? "text-primary" : ""}`} />
+                    </div>
+                    <span className="text-xs leading-tight">{item.label}</span>
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex flex-col items-center gap-2 text-foreground"
+                >
+                  <div className={`w-[34px] h-[34px] rounded-full flex items-center justify-center ${isActive ? "bg-primary/20" : "bg-foreground/5"}`}>
+                    <item.icon className={`w-5 h-5 ${isActive ? "text-primary" : ""}`} />
+                  </div>
+                  <span className="text-xs leading-tight">{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
