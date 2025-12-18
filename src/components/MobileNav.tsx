@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, User, Images, FileText, Mail, Calendar, X } from "lucide-react";
+import { Home, User, Images, FileText, Mail, Calendar, Users, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
@@ -9,6 +9,7 @@ const menuItems = [
   { icon: FileText, label: "Blog", href: "/blog" },
   { icon: Mail, label: "Contact", href: "/contact" },
   { icon: Calendar, label: "Book Call", href: "/booking" },
+  { icon: Users, label: "Skool", href: "https://www.skool.com/automind", external: true },
 ];
 
 const MobileNav = () => {
@@ -70,7 +71,25 @@ const MobileNav = () => {
 
           <div className="grid grid-cols-3 gap-5">
             {menuItems.map((item) => {
-              const isActive = location.pathname === item.href;
+              const isActive = !item.external && location.pathname === item.href;
+
+              if (item.external) {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center gap-2 text-foreground"
+                  >
+                    <div className="w-[34px] h-[34px] rounded-full flex items-center justify-center bg-foreground/5">
+                      <item.icon className="w-5 h-5" />
+                    </div>
+                    <span className="text-xs leading-tight">{item.label}</span>
+                  </a>
+                );
+              }
 
               return (
                 <Link
