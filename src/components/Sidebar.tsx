@@ -1,4 +1,4 @@
-import { Home, User, Images, FileText, Mail, Calendar } from "lucide-react";
+import { Home, User, Images, FileText, Mail, Calendar, Users } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
@@ -8,6 +8,7 @@ const menuItems = [
   { icon: FileText, label: "Blog", href: "/blog" },
   { icon: Mail, label: "Contact", href: "/contact" },
   { icon: Calendar, label: "Book Call", href: "/booking" },
+  { icon: Users, label: "Skool", href: "https://www.skool.com/automind", external: true },
 ];
 
 const Sidebar = () => {
@@ -25,7 +26,25 @@ const Sidebar = () => {
       {/* Menu */}
       <div className="flex flex-col items-center gap-6">
         {menuItems.map((item, index) => {
-          const isActive = location.pathname === item.href;
+          const isActive = !item.external && location.pathname === item.href;
+          
+          if (item.external) {
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <item.icon className="w-5 h-5 group-hover:text-primary transition-colors" />
+                <span className="text-[10px] tracking-wide text-center whitespace-pre-line leading-tight">
+                  {item.label}
+                </span>
+              </a>
+            );
+          }
           
           return (
             <Link

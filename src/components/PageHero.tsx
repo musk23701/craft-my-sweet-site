@@ -1,6 +1,7 @@
 import SocialIcons from "./SocialIcons";
 import Sidebar from "./Sidebar";
 import MobileNav from "./MobileNav";
+import TypingText from "./TypingText";
 
 interface PageHeroProps {
   title: string;
@@ -39,18 +40,21 @@ const PageHero = ({ title, titleAccent, subtitle, backgroundImage }: PageHeroPro
             {title} {titleAccent && <span className="text-primary">{titleAccent}</span>}
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle with Typing Animation */}
           {subtitle && (
-            <p className="text-sm md:text-base font-light tracking-[0.2em] uppercase text-muted-foreground opacity-0 animate-fade-up delay-200">
-              {subtitle}
-            </p>
+            <TypingText 
+              text={subtitle}
+              speed={30}
+              delay={800}
+              className="text-sm md:text-base font-light tracking-[0.2em] uppercase text-muted-foreground"
+            />
           )}
         </div>
+      </div>
 
-        {/* Social icons */}
-        <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 animate-fade-up delay-300">
-          <SocialIcons />
-        </div>
+      {/* Social icons - Absolutely positioned at bottom center */}
+      <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 animate-fade-up delay-300 z-20">
+        <SocialIcons />
       </div>
     </section>
   );
