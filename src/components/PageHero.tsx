@@ -52,8 +52,8 @@ const PageHero = ({ title, titleAccent, subtitle, backgroundImage }: PageHeroPro
         </div>
       </div>
 
-      {/* Social icons - Absolutely positioned at bottom center */}
-      <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 animate-fade-up delay-300 z-20">
+      {/* Social icons - Absolutely positioned at bottom center, visible on all devices */}
+      <div className="flex absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 animate-fade-up delay-300 z-20">
         <SocialIcons />
       </div>
     </section>
