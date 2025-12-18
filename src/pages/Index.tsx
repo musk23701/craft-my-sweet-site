@@ -1,14 +1,13 @@
 import HeroSection from "@/components/HeroSection";
 import AboutUsSection from "@/components/AboutUsSection";
 import FeaturedSection from "@/components/FeaturedSection";
-import InstagramCarouselSection from "@/components/InstagramCarouselSection";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
 import WhoWeHelp from "@/components/WhoWeHelp";
 import ServicesSection from "@/components/ServicesSection";
 import ApproachSection from "@/components/ApproachSection";
 import WhyUsSection from "@/components/WhyUsSection";
 import FAQSection from "@/components/FAQSection";
-import TikTokSection from "@/components/TikTokSection";
+import FeaturedVideosSection from "@/components/FeaturedVideosSection";
 import BlogsPodcastsSection from "@/components/BlogsPodcastsSection";
 import LinkedInConnectSection from "@/components/LinkedInConnectSection";
 import CTASection from "@/components/CTASection";
@@ -24,14 +23,13 @@ const Index = () => {
       <main>
         <AboutUsSection />
         <FeaturedSection />
-        <InstagramCarouselSection />
         <ReviewsCarousel />
         <WhoWeHelp />
         <ServicesSection />
         <ApproachSection />
         <WhyUsSection />
         <FAQSection />
-        <TikTokSection />
+        <FeaturedVideosSection />
         <BlogsPodcastsSection />
         <LinkedInConnectSection />
         <CTASection />
