@@ -7,7 +7,7 @@ import ServicesSection from "@/components/ServicesSection";
 import ApproachSection from "@/components/ApproachSection";
 import WhyUsSection from "@/components/WhyUsSection";
 import FAQSection from "@/components/FAQSection";
-import FeaturedVideosSection from "@/components/FeaturedVideosSection";
+import InstagramCarouselSection from "@/components/InstagramCarouselSection";
 import BlogsPodcastsSection from "@/components/BlogsPodcastsSection";
 import LinkedInConnectSection from "@/components/LinkedInConnectSection";
 import CTASection from "@/components/CTASection";
@@ -29,7 +29,7 @@ const Index = () => {
         <ApproachSection />
         <WhyUsSection />
         <FAQSection />
-        <FeaturedVideosSection />
+        <InstagramCarouselSection />
         <BlogsPodcastsSection />
         <LinkedInConnectSection />
         <CTASection />
