@@ -20,20 +20,25 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        message: formData.message,
+        timestamp: new Date().toISOString(),
+        source: "automind-contact-form"
+      };
+      
+      console.log("Sending to webhook:", payload);
+      
+      // Use text/plain with no-cors to ensure body is sent
       await fetch("https://hook.eu1.make.com/m7e77kai1bcj7p6i4ck25fii4mfh4t2i", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
         },
         mode: "no-cors",
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          message: formData.message,
-          timestamp: new Date().toISOString(),
-          source: "automind-contact-form"
-        }),
+        body: JSON.stringify(payload),
       });
       
       toast({
