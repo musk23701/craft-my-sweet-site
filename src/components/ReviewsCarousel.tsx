@@ -81,8 +81,8 @@ const ReviewsCarousel = () => {
   const radius = 900;
 
   return (
-    <section className="py-20 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-12 md:py-20 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Platform buttons */}
         <div className="flex justify-center mb-8">
           <button

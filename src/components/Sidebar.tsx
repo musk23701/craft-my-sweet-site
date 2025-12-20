@@ -8,14 +8,14 @@ const menuItems = [
   { icon: FileText, label: "Blog", href: "/blog" },
   { icon: Mail, label: "Contact", href: "/contact" },
   { icon: Calendar, label: "Book Call", href: "/booking" },
-  { icon: Users, label: "Skool Community", href: "https://www.skool.com/automind", external: true },
+  { icon: Users, label: "Skool\nCommunity", href: "https://www.skool.com/automind", external: true },
 ];
 
 const Sidebar = () => {
   const location = useLocation();
 
   return (
-    <nav className="hidden lg:flex bg-background w-28 border-r border-border flex-col items-center py-6 flex-shrink-0 h-screen sticky top-0">
+    <nav className="hidden lg:flex bg-background w-28 border-r border-border flex-col items-center justify-center py-6 flex-shrink-0 h-screen sticky top-0">
       {/* Logo */}
       <Link to="/" className="mb-10">
         <div className="w-20 h-12 flex items-center justify-center">

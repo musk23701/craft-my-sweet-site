@@ -30,37 +30,37 @@ const WhoWeHelp = () => {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-20">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="about" ref={sectionRef} className="py-12 md:py-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <h2
-          className={`text-3xl md:text-5xl font-extrabold text-center mb-4 transition-all duration-700 ${
+          className={`text-2xl sm:text-3xl md:text-5xl font-extrabold text-center mb-3 md:mb-4 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           Who We Help
         </h2>
         <p
-          className={`text-muted-foreground text-center mb-12 max-w-xl mx-auto transition-all duration-700 delay-100 ${
+          className={`text-muted-foreground text-sm sm:text-base text-center mb-8 md:mb-12 max-w-xl mx-auto transition-all duration-700 delay-100 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           If your business is growing but your systems are breaking — we fix that.
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {audiences.map((item, index) => (
             <div
               key={index}
-              className={`group p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 ${
+              className={`group p-4 md:p-6 rounded-xl md:rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
               style={{ transitionDelay: `${200 + index * 100}ms` }}
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                <item.icon className="w-7 h-7 text-primary" />
+              <div className="w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                <item.icon className="w-5 h-5 md:w-7 md:h-7 text-primary" />
               </div>
-              <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-              <p className="text-muted-foreground text-sm">{item.desc}</p>
+              <h3 className="font-bold text-sm md:text-lg mb-1 md:mb-2">{item.title}</h3>
+              <p className="text-muted-foreground text-xs md:text-sm">{item.desc}</p>
             </div>
           ))}
         </div>

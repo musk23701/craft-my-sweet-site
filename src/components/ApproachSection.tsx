@@ -30,30 +30,30 @@ const ApproachSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-card relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 md:py-20 bg-card relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-48 md:w-96 h-48 md:h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-48 md:w-96 h-48 md:h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <h2
-          className={`text-3xl md:text-5xl font-extrabold text-center mb-4 transition-all duration-700 ${
+          className={`text-2xl sm:text-3xl md:text-5xl font-extrabold text-center mb-3 md:mb-4 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           Our Approach
         </h2>
         <p
-          className={`text-muted-foreground text-center mb-16 max-w-xl mx-auto transition-all duration-700 delay-100 ${
+          className={`text-muted-foreground text-sm sm:text-base text-center mb-8 md:mb-16 max-w-xl mx-auto transition-all duration-700 delay-100 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           How Automind Labs AI transforms your operations
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {steps.map((item, index) => (
             <div
               key={index}
@@ -73,12 +73,12 @@ const ApproachSection = () => {
               )}
 
               <div className="relative z-10">
-                <div className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                  <item.icon className="w-7 h-7 text-primary" />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:bg-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <item.icon className="w-5 h-5 md:w-7 md:h-7 text-primary" />
                 </div>
-                <span className="text-xs font-bold text-primary tracking-wider animate-pulse">STEP {item.step}</span>
-                <h3 className="font-bold text-xl mt-2 mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.desc}</p>
+                <span className="text-[10px] md:text-xs font-bold text-primary tracking-wider animate-pulse">STEP {item.step}</span>
+                <h3 className="font-bold text-base md:text-xl mt-1 md:mt-2 mb-1 md:mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                <p className="text-muted-foreground text-xs md:text-sm">{item.desc}</p>
               </div>
             </div>
           ))}

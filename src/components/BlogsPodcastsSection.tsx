@@ -67,13 +67,13 @@ const BlogsPodcastsSection = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-background">
+    <section className="py-12 md:py-20 px-4 sm:px-6 bg-background">
       <div className="max-w-[1300px] mx-auto">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl lg:text-6xl font-black text-center mb-12"
+          className="text-2xl sm:text-4xl lg:text-6xl font-black text-center mb-8 md:mb-12"
         >
           Blogs & <br className="lg:hidden" /> <span className="text-primary">Podcasts</span>
         </motion.h2>
