@@ -9,7 +9,7 @@ const menuItems = [
   { icon: FileText, label: "Blog", href: "/blog" },
   { icon: Mail, label: "Contact", href: "/contact" },
   { icon: Calendar, label: "Book Call", href: "/booking" },
-  { icon: Users, label: "Skool", href: "https://www.skool.com/automind", external: true },
+  { icon: Users, label: "Skool Community", href: "https://www.skool.com/automind", external: true },
 ];
 
 const MobileNav = () => {

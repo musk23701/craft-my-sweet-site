@@ -34,10 +34,10 @@ const FeaturedSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
+    <section ref={sectionRef} className="py-12 md:py-20 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <h2
-          className={`text-3xl md:text-5xl lg:text-6xl font-extrabold text-center mb-12 transition-all duration-700 ${
+          className={`text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-center mb-8 md:mb-12 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >

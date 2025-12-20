@@ -24,26 +24,26 @@ const AboutUsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <section ref={sectionRef} id="about" className="py-12 md:py-20 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Column - Content */}
           <div
             className={`transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
             }`}
           >
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-6 md:mb-8">
               About <span className="text-primary">Automind Labs</span>
             </h2>
             
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+            <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-4 md:mb-6">
               Automind Labs is a cutting-edge AI automation agency dedicated to transforming the way businesses operate. 
               We specialize in building intelligent systems that automate repetitive tasks, streamline workflows, and 
               eliminate operational bottlenecks.
             </p>
             
-            <p className="text-muted-foreground text-lg leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
               Our team of experts combines deep technical knowledge with strategic business insight to deliver custom 
               AI solutions that scale with your growth. From startups to enterprises, we help organizations embrace 
               the future of work — where smart systems handle the mundane, and humans focus on what truly matters: 

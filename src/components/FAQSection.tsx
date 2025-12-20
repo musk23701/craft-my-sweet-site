@@ -26,9 +26,9 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section id="faq" className="py-20 bg-card">
-      <div className="max-w-3xl mx-auto px-6">
-        <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-12">
+    <section id="faq" className="py-12 md:py-20 bg-card">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-center mb-8 md:mb-12">
           Frequently Asked Questions
         </h2>
 

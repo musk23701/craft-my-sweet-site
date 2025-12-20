@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full overflow-x-hidden">
       {/* Hero Section with Sidebar */}
       <HeroSection />
 
