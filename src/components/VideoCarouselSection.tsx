@@ -25,7 +25,6 @@ const VideoCarouselSection = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
-    // Auto-play all videos
     videoRefs.current.forEach((video) => {
       if (video) {
         video.muted = true;
@@ -41,15 +40,27 @@ const VideoCarouselSection = () => {
     }
   };
 
-  // Instagram: 16 cards, 22.5deg apart, radius 900px
+  // Instagram: 16 cards, 22.5deg apart
   const instagramAngles = [
     0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
     180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5
   ];
 
   // YouTube: specific angles from the original
-  const youtubeAngles = [
-    0, 18, 36, 54, 72, 90, 108, 252, 270, 288, 306, 324, 342
+  const youtubeData = [
+    { angle: 0, video: 1 },
+    { angle: 18, video: 2 },
+    { angle: 36, video: 3 },
+    { angle: 54, video: 4 },
+    { angle: 72, video: 5 },
+    { angle: 90, video: 1 },
+    { angle: 108, video: 2 },
+    { angle: 252, video: 5 },
+    { angle: 270, video: 1 },
+    { angle: 288, video: 2 },
+    { angle: 306, video: 3 },
+    { angle: 324, video: 4 },
+    { angle: 342, video: 5 },
   ];
 
   return (
@@ -61,7 +72,7 @@ const VideoCarouselSection = () => {
           <span className="text-white text-lg font-bold">Instagram</span>
         </div>
 
-        {/* Instagram Carousel - exact structure from hamzaautomates.com */}
+        {/* Instagram Carousel - EXACT structure from original */}
         <div className="mask-gradient">
           <div className="flex items-center justify-center w-full h-full overflow-hidden">
             <div 
@@ -77,6 +88,7 @@ const VideoCarouselSection = () => {
                 style={{ 
                   transformStyle: 'preserve-3d', 
                   willChange: 'transform',
+                  animation: 'instagram-spin 25s linear infinite',
                 }}
               >
                 {instagramAngles.map((angle, index) => (
@@ -84,7 +96,7 @@ const VideoCarouselSection = () => {
                     key={index}
                     className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl"
                     style={{
-                      transform: `rotateY(${angle}deg) translateZ(900px)`,
+                      transform: `rotateY(${angle}deg) translateZ(-900px)`,
                       transformStyle: 'preserve-3d',
                       willChange: 'transform',
                       backfaceVisibility: 'hidden',
@@ -115,7 +127,7 @@ const VideoCarouselSection = () => {
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
 
-        {/* YouTube Carousel - exact structure from hamzaautomates.com */}
+        {/* YouTube Carousel - EXACT structure from original */}
         <div className="lg:mask-gradient">
           <div className="flex items-center justify-center w-full h-full overflow-hidden">
             <div 
@@ -125,34 +137,30 @@ const VideoCarouselSection = () => {
                 perspective: '4000px',
               }}
             >
-              {youtubeAngles.map((angle, index) => {
-                // Map angles to video indices as in original
-                const videoIndex = index < 5 ? index : (index % 5);
-                return (
-                  <div
-                    key={index}
-                    className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
-                    style={{
-                      transform: `rotateY(${angle}deg) translateZ(1500px)`,
-                      transformStyle: 'preserve-3d',
-                      willChange: 'transform',
-                    }}
-                  >
-                    <video
-                      ref={addVideoRef}
-                      className="w-full h-full object-cover"
-                      src={youtubeVideos[videoIndex]}
-                      loop
-                      muted
-                      playsInline
-                      autoPlay
-                      preload="metadata"
-                      disablePictureInPicture
-                      style={{ backfaceVisibility: 'hidden' }}
-                    />
-                  </div>
-                );
-              })}
+              {youtubeData.map((item, index) => (
+                <div
+                  key={index}
+                  className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
+                  style={{
+                    transform: `rotateY(${item.angle}deg) translateZ(1500px)`,
+                    transformStyle: 'preserve-3d',
+                    willChange: 'transform',
+                  }}
+                >
+                  <video
+                    ref={addVideoRef}
+                    className="w-full h-full object-cover"
+                    src={youtubeVideos[item.video - 1]}
+                    loop
+                    muted
+                    playsInline
+                    autoPlay
+                    preload="metadata"
+                    disablePictureInPicture
+                    style={{ backfaceVisibility: 'hidden' }}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
