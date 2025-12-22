@@ -257,4 +257,26 @@
   .glass {
     @apply bg-background/80 backdrop-blur-md border border-border/50;
   }
+
+  /* Instagram carousel spin */
+  .instagram-carousel {
+    transform-style: preserve-3d;
+    animation: instagram-spin 25s linear infinite;
+    will-change: transform;
+  }
+
+  .instagram-carousel:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes instagram-spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(-360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .instagram-carousel {
+      animation: none;
+    }
+  }
 }
