@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Home, User, Images, FileText, Mail, Calendar, Users, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import automindLogo from "@/assets/automind-labs-logo.png";
 
 const menuItems = [
   { icon: Home, label: "Home", href: "/" },
@@ -21,9 +22,7 @@ const MobileNav = () => {
       {/* Top Bar */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-[70px] flex items-center justify-between px-5 bg-background/95 backdrop-blur-sm border-b border-border z-50">
         <Link to="/">
-          <div className="h-12 flex items-center">
-            <span className="text-2xl font-black text-primary">Automind Labs</span>
-          </div>
+          <img src={automindLogo} alt="Automind Labs" className="h-10 w-auto object-contain" />
         </Link>
 
         <button

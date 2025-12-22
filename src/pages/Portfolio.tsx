@@ -204,65 +204,82 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* Featured Wins - Carousel like Blogs & Podcasts */}
-        <section className="py-20 bg-background">
-          <div className="max-w-[1300px] mx-auto px-6">
-            <h2 className="text-[40px] lg:text-[70px] text-foreground font-extrabold mb-4 text-center">
-              Featured <br className="lg:hidden" /> Wins
-            </h2>
-            <p className="text-muted-foreground text-center mb-12">
-              Proof that smart systems create powerful outcomes.
-            </p>
+        {/* Featured Wins - Carousel matching Blogs & Podcasts */}
+        <section className="py-12 md:py-20 px-4 sm:px-6 bg-background">
+          <div className="max-w-[1300px] mx-auto">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl sm:text-4xl lg:text-6xl font-black text-center mb-8 md:mb-12"
+            >
+              Featured <br className="lg:hidden" /> <span className="text-primary">Wins</span>
+            </motion.h2>
 
-            <div className="w-[70%] lg:w-full max-w-[800px] mx-auto relative">
-              {/* Previous Button */}
+            {/* Carousel Container */}
+            <div className="relative w-full max-w-[900px] mx-auto">
+              {/* Navigation Arrows */}
               <button 
                 onClick={() => handleManualNav(prevSlide)}
-                className="px-4 py-2 rounded cursor-pointer border-none absolute z-50 -left-16 md:-left-20 top-1/2 -translate-y-1/2"
+                className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                aria-label="Previous slide"
               >
-                <ChevronLeft className="w-[30px] md:w-[50px] h-auto text-foreground" />
+                <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 text-primary" />
               </button>
 
-              {/* Next Button */}
               <button 
                 onClick={() => handleManualNav(nextSlide)}
-                className="px-4 py-2 rounded cursor-pointer border-none absolute z-50 -right-16 md:-right-20 top-1/2 -translate-y-1/2"
+                className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                aria-label="Next slide"
               >
-                <ChevronRight className="w-[30px] md:w-[50px] h-auto text-foreground" />
+                <ChevronRight className="w-6 h-6 md:w-8 md:h-8 text-primary" />
               </button>
 
-              {/* Carousel */}
-              <div className="overflow-hidden">
-                <motion.div 
-                  className="flex"
-                  animate={{ x: `-${currentIndex * 100}%` }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+              {/* Main Slider */}
+              <div className="relative overflow-hidden rounded-2xl">
+                <div 
+                  className="flex transition-transform duration-500 ease-out"
+                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                 >
                   {featuredWins.map((win) => (
-                    <div key={win.id} className="min-w-full px-2">
-                      <div className="relative w-full pt-[56.25%] overflow-hidden rounded-xl">
+                    <div key={win.id} className="w-full flex-shrink-0">
+                      <div className="relative w-full pt-[56.25%] overflow-hidden rounded-2xl cursor-pointer group">
                         <img 
                           src={win.thumbnail} 
                           alt={win.title}
-                          className="absolute inset-0 w-full h-full object-cover cursor-pointer"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        {/* Play Button Overlay */}
+                        
+                        {/* Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                        
+                        {/* Play Button */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-16 h-16 md:w-20 md:h-20 bg-primary/90 rounded-full flex items-center justify-center cursor-pointer hover:bg-primary transition-colors">
-                            <Play className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" fill="currentColor" />
-                          </div>
+                          <motion.div 
+                            whileHover={{ scale: 1.1 }}
+                            className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-2xl"
+                          >
+                            <svg className="w-6 h-6 md:w-8 md:h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </motion.div>
                         </div>
-                        {/* Title & Subtitle */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
-                          <span className="text-xs px-3 py-1 bg-primary rounded-full text-primary-foreground mb-2 inline-block">
-                            {win.subtitle}
-                          </span>
-                          <h3 className="text-lg md:text-xl font-bold text-foreground">{win.title}</h3>
+
+                        {/* Badge */}
+                        <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-xs font-semibold text-primary">{win.subtitle}</span>
+                        </div>
+
+                        {/* Title */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h3 className="text-lg md:text-xl font-bold text-foreground tracking-wide">
+                            {win.title}
+                          </h3>
                         </div>
                       </div>
                     </div>
                   ))}
-                </motion.div>
+                </div>
               </div>
 
               {/* Dots Indicator */}
@@ -271,9 +288,10 @@ const Portfolio = () => {
                   <button
                     key={index}
                     onClick={() => handleManualNav(() => setCurrentIndex(index))}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      currentIndex === index ? 'bg-primary' : 'bg-muted-foreground/30'
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
                     }`}
+                    aria-label={`Go to slide ${index + 1}`}
                   />
                 ))}
               </div>
