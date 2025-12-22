@@ -274,9 +274,9 @@
     to { transform: rotateY(360deg); }
   }
 
-  /* YouTube horizontal marquee - moves left to right */
+  /* YouTube horizontal marquee - moves left to right seamlessly */
   .youtube-marquee {
-    animation: youtube-scroll 40s linear infinite;
+    animation: youtube-scroll 50s linear infinite;
     will-change: transform;
   }
 
@@ -285,8 +285,8 @@
   }
 
   @keyframes youtube-scroll {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0%); }
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
   }
 
   @media (prefers-reduced-motion: reduce) {
