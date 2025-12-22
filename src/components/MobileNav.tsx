@@ -86,7 +86,7 @@ const MobileNav = () => {
                     <div className="w-[34px] h-[34px] rounded-full flex items-center justify-center bg-foreground/5">
                       <item.icon className="w-5 h-5" />
                     </div>
-                    <span className="text-xs leading-tight">{item.label}</span>
+                    <span className="text-xs leading-tight text-center">{item.label}</span>
                   </a>
                 );
               }
