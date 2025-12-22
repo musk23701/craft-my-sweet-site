@@ -72,7 +72,7 @@ const VideoCarouselSection = () => {
           <span className="text-white text-lg font-bold">Instagram</span>
         </div>
 
-        {/* Instagram Carousel - EXACT structure from original */}
+        {/* Instagram Carousel */}
         <div className="mask-gradient">
           <div className="flex items-center justify-center w-full h-full overflow-hidden">
             <div 
@@ -88,7 +88,6 @@ const VideoCarouselSection = () => {
                 style={{ 
                   transformStyle: 'preserve-3d', 
                   willChange: 'transform',
-                  animation: 'instagram-spin 25s linear infinite',
                 }}
               >
                 {instagramAngles.map((angle, index) => (
@@ -127,7 +126,7 @@ const VideoCarouselSection = () => {
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
 
-        {/* YouTube Carousel - EXACT structure from original */}
+        {/* YouTube Carousel */}
         <div className="lg:mask-gradient">
           <div className="flex items-center justify-center w-full h-full overflow-hidden">
             <div 
@@ -137,30 +136,38 @@ const VideoCarouselSection = () => {
                 perspective: '4000px',
               }}
             >
-              {youtubeData.map((item, index) => (
-                <div
-                  key={index}
-                  className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
-                  style={{
-                    transform: `rotateY(${item.angle}deg) translateZ(1500px)`,
-                    transformStyle: 'preserve-3d',
-                    willChange: 'transform',
-                  }}
-                >
-                  <video
-                    ref={addVideoRef}
-                    className="w-full h-full object-cover"
-                    src={youtubeVideos[item.video - 1]}
-                    loop
-                    muted
-                    playsInline
-                    autoPlay
-                    preload="metadata"
-                    disablePictureInPicture
-                    style={{ backfaceVisibility: 'hidden' }}
-                  />
-                </div>
-              ))}
+              <div
+                className="youtube-carousel"
+                style={{
+                  transformStyle: 'preserve-3d',
+                  willChange: 'transform',
+                }}
+              >
+                {youtubeData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
+                    style={{
+                      transform: `rotateY(${item.angle}deg) translateZ(1500px)`,
+                      transformStyle: 'preserve-3d',
+                      willChange: 'transform',
+                    }}
+                  >
+                    <video
+                      ref={addVideoRef}
+                      className="w-full h-full object-cover"
+                      src={youtubeVideos[item.video - 1]}
+                      loop
+                      muted
+                      playsInline
+                      autoPlay
+                      preload="metadata"
+                      disablePictureInPicture
+                      style={{ backfaceVisibility: 'hidden' }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
