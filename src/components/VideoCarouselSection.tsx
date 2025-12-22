@@ -40,36 +40,47 @@ const VideoCarouselSection = () => {
     }
   };
 
+  const totalCards = 16;
+  const angleStep = 360 / totalCards;
+  const radius = 900;
+
   return (
     <section className="py-20 bg-background overflow-hidden">
       {/* Instagram Section */}
       <div className="mx-auto">
         {/* Instagram Button */}
-        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 pt-3 mx-auto z-0 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center">
+        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center">
           <span className="text-white text-lg font-bold">Instagram</span>
         </div>
 
         {/* Instagram Carousel */}
-        <div className="mask-gradient">
-          <div className="flex items-center justify-center w-full h-full overflow-hidden">
+        <div className="mask-gradient h-[600px]">
+          <div className="flex items-center justify-center w-full h-full overflow-visible">
             <div 
-              className="relative w-[320px] h-[568px] -rotate-6"
-              style={{ transformStyle: 'preserve-3d', perspective: '1500px', willChange: 'transform' }}
+              className="relative -rotate-6"
+              style={{ 
+                transformStyle: 'preserve-3d', 
+                perspective: '1500px', 
+                width: '320px',
+                height: '468px',
+              }}
             >
               <div 
-                className="instagram-carousel"
-                style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+                className="instagram-carousel absolute inset-0"
+                style={{ 
+                  transformStyle: 'preserve-3d', 
+                  willChange: 'transform',
+                }}
               >
                 {instagramVideos.map((video, index) => {
-                  const angle = (360 / 16) * index;
+                  const angle = angleStep * index;
                   return (
                     <div
                       key={index}
-                      className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl"
+                      className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl left-1/2 top-1/2"
                       style={{
-                        transform: `rotateY(${angle}deg) translateZ(-900px)`,
+                        transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${radius}px)`,
                         transformStyle: 'preserve-3d',
-                        willChange: 'transform',
                         backfaceVisibility: 'hidden',
                       }}
                     >
@@ -88,15 +99,14 @@ const VideoCarouselSection = () => {
                 })}
                 {/* Duplicate for seamless loop */}
                 {instagramVideos.map((video, index) => {
-                  const angle = (360 / 16) * (index + 8);
+                  const angle = angleStep * (index + 8);
                   return (
                     <div
                       key={`dup-${index}`}
-                      className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl"
+                      className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl left-1/2 top-1/2"
                       style={{
-                        transform: `rotateY(${angle}deg) translateZ(-900px)`,
+                        transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${radius}px)`,
                         transformStyle: 'preserve-3d',
-                        willChange: 'transform',
                         backfaceVisibility: 'hidden',
                       }}
                     >
@@ -122,33 +132,69 @@ const VideoCarouselSection = () => {
       {/* YouTube Section */}
       <div className="mx-auto mt-10 h-[700px]">
         {/* YouTube Button */}
-        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 pt-3 mx-auto z-0 relative bg-[#00B4D8] font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center">
+        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-[#00B4D8] font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center">
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
 
         {/* YouTube Carousel */}
-        <div className="lg:mask-gradient">
-          <div className="flex items-center justify-center w-full h-full overflow-hidden">
+        <div className="lg:mask-gradient h-[600px]">
+          <div className="flex items-center justify-center w-full h-full overflow-visible">
             <div 
-              className="relative w-[320px] h-[568px] pt-40 rotate-4"
-              style={{ transformStyle: 'preserve-3d', perspective: '4000px' }}
+              className="relative rotate-4"
+              style={{ 
+                transformStyle: 'preserve-3d', 
+                perspective: '4000px',
+                width: '400px',
+                height: '200px',
+              }}
             >
-              {youtubeVideos.map((video, index) => {
-                const angle = 18 * index;
-                return (
+              <div 
+                className="youtube-carousel absolute inset-0"
+                style={{ 
+                  transformStyle: 'preserve-3d', 
+                  willChange: 'transform',
+                }}
+              >
+                {youtubeVideos.map((video, index) => {
+                  const angle = 18 * index;
+                  return (
+                    <div
+                      key={index}
+                      className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl left-1/2 top-1/2"
+                      style={{
+                        transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(800px)`,
+                        transformStyle: 'preserve-3d',
+                      }}
+                    >
+                      <video
+                        ref={addVideoRef}
+                        className="w-full h-full object-cover"
+                        src={video}
+                        loop
+                        muted
+                        playsInline
+                        autoPlay
+                        preload="metadata"
+                        disablePictureInPicture
+                        style={{ backfaceVisibility: 'hidden' }}
+                      />
+                    </div>
+                  );
+                })}
+                {/* Additional cards to fill the carousel */}
+                {[90, 108, 180, 198, 252, 270, 288, 306, 324, 342].map((angle, index) => (
                   <div
-                    key={index}
-                    className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
+                    key={`extra-${index}`}
+                    className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl left-1/2 top-1/2"
                     style={{
-                      transform: `rotateY(${angle}deg) translateZ(1500px)`,
+                      transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(800px)`,
                       transformStyle: 'preserve-3d',
-                      willChange: 'transform',
                     }}
                   >
                     <video
                       ref={addVideoRef}
                       className="w-full h-full object-cover"
-                      src={video}
+                      src={youtubeVideos[index % youtubeVideos.length]}
                       loop
                       muted
                       playsInline
@@ -158,33 +204,8 @@ const VideoCarouselSection = () => {
                       style={{ backfaceVisibility: 'hidden' }}
                     />
                   </div>
-                );
-              })}
-              {/* Additional cards to fill the carousel */}
-              {[90, 108, 252, 270, 288, 306, 324, 342].map((angle, index) => (
-                <div
-                  key={`extra-${index}`}
-                  className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
-                  style={{
-                    transform: `rotateY(${angle}deg) translateZ(1500px)`,
-                    transformStyle: 'preserve-3d',
-                    willChange: 'transform',
-                  }}
-                >
-                  <video
-                    ref={addVideoRef}
-                    className="w-full h-full object-cover"
-                    src={youtubeVideos[index % youtubeVideos.length]}
-                    loop
-                    muted
-                    playsInline
-                    autoPlay
-                    preload="metadata"
-                    disablePictureInPicture
-                    style={{ backfaceVisibility: 'hidden' }}
-                  />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

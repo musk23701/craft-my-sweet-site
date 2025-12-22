@@ -274,8 +274,25 @@
     to { transform: rotateY(-360deg); }
   }
 
+  /* YouTube carousel spin */
+  .youtube-carousel {
+    transform-style: preserve-3d;
+    animation: youtube-spin 30s linear infinite;
+    will-change: transform;
+  }
+
+  .youtube-carousel:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes youtube-spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(-360deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .instagram-carousel {
+    .instagram-carousel,
+    .youtube-carousel {
       animation: none;
     }
   }
