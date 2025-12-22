@@ -1,5 +1,6 @@
 import { Home, User, Images, FileText, Mail, Calendar, Users } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import automindLogo from "@/assets/automind-labs-logo.png";
 
 const menuItems = [
   { icon: Home, label: "Home", href: "/" },
@@ -18,9 +19,11 @@ const Sidebar = () => {
     <nav className="hidden lg:flex bg-background w-28 border-r border-border flex-col items-center justify-center py-6 flex-shrink-0 h-screen sticky top-0">
       {/* Logo */}
       <Link to="/" className="mb-10">
-        <div className="w-20 h-12 flex items-center justify-center">
-          <span className="text-xl font-black text-primary">AI</span>
-        </div>
+        <img 
+          src={automindLogo} 
+          alt="Automind Labs" 
+          className="w-20 h-auto object-contain"
+        />
       </Link>
 
       {/* Menu */}
