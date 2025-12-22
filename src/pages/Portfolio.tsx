@@ -1,6 +1,6 @@
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
-import { ExternalLink, Cpu, GraduationCap, Bot, Users, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { Cpu, GraduationCap, Bot, Users, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
@@ -32,26 +32,41 @@ const valueItems = [
   { icon: Users, title: "Hands on Mentorship & Coaching", subtitle: "to Help Entrepreneurs Scale" }
 ];
 
-const partners = ["Zapier", "OpenAI", "Gamma", "Make", "Snowflake"];
+const partners = [
+  { name: "Zapier", icon: "⚡" },
+  { name: "OpenAI", icon: "🤖" },
+  { name: "Gamma", icon: "📊" },
+  { name: "Make", icon: "🔧" },
+  { name: "Snowflake", icon: "❄️" }
+];
 
 const featuredWins = [
   {
     id: 1,
     thumbnail: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop",
     title: "Enterprise Automation Success",
-    subtitle: "Case Study"
+    subtitle: "Case Study",
+    testimonial: "Automind Labs transformed our entire workflow. We saved 40+ hours per week!",
+    author: "Sarah Johnson",
+    role: "CEO, TechFlow Inc."
   },
   {
     id: 2,
     thumbnail: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&h=450&fit=crop",
     title: "Scaling Operations with AI",
-    subtitle: "Client Story"
+    subtitle: "Client Story",
+    testimonial: "The ROI was incredible. Within 3 months, we doubled our output with half the effort.",
+    author: "Michael Chen",
+    role: "Operations Director, ScaleUp Co."
   },
   {
     id: 3,
     thumbnail: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=450&fit=crop",
     title: "Workflow Transformation",
-    subtitle: "Featured Win"
+    subtitle: "Featured Win",
+    testimonial: "Best investment we ever made. The automation systems are game-changers.",
+    author: "Emily Rodriguez",
+    role: "Founder, Creative Agency"
   }
 ];
 
@@ -79,6 +94,20 @@ const Portfolio = () => {
     setTimeout(() => setIsAutoPlaying(true), 5000);
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
     <div className="min-h-screen w-full bg-background">
       <PageHero 
@@ -89,43 +118,53 @@ const Portfolio = () => {
       />
 
       <main>
-        {/* Companies Section - Updated to match reference */}
-        <section className="py-16 bg-background px-6 lg:px-24">
+        {/* Companies Section */}
+        <section className="py-12 md:py-16 bg-background px-4 sm:px-6 lg:px-24">
           <div className="max-w-[1300px] mx-auto">
-            <h2 className="text-3xl lg:text-[70px] font-extrabold mb-4 text-center text-foreground">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl sm:text-4xl lg:text-6xl font-extrabold mb-8 md:mb-12 text-center text-foreground"
+            >
               Companies
-            </h2>
+            </motion.h2>
 
-            <div className="bg-card mt-20">
+            <div className="bg-card mt-8 md:mt-12">
               {companies.map((company, index) => (
                 <motion.div 
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
                   viewport={{ once: true }}
-                  className="flex flex-col sm:flex-row sm:items-center sm:px-5 sm:justify-between lg:px-20 sm:gap-8 border-t border-b border-border py-5"
+                  className="flex flex-col sm:flex-row sm:items-center sm:px-5 sm:justify-between lg:px-20 sm:gap-8 border-t border-b border-border py-6 md:py-8"
                 >
-                  <div className="flex justify-center px-5 mb-6 sm:mb-0">
+                  <motion.div 
+                    className="flex justify-center px-4 mb-4 sm:mb-0"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
                     <img 
                       src={company.logo} 
                       alt={company.name}
-                      className="h-[130px] w-[130px] md:h-[150px] md:w-[150px] lg:w-[180px] lg:h-[180px] object-contain rounded-xl"
+                      className="h-[100px] w-[100px] sm:h-[130px] sm:w-[130px] md:h-[150px] md:w-[150px] lg:w-[180px] lg:h-[180px] object-contain rounded-xl"
                     />
-                  </div>
-                  <div className="text-center px-5 max-w-[500px] mx-auto">
-                    <h3 className="text-[30px] md:text-[36px] font-medium mb-4 text-foreground">{company.name}</h3>
-                    <p className="text-[10px] sm:text-[10px] md:text-[12px] xl:text-[16px] font-medium leading-relaxed text-muted-foreground">
+                  </motion.div>
+                  <div className="text-center px-4 max-w-[500px] mx-auto">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-medium mb-3 text-foreground">{company.name}</h3>
+                    <p className="text-xs sm:text-sm md:text-base font-medium leading-relaxed text-muted-foreground">
                       {company.description}
                     </p>
-                    <a 
+                    <motion.a 
                       href={company.link} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-[10px] sm:text-[10px] md:text-[12px] xl:text-[16px] inline-block mt-4 text-primary font-medium hover:underline"
+                      className="text-sm md:text-base inline-block mt-4 text-primary font-medium hover:underline"
+                      whileHover={{ x: 5 }}
                     >
-                      Visit Website
-                    </a>
+                      Visit Website →
+                    </motion.a>
                   </div>
                 </motion.div>
               ))}
@@ -134,77 +173,143 @@ const Portfolio = () => {
         </section>
 
         {/* Stats Section */}
-        <section className="py-20 bg-card">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+        <section className="py-12 md:py-20 bg-card">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">
                   The Numbers<br />That Hold Stories
                 </h2>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-sm md:text-base text-muted-foreground mb-3">
                   These aren't just stats, they're snapshots of people, moments, and milestones.
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-sm md:text-base text-muted-foreground">
                   Behind every number is a real person we've had the privilege to help automate, simplify, and grow.
                 </p>
-              </div>
-              <div className="space-y-6">
+              </motion.div>
+              <motion.div 
+                className="space-y-4 md:space-y-6"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {stats.map((stat, index) => (
-                  <div key={index} className="text-right">
-                    <div className="text-4xl md:text-5xl font-black text-primary">{stat.value}</div>
-                    <div className="text-muted-foreground">{stat.label}</div>
-                  </div>
+                  <motion.div 
+                    key={index} 
+                    className="text-right"
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.02, x: -5 }}
+                  >
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-black text-primary">{stat.value}</div>
+                    <div className="text-sm md:text-base text-muted-foreground">{stat.label}</div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* Where We Create Value */}
-        <section className="py-20 bg-background">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-primary">
+        <section className="py-12 md:py-20 bg-background">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-3 text-primary"
+            >
               Where We Create Value
-            </h2>
-            <p className="text-muted-foreground mb-16">
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-sm md:text-base text-muted-foreground mb-10 md:mb-16"
+            >
               We don't just automate tasks. We build machines that scale businesses.
-            </p>
+            </motion.p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <motion.div 
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {valueItems.map((item, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <item.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="font-bold mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.subtitle}</p>
-                </div>
+                <motion.div 
+                  key={index} 
+                  className="text-center p-4"
+                  variants={itemVariants}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <motion.div 
+                    className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-xl bg-primary/10 flex items-center justify-center"
+                    whileHover={{ rotate: 5, scale: 1.1 }}
+                  >
+                    <item.icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                  </motion.div>
+                  <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground">{item.subtitle}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* Clients & Partners */}
-        <section className="py-20 bg-card">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-12">
+        <section className="py-12 md:py-20 bg-card overflow-hidden">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 md:mb-12"
+            >
               Clients & Partners
-            </h2>
+            </motion.h2>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <motion.div 
+              className="flex flex-wrap justify-center gap-3 md:gap-4"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {partners.map((partner, index) => (
-                <div 
+                <motion.div 
                   key={index} 
-                  className="px-8 py-4 rounded-full bg-card border border-border hover:border-primary/50 transition-colors"
+                  className="group px-5 py-3 md:px-8 md:py-4 rounded-full bg-card border border-border cursor-pointer relative overflow-hidden"
+                  variants={itemVariants}
+                  whileHover={{ 
+                    scale: 1.08, 
+                    borderColor: "hsl(var(--primary))",
+                    boxShadow: "0 10px 30px -10px hsl(var(--primary) / 0.3)"
+                  }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <span className="font-semibold">{partner}</span>
-                </div>
+                  <motion.div 
+                    className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <span className="relative flex items-center gap-2 font-semibold text-sm md:text-base">
+                    <span className="text-lg">{partner.icon}</span>
+                    {partner.name}
+                  </span>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* Featured Wins - Carousel matching Blogs & Podcasts */}
+        {/* Featured Wins - Carousel with Testimonials */}
         <section className="py-12 md:py-20 px-4 sm:px-6 bg-background">
           <div className="max-w-[1300px] mx-auto">
             <motion.h2 
@@ -221,18 +326,18 @@ const Portfolio = () => {
               {/* Navigation Arrows */}
               <button 
                 onClick={() => handleManualNav(prevSlide)}
-                className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                className="absolute -left-2 sm:-left-4 md:-left-16 top-1/3 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
                 aria-label="Previous slide"
               >
-                <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
               </button>
 
               <button 
                 onClick={() => handleManualNav(nextSlide)}
-                className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                className="absolute -right-2 sm:-right-4 md:-right-16 top-1/3 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
                 aria-label="Next slide"
               >
-                <ChevronRight className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
               </button>
 
               {/* Main Slider */}
@@ -251,28 +356,28 @@ const Portfolio = () => {
                         />
                         
                         {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                         
                         {/* Play Button */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <motion.div 
                             whileHover={{ scale: 1.1 }}
-                            className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-2xl"
+                            className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-2xl"
                           >
-                            <svg className="w-6 h-6 md:w-8 md:h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M8 5v14l11-7z"/>
                             </svg>
                           </motion.div>
                         </div>
 
                         {/* Badge */}
-                        <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full">
-                          <span className="text-xs font-semibold text-primary">{win.subtitle}</span>
+                        <div className="absolute top-3 right-3 md:top-4 md:right-4 bg-background/80 backdrop-blur-sm px-2 py-1 md:px-3 rounded-full">
+                          <span className="text-[10px] md:text-xs font-semibold text-primary">{win.subtitle}</span>
                         </div>
 
                         {/* Title */}
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <h3 className="text-lg md:text-xl font-bold text-foreground tracking-wide">
+                        <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4">
+                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground tracking-wide">
                             {win.title}
                           </h3>
                         </div>
@@ -282,6 +387,31 @@ const Portfolio = () => {
                 </div>
               </div>
 
+              {/* Testimonial Card */}
+              <motion.div 
+                key={currentIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="mt-6 md:mt-8 p-4 md:p-6 bg-card rounded-xl border border-border"
+              >
+                <Quote className="w-6 h-6 md:w-8 md:h-8 text-primary mb-3" />
+                <p className="text-sm md:text-lg text-foreground italic mb-4">
+                  "{featuredWins[currentIndex].testimonial}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm md:text-base">
+                      {featuredWins[currentIndex].author.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-sm md:text-base text-foreground">{featuredWins[currentIndex].author}</p>
+                    <p className="text-xs md:text-sm text-muted-foreground">{featuredWins[currentIndex].role}</p>
+                  </div>
+                </div>
+              </motion.div>
+
               {/* Dots Indicator */}
               <div className="flex justify-center gap-2 mt-6">
                 {featuredWins.map((_, index) => (
@@ -289,7 +419,7 @@ const Portfolio = () => {
                     key={index}
                     onClick={() => handleManualNav(() => setCurrentIndex(index))}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      index === currentIndex ? 'bg-primary w-6 md:w-8' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
