@@ -12,8 +12,13 @@ const instagramVideos = [
   '/videos/instagram/8.mp4',
 ];
 
-// YouTube videos (5 videos)
+// YouTube videos (5 videos, duplicated for seamless loop)
 const youtubeVideos = [
+  '/videos/youtube/1.mp4',
+  '/videos/youtube/2.mp4',
+  '/videos/youtube/3.mp4',
+  '/videos/youtube/4.mp4',
+  '/videos/youtube/5.mp4',
   '/videos/youtube/1.mp4',
   '/videos/youtube/2.mp4',
   '/videos/youtube/3.mp4',
@@ -44,23 +49,6 @@ const VideoCarouselSection = () => {
   const instagramAngles = [
     0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
     180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5
-  ];
-
-  // YouTube: specific angles from the original
-  const youtubeData = [
-    { angle: 0, video: 1 },
-    { angle: 18, video: 2 },
-    { angle: 36, video: 3 },
-    { angle: 54, video: 4 },
-    { angle: 72, video: 5 },
-    { angle: 90, video: 1 },
-    { angle: 108, video: 2 },
-    { angle: 252, video: 5 },
-    { angle: 270, video: 1 },
-    { angle: 288, video: 2 },
-    { angle: 306, video: 3 },
-    { angle: 324, video: 4 },
-    { angle: 342, video: 5 },
   ];
 
   return (
@@ -120,55 +108,57 @@ const VideoCarouselSection = () => {
       </div>
 
       {/* YouTube Section */}
-      <div className="mx-auto mt-10 h-[700px]">
+      <div className="mx-auto mt-10">
         {/* YouTube Button */}
-        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 pt-3 mx-auto z-0 relative bg-[#00B4D8] font-extrabold mb-4 text-center cursor-pointer">
+        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#00B4D8] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center">
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
 
-        {/* YouTube Carousel */}
-        <div className="lg:mask-gradient">
-          <div className="flex items-center justify-center w-full h-full overflow-hidden">
-            <div 
-              className="relative w-[320px] h-[568px] pt-40 rotate-4"
-              style={{ 
-                transformStyle: 'preserve-3d', 
-                perspective: '4000px',
-              }}
-            >
+        {/* YouTube Horizontal Carousel - moves left to right */}
+        <div className="mask-gradient overflow-hidden">
+          <div 
+            className="youtube-marquee flex gap-6"
+            style={{
+              width: 'max-content',
+            }}
+          >
+            {youtubeVideos.map((video, index) => (
               <div
-                className="youtube-carousel"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  willChange: 'transform',
-                }}
+                key={index}
+                className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
               >
-                {youtubeData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="absolute w-[400px] h-[200px] rounded-xl overflow-hidden shadow-xl"
-                    style={{
-                      transform: `rotateY(${item.angle}deg) translateZ(1500px)`,
-                      transformStyle: 'preserve-3d',
-                      willChange: 'transform',
-                    }}
-                  >
-                    <video
-                      ref={addVideoRef}
-                      className="w-full h-full object-cover"
-                      src={youtubeVideos[item.video - 1]}
-                      loop
-                      muted
-                      playsInline
-                      autoPlay
-                      preload="metadata"
-                      disablePictureInPicture
-                      style={{ backfaceVisibility: 'hidden' }}
-                    />
-                  </div>
-                ))}
+                <video
+                  ref={addVideoRef}
+                  className="w-full h-full object-cover"
+                  src={video}
+                  loop
+                  muted
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  disablePictureInPicture
+                />
               </div>
-            </div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {youtubeVideos.map((video, index) => (
+              <div
+                key={`dup-${index}`}
+                className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
+              >
+                <video
+                  ref={addVideoRef}
+                  className="w-full h-full object-cover"
+                  src={video}
+                  loop
+                  muted
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  disablePictureInPicture
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
