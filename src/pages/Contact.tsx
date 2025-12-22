@@ -58,7 +58,7 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: Mail, title: "Email Us", details: "hello@automindlabs.com", description: "We reply within 24 hours" },
+    { icon: Mail, title: "Email Us", details: "Info@automindlabs.ai", description: "We reply within 24 hours" },
     { icon: Phone, title: "Call Us", details: "+1 (555) 123-4567", description: "Mon-Fri, 9am-6pm EST" },
     { icon: MapPin, title: "Visit Us", details: "123 AI Innovation Drive", description: "San Francisco, CA 94105" }
   ];
