@@ -8,7 +8,7 @@ const companies = [
   {
     name: "Automation Institute",
     logo: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=180&h=180&fit=crop",
-    description: "Founded by Hamza Automates and built for the ones who want to break out of the \"busy\" loop. We're here to help you escape the chaos by teaching you how to use AI and automation to take back your time and redesign the way you work.",
+    description: "Founded by Automind Labs and built for the ones who want to break out of the \"busy\" loop. We're here to help you escape the chaos by teaching you how to use AI and automation to take back your time and redesign the way you work.",
     link: "https://automationinstitute.ai/"
   },
   {
