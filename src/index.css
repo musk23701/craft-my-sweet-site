@@ -285,7 +285,7 @@
   }
 
   @keyframes youtube-scroll {
-    0% { transform: translateX(-50%); }
+    0% { transform: translateX(-66.666%); }
     100% { transform: translateX(0%); }
   }
 

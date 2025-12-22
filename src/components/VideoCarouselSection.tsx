@@ -12,13 +12,8 @@ const instagramVideos = [
   '/videos/instagram/8.mp4',
 ];
 
-// YouTube videos (5 videos, duplicated for seamless loop)
+// YouTube videos (5 videos)
 const youtubeVideos = [
-  '/videos/youtube/1.mp4',
-  '/videos/youtube/2.mp4',
-  '/videos/youtube/3.mp4',
-  '/videos/youtube/4.mp4',
-  '/videos/youtube/5.mp4',
   '/videos/youtube/1.mp4',
   '/videos/youtube/2.mp4',
   '/videos/youtube/3.mp4',
@@ -117,11 +112,13 @@ const VideoCarouselSection = () => {
         {/* YouTube Horizontal Carousel - moves left to right */}
         <div className="mask-gradient overflow-hidden">
           <div 
-            className="youtube-marquee flex gap-6"
+            className="youtube-marquee flex"
             style={{
               width: 'max-content',
+              gap: '24px',
             }}
           >
+            {/* First set */}
             {youtubeVideos.map((video, index) => (
               <div
                 key={index}
@@ -140,10 +137,29 @@ const VideoCarouselSection = () => {
                 />
               </div>
             ))}
-            {/* Duplicate for seamless loop */}
+            {/* Second set for seamless loop */}
             {youtubeVideos.map((video, index) => (
               <div
-                key={`dup-${index}`}
+                key={`dup1-${index}`}
+                className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
+              >
+                <video
+                  ref={addVideoRef}
+                  className="w-full h-full object-cover"
+                  src={video}
+                  loop
+                  muted
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  disablePictureInPicture
+                />
+              </div>
+            ))}
+            {/* Third set to fill any remaining gap */}
+            {youtubeVideos.map((video, index) => (
+              <div
+                key={`dup2-${index}`}
                 className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
               >
                 <video
