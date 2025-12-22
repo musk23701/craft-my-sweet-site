@@ -1,5 +1,6 @@
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+import AnimatedCounter from "@/components/AnimatedCounter";
 import { Cpu, GraduationCap, Bot, Users, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
@@ -20,9 +21,9 @@ const companies = [
 ];
 
 const stats = [
-  { value: "20,000+", label: "YouTube Subscribers" },
-  { value: "80,000+", label: "Followers on Instagram" },
-  { value: "30,000+", label: "Active Students in Skool" }
+  { value: 20000, suffix: "+", label: "YouTube Subscribers" },
+  { value: 80000, suffix: "+", label: "Followers on Instagram" },
+  { value: 30000, suffix: "+", label: "Active Students in Skool" }
 ];
 
 const valueItems = [
@@ -175,12 +176,13 @@ const Portfolio = () => {
         {/* Stats Section */}
         <section className="py-12 md:py-20 bg-card">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
+                className="text-center md:text-left"
               >
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">
                   The Numbers<br />That Hold Stories
@@ -193,7 +195,7 @@ const Portfolio = () => {
                 </p>
               </motion.div>
               <motion.div 
-                className="space-y-4 md:space-y-6"
+                className="w-full space-y-6 md:space-y-8"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -202,12 +204,19 @@ const Portfolio = () => {
                 {stats.map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    className="text-right"
+                    className="text-center md:text-right"
                     variants={itemVariants}
-                    whileHover={{ scale: 1.02, x: -5 }}
+                    whileHover={{ scale: 1.02 }}
                   >
-                    <div className="text-3xl sm:text-4xl md:text-5xl font-black text-primary">{stat.value}</div>
-                    <div className="text-sm md:text-base text-muted-foreground">{stat.label}</div>
+                    <div className="text-4xl sm:text-5xl md:text-6xl font-black text-primary">
+                      <AnimatedCounter 
+                        value={stat.value} 
+                        suffix={stat.suffix} 
+                        duration={2.5}
+                        className="text-primary"
+                      />
+                    </div>
+                    <div className="text-sm md:text-base text-muted-foreground mt-1">{stat.label}</div>
                   </motion.div>
                 ))}
               </motion.div>
