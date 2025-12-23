@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useVideos } from "@/hooks/useCMSData";
 
 const videos = [
   { id: 1, position: { top: "10vh", left: "5vw" }, mobilePosition: { top: "5vh", left: "5vw" }, zIndex: 50 },
@@ -11,8 +12,7 @@ const videos = [
   { id: 7, position: { top: "30vh", left: "15vw" }, mobilePosition: { top: "45vh", left: "5vw" }, zIndex: 30 },
 ];
 
-// Placeholder video thumbnails with gradient backgrounds
-const VideoPlaceholder = ({ index }: { index: number }) => {
+const VideoPlaceholder = ({ index, videoUrl }: { index: number; videoUrl?: string }) => {
   const colors = [
     "from-primary/40 to-primary/20",
     "from-cyan-500/40 to-blue-500/20",
@@ -22,6 +22,19 @@ const VideoPlaceholder = ({ index }: { index: number }) => {
     "from-indigo-500/40 to-violet-500/20",
     "from-rose-500/40 to-pink-500/20",
   ];
+
+  if (videoUrl) {
+    return (
+      <video
+        src={videoUrl}
+        className="w-full h-full object-cover rounded-xl"
+        muted
+        loop
+        playsInline
+        autoPlay
+      />
+    );
+  }
   
   return (
     <div className={`w-full h-full bg-gradient-to-br ${colors[index % colors.length]} rounded-xl flex items-center justify-center`}>
@@ -43,6 +56,7 @@ const FeaturedVideosSection = () => {
   });
 
   const buttonY = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const { videos: tiktokVideos } = useVideos('tiktok');
 
   // Check if mobile
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -77,7 +91,10 @@ const FeaturedVideosSection = () => {
                 zIndex: video.zIndex,
               }}
             >
-              <VideoPlaceholder index={index} />
+              <VideoPlaceholder 
+                index={index} 
+                videoUrl={tiktokVideos[index]?.video_url}
+              />
             </motion.div>
           ))}
         </div>

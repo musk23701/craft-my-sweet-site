@@ -1,3 +1,4 @@
+import { useSections } from "@/hooks/useCMSData";
 import HeroSection from "@/components/HeroSection";
 import AboutUsSection from "@/components/AboutUsSection";
 import FeaturedSection from "@/components/FeaturedSection";
@@ -15,27 +16,33 @@ import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const { isSectionVisible, loading } = useSections();
+
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      {/* Hero Section with Sidebar */}
+      {/* Hero Section with Sidebar - always visible */}
       <HeroSection />
 
       {/* Rest of content - full width without sidebar */}
       <main>
-        <AboutUsSection />
-        <FeaturedSection />
-        <ReviewsCarousel />
-        <WhoWeHelp />
-        <ServicesSection />
-        <ApproachSection />
-        <WhyUsSection />
-        <FAQSection />
-        <VideoCarouselSection />
-        <FeaturedVideosSection />
-        <BlogsPodcastsSection />
-        <LinkedInConnectSection />
-        <CTASection />
-        <Footer />
+        {isSectionVisible('about') && <AboutUsSection />}
+        {isSectionVisible('featured') && <FeaturedSection />}
+        {isSectionVisible('reviews') && <ReviewsCarousel />}
+        {isSectionVisible('who-we-help') && <WhoWeHelp />}
+        {isSectionVisible('services') && <ServicesSection />}
+        {isSectionVisible('approach') && <ApproachSection />}
+        {isSectionVisible('why-us') && <WhyUsSection />}
+        {isSectionVisible('faq') && <FAQSection />}
+        {isSectionVisible('videos') && (
+          <>
+            <VideoCarouselSection />
+            <FeaturedVideosSection />
+          </>
+        )}
+        {isSectionVisible('blogs-podcasts') && <BlogsPodcastsSection />}
+        {isSectionVisible('linkedin') && <LinkedInConnectSection />}
+        {isSectionVisible('cta') && <CTASection />}
+        {isSectionVisible('footer') && <Footer />}
       </main>
     </div>
   );

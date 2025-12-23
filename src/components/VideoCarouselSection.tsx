@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Instagram, Youtube } from 'lucide-react';
+import { useVideos } from '@/hooks/useCMSData';
 
-// Instagram videos (8 videos, duplicated to fill 16 cards)
-const instagramVideos = [
+// Fallback Instagram videos
+const fallbackInstagramVideos = [
   '/videos/instagram/1.mp4',
   '/videos/instagram/2.mp4',
   '/videos/instagram/3.mp4',
@@ -13,8 +14,8 @@ const instagramVideos = [
   '/videos/instagram/8.mp4',
 ];
 
-// YouTube videos (5 videos)
-const youtubeVideos = [
+// Fallback YouTube videos
+const fallbackYoutubeVideos = [
   '/videos/youtube/1.mp4',
   '/videos/youtube/2.mp4',
   '/videos/youtube/3.mp4',
@@ -82,6 +83,18 @@ const LazyVideo = ({ src, className }: { src: string; className: string }) => {
 };
 
 const VideoCarouselSection = () => {
+  const { videos: dbInstagramVideos } = useVideos('instagram');
+  const { videos: dbYoutubeVideos } = useVideos('youtube');
+
+  // Use DB videos if available, otherwise fallback
+  const instagramVideos = dbInstagramVideos.length > 0 
+    ? dbInstagramVideos.map(v => v.video_url)
+    : fallbackInstagramVideos;
+
+  const youtubeVideos = dbYoutubeVideos.length > 0 
+    ? dbYoutubeVideos.map(v => v.video_url)
+    : fallbackYoutubeVideos;
+
   // Instagram: 16 cards, 22.5deg apart
   const instagramAngles = [
     0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
