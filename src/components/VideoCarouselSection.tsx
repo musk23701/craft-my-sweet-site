@@ -93,7 +93,7 @@ const VideoCarouselSection = () => {
       {/* Instagram Section */}
       <div className="mx-auto">
         {/* Instagram Button with Logo */}
-        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2 border-2 border-cyan-400">
+        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2 border border-cyan-400">
           <Instagram className="w-5 h-5 text-white" />
           <span className="text-white text-lg font-bold">Instagram</span>
         </div>
@@ -142,7 +142,7 @@ const VideoCarouselSection = () => {
       {/* YouTube Section */}
       <div className="mx-auto mt-10">
         {/* YouTube Button with Logo */}
-        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#FF0000] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center gap-2 border-2 border-cyan-400">
+        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#FF0000] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center gap-2 border border-cyan-400">
           <Youtube className="w-5 h-5 text-white" />
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
