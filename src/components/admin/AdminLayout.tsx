@@ -8,7 +8,6 @@ import {
   Briefcase,
   Image,
   Video,
-  MessageSquare,
   Star,
   Settings,
   LogOut,
@@ -19,6 +18,7 @@ import {
   HelpCircle,
   Wrench,
   ChevronDown,
+  Eye,
 } from 'lucide-react';
 import automindLogo from '@/assets/automind-labs-logo-new.png';
 import {
@@ -148,10 +148,21 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               variant="outline"
               size="sm"
               className="flex-1"
+              onClick={() => {
+                const previewUrl = new URL('/', window.location.origin);
+                previewUrl.searchParams.set('preview', 'true');
+                window.open(previewUrl.toString(), '_blank');
+              }}
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              Preview
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={() => window.open('/', '_blank')}
             >
-              <Globe className="w-4 h-4 mr-2" />
-              View Site
+              <Globe className="w-4 h-4" />
             </Button>
             <Button
               variant="ghost"
