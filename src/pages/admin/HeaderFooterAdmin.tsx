@@ -4,11 +4,11 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Save, Plus, Trash2 } from 'lucide-react';
+import { Loader2, Save, Plus, Trash2, ExternalLink } from 'lucide-react';
 import MediaUploader from '@/components/admin/MediaUploader';
+import { Switch } from '@/components/ui/switch';
 
 interface NavLink {
   label: string;
@@ -28,6 +28,7 @@ const HeaderFooterAdmin = () => {
 
   // Header state
   const [logoUrl, setLogoUrl] = useState('');
+  const [faviconUrl, setFaviconUrl] = useState('');
   const [navLinks, setNavLinks] = useState<NavLink[]>([]);
   const [headerId, setHeaderId] = useState<string | null>(null);
 
@@ -46,7 +47,8 @@ const HeaderFooterAdmin = () => {
       if (headerData) {
         setHeaderId(headerData.id);
         setLogoUrl(headerData.logo_url || '');
-        setNavLinks(Array.isArray(headerData.nav_links) ? (headerData.nav_links as unknown as NavLink[]) : []);
+        const links = Array.isArray(headerData.nav_links) ? (headerData.nav_links as unknown as NavLink[]) : [];
+        setNavLinks(links);
       } else {
         // Initialize with defaults
         setNavLinks([
@@ -56,6 +58,7 @@ const HeaderFooterAdmin = () => {
           { label: 'Blog', href: '/blog' },
           { label: 'Contact', href: '/contact' },
           { label: 'Book Call', href: '/booking' },
+          { label: 'Skool Community', href: 'https://www.skool.com/automind', external: true },
         ]);
       }
 
@@ -79,6 +82,18 @@ const HeaderFooterAdmin = () => {
           { platform: 'youtube', url: '#' },
         ]);
       }
+
+      // Fetch favicon from site settings
+      const { data: faviconData } = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('key', 'favicon')
+        .maybeSingle();
+      
+      if (faviconData?.value) {
+        const val = faviconData.value as any;
+        setFaviconUrl(val.url || '');
+      }
     } catch (error: any) {
       toast({ title: 'Error', description: error.message, variant: 'destructive' });
     } finally {
@@ -89,7 +104,7 @@ const HeaderFooterAdmin = () => {
   useEffect(() => { fetchData(); }, []);
 
   const addNavLink = () => {
-    setNavLinks([...navLinks, { label: '', href: '' }]);
+    setNavLinks([...navLinks, { label: '', href: '', external: false }]);
   };
 
   const updateNavLink = (index: number, field: keyof NavLink, value: string | boolean) => {
@@ -151,6 +166,24 @@ const HeaderFooterAdmin = () => {
         setFooterId(data.id);
       }
 
+      // Save favicon to site_settings
+      const { data: existingFavicon } = await supabase
+        .from('site_settings')
+        .select('id')
+        .eq('key', 'favicon')
+        .maybeSingle();
+
+      if (existingFavicon) {
+        await supabase
+          .from('site_settings')
+          .update({ value: { url: faviconUrl } })
+          .eq('key', 'favicon');
+      } else if (faviconUrl) {
+        await supabase
+          .from('site_settings')
+          .insert({ key: 'favicon', value: { url: faviconUrl } });
+      }
+
       toast({ title: 'Settings saved successfully' });
     } catch (error: any) {
       toast({ title: 'Error', description: error.message, variant: 'destructive' });
@@ -173,7 +206,7 @@ const HeaderFooterAdmin = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Header & Footer</h1>
-            <p className="text-muted-foreground mt-1">Manage navigation and footer settings</p>
+            <p className="text-muted-foreground mt-1">Manage navigation, logo, favicon, and footer settings</p>
           </div>
           <Button onClick={handleSave} disabled={saving}>
             {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
@@ -192,7 +225,7 @@ const HeaderFooterAdmin = () => {
                 <Label>Logo</Label>
                 {logoUrl ? (
                   <div className="relative inline-block">
-                    <img src={logoUrl} alt="Logo" className="h-16 w-auto" />
+                    <img src={logoUrl} alt="Logo" className="h-16 w-auto bg-background p-2 rounded-lg border" />
                     <Button
                       variant="destructive"
                       size="icon"
@@ -208,15 +241,35 @@ const HeaderFooterAdmin = () => {
               </div>
 
               <div className="space-y-2">
+                <Label>Favicon</Label>
+                {faviconUrl ? (
+                  <div className="relative inline-block">
+                    <img src={faviconUrl} alt="Favicon" className="h-10 w-10 object-contain bg-background p-1 rounded-lg border" />
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="absolute -top-2 -right-2 h-6 w-6"
+                      onClick={() => setFaviconUrl('')}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
+                ) : (
+                  <MediaUploader accept="image/*" onUpload={setFaviconUrl} />
+                )}
+                <p className="text-xs text-muted-foreground">Recommended: 32x32 or 64x64 pixels, PNG or ICO format</p>
+              </div>
+
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label>Navigation Links</Label>
                   <Button variant="outline" size="sm" onClick={addNavLink}>
                     <Plus className="w-4 h-4 mr-1" /> Add Link
                   </Button>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {navLinks.map((link, index) => (
-                    <div key={index} className="flex gap-2">
+                    <div key={index} className="flex gap-2 items-center">
                       <Input
                         placeholder="Label"
                         value={link.label}
@@ -229,12 +282,20 @@ const HeaderFooterAdmin = () => {
                         onChange={(e) => updateNavLink(index, 'href', e.target.value)}
                         className="flex-1"
                       />
+                      <div className="flex items-center gap-1">
+                        <Switch
+                          checked={link.external || false}
+                          onCheckedChange={(checked) => updateNavLink(index, 'external', checked)}
+                        />
+                        <ExternalLink className="w-4 h-4 text-muted-foreground" />
+                      </div>
                       <Button variant="ghost" size="icon" onClick={() => removeNavLink(index)}>
                         <Trash2 className="w-4 h-4 text-destructive" />
                       </Button>
                     </div>
                   ))}
                 </div>
+                <p className="text-xs text-muted-foreground">Toggle the external link icon for links that open in a new tab</p>
               </div>
             </CardContent>
           </Card>
@@ -284,10 +345,10 @@ const HeaderFooterAdmin = () => {
                   {socialLinks.map((link, index) => (
                     <div key={index} className="flex gap-2">
                       <Input
-                        placeholder="Platform"
+                        placeholder="Platform (instagram, twitter, etc.)"
                         value={link.platform}
                         onChange={(e) => updateSocialLink(index, 'platform', e.target.value)}
-                        className="w-32"
+                        className="w-40"
                       />
                       <Input
                         placeholder="https://..."
