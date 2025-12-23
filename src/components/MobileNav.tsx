@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Home, User, Images, FileText, Mail, Calendar, Users, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import automindLogo from "@/assets/automind-labs-logo.png";
+import automindLogo from "@/assets/automind-labs-logo-new.png";
 
 const menuItems = [
   { icon: Home, label: "Home", href: "/" },
