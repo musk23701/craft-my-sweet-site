@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Instagram, Youtube } from 'lucide-react';
 import { useVideos } from '@/hooks/useCMSData';
 
+interface VideoCarouselSectionProps {
+  platform?: 'instagram' | 'tiktok';
+}
+
 // Fallback Instagram videos
 const fallbackInstagramVideos = [
   '/videos/instagram/1.mp4',
@@ -12,15 +16,6 @@ const fallbackInstagramVideos = [
   '/videos/instagram/6.mp4',
   '/videos/instagram/7.mp4',
   '/videos/instagram/8.mp4',
-];
-
-// Fallback YouTube videos
-const fallbackYoutubeVideos = [
-  '/videos/youtube/1.mp4',
-  '/videos/youtube/2.mp4',
-  '/videos/youtube/3.mp4',
-  '/videos/youtube/4.mp4',
-  '/videos/youtube/5.mp4',
 ];
 
 // Optimized lazy video component - only loads when in viewport
@@ -82,36 +77,51 @@ const LazyVideo = ({ src, className }: { src: string; className: string }) => {
   );
 };
 
-const VideoCarouselSection = () => {
-  const { videos: dbInstagramVideos } = useVideos('instagram');
-  const { videos: dbYoutubeVideos } = useVideos('youtube');
+const TikTokIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5 text-white fill-current">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+);
+
+const VideoCarouselSection = ({ platform = 'instagram' }: VideoCarouselSectionProps) => {
+  const { videos: dbVideos } = useVideos(platform);
 
   // Use DB videos if available, otherwise fallback
-  const instagramVideos = dbInstagramVideos.length > 0 
-    ? dbInstagramVideos.map(v => v.video_url)
+  const videos = dbVideos.length > 0 
+    ? dbVideos.map(v => v.video_url)
     : fallbackInstagramVideos;
 
-  const youtubeVideos = dbYoutubeVideos.length > 0 
-    ? dbYoutubeVideos.map(v => v.video_url)
-    : fallbackYoutubeVideos;
-
-  // Instagram: 16 cards, 22.5deg apart
-  const instagramAngles = [
+  // 16 cards, 22.5deg apart for 3D carousel
+  const angles = [
     0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
     180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5
   ];
 
+  const platformConfig = {
+    instagram: {
+      label: 'Instagram',
+      icon: <Instagram className="w-5 h-5 text-white" />,
+      buttonClass: 'bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400',
+    },
+    tiktok: {
+      label: 'TikTok',
+      icon: <TikTokIcon />,
+      buttonClass: 'bg-black border border-cyan-400',
+    },
+  };
+
+  const config = platformConfig[platform];
+
   return (
     <section className="py-20 bg-background overflow-hidden">
-      {/* Instagram Section */}
       <div className="mx-auto">
-        {/* Instagram Button with Logo */}
-        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2">
-          <Instagram className="w-5 h-5 text-white" />
-          <span className="text-white text-lg font-bold">Instagram</span>
+        {/* Platform Button */}
+        <div className={`w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative ${config.buttonClass} font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2`}>
+          {config.icon}
+          <span className="text-white text-lg font-bold">{config.label}</span>
         </div>
 
-        {/* Instagram Carousel */}
+        {/* 3D Carousel */}
         <div className="mask-gradient">
           <div className="flex items-center justify-center w-full h-full overflow-hidden">
             <div 
@@ -129,7 +139,7 @@ const VideoCarouselSection = () => {
                   willChange: 'transform',
                 }}
               >
-                {instagramAngles.map((angle, index) => (
+                {angles.map((angle, index) => (
                   <div
                     key={index}
                     className="absolute w-[320px] h-[468px] rounded-xl overflow-hidden shadow-xl"
@@ -141,70 +151,13 @@ const VideoCarouselSection = () => {
                     }}
                   >
                     <LazyVideo
-                      src={instagramVideos[index % 8]}
+                      src={videos[index % videos.length]}
                       className="w-full h-full object-cover"
                     />
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* YouTube Section */}
-      <div className="mx-auto mt-10">
-        {/* YouTube Button with Logo */}
-        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#FF0000] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center gap-2">
-          <Youtube className="w-5 h-5 text-white" />
-          <span className="text-white text-lg font-bold">YouTube</span>
-        </div>
-
-        {/* YouTube Horizontal Carousel - moves left to right */}
-        <div className="mask-gradient overflow-hidden">
-          <div 
-            className="youtube-marquee flex"
-            style={{
-              width: 'max-content',
-              gap: '24px',
-            }}
-          >
-            {/* First set */}
-            {youtubeVideos.map((video, index) => (
-              <div
-                key={index}
-                className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
-              >
-                <LazyVideo
-                  src={video}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-            {/* Second set for seamless loop */}
-            {youtubeVideos.map((video, index) => (
-              <div
-                key={`dup1-${index}`}
-                className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
-              >
-                <LazyVideo
-                  src={video}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-            {/* Third set to fill any remaining gap */}
-            {youtubeVideos.map((video, index) => (
-              <div
-                key={`dup2-${index}`}
-                className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
-              >
-                <LazyVideo
-                  src={video}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
           </div>
         </div>
       </div>

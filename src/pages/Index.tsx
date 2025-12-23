@@ -46,7 +46,7 @@ const Index = () => {
       {/* Hero Section with Sidebar - always visible */}
       <HeroSection />
 
-      {/* Rest of content - full width without sidebar */}
+      {/* Rest of content */}
       <main>
         {isSectionVisible('about') && <AboutUsSection />}
         {isSectionVisible('featured') && <FeaturedSection />}
@@ -56,12 +56,33 @@ const Index = () => {
         {isSectionVisible('approach') && <ApproachSection />}
         {isSectionVisible('why-us') && <WhyUsSection />}
         {isSectionVisible('faq') && <FAQSection />}
-        {isSectionVisible('videos') && (
+        
+        {/* Instagram Videos - separate section */}
+        {isSectionVisible('videos-instagram') && (
+          <VideoCarouselSection platform="instagram" />
+        )}
+
+        {/* YouTube Videos - separate section */}
+        {isSectionVisible('videos-youtube') && (
+          <FeaturedVideosSection platform="youtube" />
+        )}
+
+        {/* TikTok Videos - separate section */}
+        {isSectionVisible('videos-tiktok') && (
+          <FeaturedVideosSection platform="tiktok" />
+        )}
+
+        {/* Legacy videos section fallback for old data */}
+        {isSectionVisible('videos') && 
+         !isSectionVisible('videos-instagram') && 
+         !isSectionVisible('videos-youtube') && 
+         !isSectionVisible('videos-tiktok') && (
           <>
-            <VideoCarouselSection />
-            <FeaturedVideosSection />
+            <VideoCarouselSection platform="instagram" />
+            <FeaturedVideosSection platform="youtube" />
           </>
         )}
+
         {isSectionVisible('blogs-podcasts') && <BlogsPodcastsSection />}
         {isSectionVisible('linkedin') && <LinkedInConnectSection />}
         {isSectionVisible('cta') && <CTASection />}

@@ -4,6 +4,7 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import { Cpu, GraduationCap, Bot, Users, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
+import { usePortfolio } from "@/hooks/useCMSData";
 
 const companies = [
   {
@@ -41,47 +42,59 @@ const partners = [
   { name: "Snowflake", icon: "❄️" }
 ];
 
-const featuredWins = [
-  {
-    id: 1,
-    thumbnail: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop",
-    title: "Enterprise Automation Success",
-    subtitle: "Case Study",
-    testimonial: "Automind Labs transformed our entire workflow. We saved 40+ hours per week!",
-    author: "Sarah Johnson",
-    role: "CEO, TechFlow Inc."
-  },
-  {
-    id: 2,
-    thumbnail: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&h=450&fit=crop",
-    title: "Scaling Operations with AI",
-    subtitle: "Client Story",
-    testimonial: "The ROI was incredible. Within 3 months, we doubled our output with half the effort.",
-    author: "Michael Chen",
-    role: "Operations Director, ScaleUp Co."
-  },
-  {
-    id: 3,
-    thumbnail: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=450&fit=crop",
-    title: "Workflow Transformation",
-    subtitle: "Featured Win",
-    testimonial: "Best investment we ever made. The automation systems are game-changers.",
-    author: "Emily Rodriguez",
-    role: "Founder, Creative Agency"
-  }
-];
-
 const Portfolio = () => {
+  const { portfolio, loading } = usePortfolio();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+  // Use portfolio items from database for featured wins
+  const featuredWins = portfolio.length > 0 
+    ? portfolio.map(p => ({
+        id: p.id,
+        thumbnail: p.featured_image || 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop',
+        title: p.title,
+        subtitle: p.category || 'Case Study',
+        testimonial: p.description || '',
+        author: p.client_name || 'Automind Labs',
+        role: p.category || 'Client'
+      }))
+    : [
+        {
+          id: '1',
+          thumbnail: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop",
+          title: "Enterprise Automation Success",
+          subtitle: "Case Study",
+          testimonial: "Automind Labs transformed our entire workflow. We saved 40+ hours per week!",
+          author: "Sarah Johnson",
+          role: "CEO, TechFlow Inc."
+        },
+        {
+          id: '2',
+          thumbnail: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&h=450&fit=crop",
+          title: "Scaling Operations with AI",
+          subtitle: "Client Story",
+          testimonial: "The ROI was incredible. Within 3 months, we doubled our output with half the effort.",
+          author: "Michael Chen",
+          role: "Operations Director, ScaleUp Co."
+        },
+        {
+          id: '3',
+          thumbnail: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=450&fit=crop",
+          title: "Workflow Transformation",
+          subtitle: "Featured Win",
+          testimonial: "Best investment we ever made. The automation systems are game-changers.",
+          author: "Emily Rodriguez",
+          role: "Founder, Creative Agency"
+        }
+      ];
+
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % featuredWins.length);
-  }, []);
+  }, [featuredWins.length]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + featuredWins.length) % featuredWins.length);
-  }, []);
+  }, [featuredWins.length]);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -95,7 +108,6 @@ const Portfolio = () => {
     setTimeout(() => setIsAutoPlaying(true), 5000);
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -401,34 +413,40 @@ const Portfolio = () => {
                 key={currentIndex}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="mt-6 md:mt-8 p-4 md:p-6 bg-card rounded-xl border border-border"
+                transition={{ duration: 0.5 }}
+                className="mt-6 md:mt-8 bg-card rounded-2xl p-4 md:p-6 border border-border"
               >
-                <Quote className="w-6 h-6 md:w-8 md:h-8 text-primary mb-3" />
-                <p className="text-sm md:text-lg text-foreground italic mb-4">
-                  "{featuredWins[currentIndex].testimonial}"
+                <Quote className="w-6 h-6 md:w-8 md:h-8 text-primary/50 mb-3" />
+                <p className="text-sm md:text-base lg:text-lg text-foreground mb-4 italic">
+                  "{featuredWins[currentIndex]?.testimonial}"
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm md:text-base">
-                      {featuredWins[currentIndex].author.charAt(0)}
+                      {featuredWins[currentIndex]?.author?.charAt(0)}
                     </span>
                   </div>
                   <div>
-                    <p className="font-semibold text-sm md:text-base text-foreground">{featuredWins[currentIndex].author}</p>
-                    <p className="text-xs md:text-sm text-muted-foreground">{featuredWins[currentIndex].role}</p>
+                    <p className="font-semibold text-sm md:text-base">{featuredWins[currentIndex]?.author}</p>
+                    <p className="text-xs md:text-sm text-muted-foreground">{featuredWins[currentIndex]?.role}</p>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Dots Indicator */}
-              <div className="flex justify-center gap-2 mt-6">
+              {/* Dots */}
+              <div className="flex justify-center gap-2 mt-4 md:mt-6">
                 {featuredWins.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => handleManualNav(() => setCurrentIndex(index))}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentIndex ? 'bg-primary w-6 md:w-8' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                    onClick={() => {
+                      setIsAutoPlaying(false);
+                      setCurrentIndex(index);
+                      setTimeout(() => setIsAutoPlaying(true), 5000);
+                    }}
+                    className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+                      index === currentIndex 
+                        ? 'bg-primary w-6 md:w-8' 
+                        : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
