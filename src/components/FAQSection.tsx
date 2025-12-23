@@ -4,27 +4,38 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useFAQs } from "@/hooks/useCMSData";
+import { Loader2 } from "lucide-react";
 
-const faqs = [
+// Fallback data for when database is empty
+const fallbackFaqs = [
   {
-    q: "What makes Automind Labs AI different?",
-    a: "We don't sell tools or one-off automations. We build complete AI operating systems designed around your business.",
+    id: '1',
+    question: "What makes Automind Labs AI different?",
+    answer: "We don't sell tools or one-off automations. We build complete AI operating systems designed around your business.",
   },
   {
-    q: "Is this only for large companies?",
-    a: "No. We work with startups, founders, and growing businesses ready to scale intelligently.",
+    id: '2',
+    question: "Is this only for large companies?",
+    answer: "No. We work with startups, founders, and growing businesses ready to scale intelligently.",
   },
   {
-    q: "Is my data secure?",
-    a: "Yes. Security and privacy are built into every system we design.",
+    id: '3',
+    question: "Is my data secure?",
+    answer: "Yes. Security and privacy are built into every system we design.",
   },
   {
-    q: "How long does implementation take?",
-    a: "Timelines vary, but most core systems are deployed within weeks — not months.",
+    id: '4',
+    question: "How long does implementation take?",
+    answer: "Timelines vary, but most core systems are deployed within weeks — not months.",
   },
 ];
 
 const FAQSection = () => {
+  const { faqs, loading } = useFAQs();
+  
+  const displayFaqs = faqs.length > 0 ? faqs : fallbackFaqs;
+
   return (
     <section id="faq" className="py-12 md:py-20 bg-card">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
@@ -32,22 +43,28 @@ const FAQSection = () => {
           Frequently Asked Questions
         </h2>
 
-        <Accordion type="single" collapsible className="space-y-4">
-          {faqs.map((faq, index) => (
-            <AccordionItem
-              key={index}
-              value={`item-${index}`}
-              className="border border-border rounded-xl px-6 bg-background"
-            >
-              <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                {faq.q}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                {faq.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+          </div>
+        ) : (
+          <Accordion type="single" collapsible className="space-y-4">
+            {displayFaqs.map((faq, index) => (
+              <AccordionItem
+                key={faq.id || index}
+                value={`item-${index}`}
+                className="border border-border rounded-xl px-6 bg-background"
+              >
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        )}
       </div>
     </section>
   );
