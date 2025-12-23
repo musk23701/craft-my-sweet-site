@@ -22,48 +22,62 @@ const youtubeVideos = [
   '/videos/youtube/5.mp4',
 ];
 
-// Lazy video component for better performance
+// Optimized lazy video component - only loads when in viewport
 const LazyVideo = ({ src, className }: { src: string; className: string }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
+          setShouldLoad(true);
         }
+        setIsPlaying(entry.isIntersecting);
       },
-      { rootMargin: '100px' }
+      { rootMargin: '200px', threshold: 0.1 }
     );
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (isVisible && videoRef.current) {
-      videoRef.current.play().catch(() => {});
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
     }
-  }, [isVisible]);
+  }, [isPlaying]);
 
   return (
-    <video
-      ref={videoRef}
-      className={className}
-      src={isVisible ? src : undefined}
-      poster={isVisible ? undefined : undefined}
-      loop
-      muted
-      playsInline
-      autoPlay={isVisible}
-      preload="none"
-      disablePictureInPicture
-    />
+    <div ref={containerRef} className={`${className} bg-muted`}>
+      {shouldLoad ? (
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          src={src}
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+        />
+      ) : (
+        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+            <div className="w-0 h-0 border-l-[16px] border-l-white/50 border-y-[10px] border-y-transparent ml-1" />
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -79,7 +93,7 @@ const VideoCarouselSection = () => {
       {/* Instagram Section */}
       <div className="mx-auto">
         {/* Instagram Button with Logo */}
-        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2">
+        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2 border-2 border-cyan-400">
           <Instagram className="w-5 h-5 text-white" />
           <span className="text-white text-lg font-bold">Instagram</span>
         </div>
@@ -128,7 +142,7 @@ const VideoCarouselSection = () => {
       {/* YouTube Section */}
       <div className="mx-auto mt-10">
         {/* YouTube Button with Logo */}
-        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#FF0000] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center gap-2">
+        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#FF0000] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center gap-2 border-2 border-cyan-400">
           <Youtube className="w-5 h-5 text-white" />
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
