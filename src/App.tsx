@@ -17,6 +17,13 @@ import Dashboard from "./pages/admin/Dashboard";
 import BlogsAdmin from "./pages/admin/BlogsAdmin";
 import PortfolioAdmin from "./pages/admin/PortfolioAdmin";
 import VideosAdmin from "./pages/admin/VideosAdmin";
+import MediaAdmin from "./pages/admin/MediaAdmin";
+import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
+import FAQsAdmin from "./pages/admin/FAQsAdmin";
+import ServicesAdmin from "./pages/admin/ServicesAdmin";
+import SectionsAdmin from "./pages/admin/SectionsAdmin";
+import HeaderFooterAdmin from "./pages/admin/HeaderFooterAdmin";
+import ContactAdmin from "./pages/admin/ContactAdmin";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +46,13 @@ const App = () => (
             <Route path="/admin/blogs" element={<ProtectedRoute><BlogsAdmin /></ProtectedRoute>} />
             <Route path="/admin/portfolio" element={<ProtectedRoute><PortfolioAdmin /></ProtectedRoute>} />
             <Route path="/admin/videos" element={<ProtectedRoute><VideosAdmin /></ProtectedRoute>} />
+            <Route path="/admin/media" element={<ProtectedRoute><MediaAdmin /></ProtectedRoute>} />
+            <Route path="/admin/reviews" element={<ProtectedRoute><ReviewsAdmin /></ProtectedRoute>} />
+            <Route path="/admin/faqs" element={<ProtectedRoute><FAQsAdmin /></ProtectedRoute>} />
+            <Route path="/admin/services" element={<ProtectedRoute><ServicesAdmin /></ProtectedRoute>} />
+            <Route path="/admin/sections" element={<ProtectedRoute><SectionsAdmin /></ProtectedRoute>} />
+            <Route path="/admin/header-footer" element={<ProtectedRoute><HeaderFooterAdmin /></ProtectedRoute>} />
+            <Route path="/admin/contact" element={<ProtectedRoute><ContactAdmin /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
