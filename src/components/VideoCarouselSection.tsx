@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Instagram, Youtube } from 'lucide-react';
 
 // Instagram videos (8 videos, duplicated to fill 16 cards)
 const instagramVideos = [
@@ -21,25 +22,52 @@ const youtubeVideos = [
   '/videos/youtube/5.mp4',
 ];
 
-const VideoCarouselSection = () => {
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+// Lazy video component for better performance
+const LazyVideo = ({ src, className }: { src: string; className: string }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    videoRefs.current.forEach((video) => {
-      if (video) {
-        video.muted = true;
-        video.playsInline = true;
-        video.play().catch(() => {});
-      }
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '100px' }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
-  const addVideoRef = (el: HTMLVideoElement | null) => {
-    if (el && !videoRefs.current.includes(el)) {
-      videoRefs.current.push(el);
+  useEffect(() => {
+    if (isVisible && videoRef.current) {
+      videoRef.current.play().catch(() => {});
     }
-  };
+  }, [isVisible]);
 
+  return (
+    <video
+      ref={videoRef}
+      className={className}
+      src={isVisible ? src : undefined}
+      poster={isVisible ? undefined : undefined}
+      loop
+      muted
+      playsInline
+      autoPlay={isVisible}
+      preload="none"
+      disablePictureInPicture
+    />
+  );
+};
+
+const VideoCarouselSection = () => {
   // Instagram: 16 cards, 22.5deg apart
   const instagramAngles = [
     0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
@@ -50,8 +78,9 @@ const VideoCarouselSection = () => {
     <section className="py-20 bg-background overflow-hidden">
       {/* Instagram Section */}
       <div className="mx-auto">
-        {/* Instagram Button */}
-        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center">
+        {/* Instagram Button with Logo */}
+        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-10 relative bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 font-extrabold mb-4 text-center cursor-pointer flex items-center justify-center gap-2">
+          <Instagram className="w-5 h-5 text-white" />
           <span className="text-white text-lg font-bold">Instagram</span>
         </div>
 
@@ -84,15 +113,9 @@ const VideoCarouselSection = () => {
                       backfaceVisibility: 'hidden',
                     }}
                   >
-                    <video
-                      ref={addVideoRef}
-                      className="w-full h-full object-cover"
+                    <LazyVideo
                       src={instagramVideos[index % 8]}
-                      loop
-                      muted
-                      playsInline
-                      autoPlay
-                      disablePictureInPicture
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ))}
@@ -104,8 +127,9 @@ const VideoCarouselSection = () => {
 
       {/* YouTube Section */}
       <div className="mx-auto mt-10">
-        {/* YouTube Button */}
-        <div className="w-[150px] h-[47px] md:w-[180px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#00B4D8] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center">
+        {/* YouTube Button with Logo */}
+        <div className="w-[170px] h-[47px] md:w-[200px] md:h-[56px] rounded-2xl px-5 mx-auto z-0 relative bg-[#FF0000] font-extrabold mb-8 text-center cursor-pointer flex items-center justify-center gap-2">
+          <Youtube className="w-5 h-5 text-white" />
           <span className="text-white text-lg font-bold">YouTube</span>
         </div>
 
@@ -124,16 +148,9 @@ const VideoCarouselSection = () => {
                 key={index}
                 className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
               >
-                <video
-                  ref={addVideoRef}
-                  className="w-full h-full object-cover"
+                <LazyVideo
                   src={video}
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                  preload="metadata"
-                  disablePictureInPicture
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}
@@ -143,16 +160,9 @@ const VideoCarouselSection = () => {
                 key={`dup1-${index}`}
                 className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
               >
-                <video
-                  ref={addVideoRef}
-                  className="w-full h-full object-cover"
+                <LazyVideo
                   src={video}
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                  preload="metadata"
-                  disablePictureInPicture
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}
@@ -162,16 +172,9 @@ const VideoCarouselSection = () => {
                 key={`dup2-${index}`}
                 className="w-[400px] h-[225px] rounded-xl overflow-hidden shadow-xl flex-shrink-0"
               >
-                <video
-                  ref={addVideoRef}
-                  className="w-full h-full object-cover"
+                <LazyVideo
                   src={video}
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                  preload="metadata"
-                  disablePictureInPicture
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}
