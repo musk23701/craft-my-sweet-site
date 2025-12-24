@@ -65,6 +65,7 @@ export type Database = {
           booking_iframe_code: string | null
           email: string | null
           id: string
+          map_url: string | null
           phone: string | null
           social_links: Json
           updated_at: string
@@ -74,6 +75,7 @@ export type Database = {
           booking_iframe_code?: string | null
           email?: string | null
           id?: string
+          map_url?: string | null
           phone?: string | null
           social_links?: Json
           updated_at?: string
@@ -83,6 +85,7 @@ export type Database = {
           booking_iframe_code?: string | null
           email?: string | null
           id?: string
+          map_url?: string | null
           phone?: string | null
           social_links?: Json
           updated_at?: string
