@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, GripVertical, Eye, EyeOff, Save } from 'lucide-react';
 import { SortableList } from '@/hooks/useSortable';
+import { invalidateSectionsCache } from '@/hooks/useCMSData';
 
 interface Section {
   id: string;
@@ -88,6 +89,9 @@ const SectionsAdmin = () => {
       setSections(sections.map(s => 
         s.id === section.id ? { ...s, is_visible: !s.is_visible } : s
       ));
+
+      // Invalidate cache so frontend reflects changes
+      invalidateSectionsCache();
 
       toast({ title: `${section.display_name} ${section.is_visible ? 'hidden' : 'visible'}` });
     } catch (error: any) {
