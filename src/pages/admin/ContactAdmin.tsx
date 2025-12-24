@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import DOMPurify from 'dompurify';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -180,7 +181,13 @@ const ContactAdmin = () => {
                   <Label>Preview</Label>
                   <div 
                     className="border rounded-lg p-4 bg-muted/50 min-h-[300px]"
-                    dangerouslySetInnerHTML={{ __html: bookingIframeCode }}
+                    dangerouslySetInnerHTML={{ 
+                      __html: DOMPurify.sanitize(bookingIframeCode, {
+                        ALLOWED_TAGS: ['iframe'],
+                        ALLOWED_ATTR: ['src', 'width', 'height', 'frameborder', 'allow', 'allowfullscreen', 'style', 'class', 'title'],
+                        ALLOW_DATA_ATTR: false
+                      }) 
+                    }}
                   />
                 </div>
               )}
