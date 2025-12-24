@@ -5,6 +5,7 @@ interface NavLink {
   label: string;
   href: string;
   external?: boolean;
+  is_visible?: boolean;
 }
 
 interface HeaderConfig {
@@ -23,9 +24,13 @@ const fetchHeaderConfig = async (): Promise<HeaderConfig> => {
     .limit(1)
     .maybeSingle();
 
+  const allLinks = (data?.nav_links as unknown as NavLink[]) || [];
+  // Filter out hidden pages
+  const visibleLinks = allLinks.filter(link => link.is_visible !== false);
+
   const config: HeaderConfig = {
     logoUrl: data?.logo_url || null,
-    navLinks: (data?.nav_links as unknown as NavLink[]) || [],
+    navLinks: visibleLinks,
   };
 
   cachedConfig = config;

@@ -9,16 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Save } from 'lucide-react';
 
-interface ContactInfo {
-  id: string;
-  email: string | null;
-  phone: string | null;
-  address: string | null;
-  booking_iframe_code: string | null;
-  map_url: string | null;
-  social_links: Record<string, string>;
-}
-
 const ContactAdmin = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -30,11 +20,6 @@ const ContactAdmin = () => {
   const [address, setAddress] = useState('');
   const [bookingIframeCode, setBookingIframeCode] = useState('');
   const [mapUrl, setMapUrl] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [linkedin, setLinkedin] = useState('');
-  const [youtube, setYoutube] = useState('');
-  const [tiktok, setTiktok] = useState('');
 
   const fetchContact = async () => {
     try {
@@ -53,15 +38,7 @@ const ContactAdmin = () => {
         setAddress(data.address || '');
         setMapUrl((data as any).map_url || '');
         setBookingIframeCode(data.booking_iframe_code || '');
-        
-        const links = data.social_links as Record<string, string> || {};
-        setInstagram(links.instagram || '');
-        setTwitter(links.twitter || '');
-        setLinkedin(links.linkedin || '');
-        setYoutube(links.youtube || '');
-        setTiktok(links.tiktok || '');
       } else {
-        // Set defaults
         setEmail('Info@automindlabs.ai');
       }
     } catch (error: any) {
@@ -82,13 +59,6 @@ const ContactAdmin = () => {
         address: address || null,
         booking_iframe_code: bookingIframeCode || null,
         map_url: mapUrl || null,
-        social_links: {
-          instagram,
-          twitter,
-          linkedin,
-          youtube,
-          tiktok,
-        },
       };
 
       if (contactId) {
@@ -189,58 +159,6 @@ const ContactAdmin = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Social Media Links</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Instagram</Label>
-                <Input
-                  value={instagram}
-                  onChange={(e) => setInstagram(e.target.value)}
-                  placeholder="https://instagram.com/..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Twitter/X</Label>
-                <Input
-                  value={twitter}
-                  onChange={(e) => setTwitter(e.target.value)}
-                  placeholder="https://twitter.com/..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>LinkedIn</Label>
-                <Input
-                  value={linkedin}
-                  onChange={(e) => setLinkedin(e.target.value)}
-                  placeholder="https://linkedin.com/..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>YouTube</Label>
-                <Input
-                  value={youtube}
-                  onChange={(e) => setYoutube(e.target.value)}
-                  placeholder="https://youtube.com/..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>TikTok</Label>
-                <Input
-                  value={tiktok}
-                  onChange={(e) => setTiktok(e.target.value)}
-                  placeholder="https://tiktok.com/..."
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="lg:col-span-2">
-            <CardHeader>
               <CardTitle>Booking Integration</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -269,6 +187,10 @@ const ContactAdmin = () => {
             </CardContent>
           </Card>
         </div>
+
+        <p className="text-sm text-muted-foreground">
+          Social media links are managed in Settings → Header & Footer
+        </p>
       </div>
     </AdminLayout>
   );

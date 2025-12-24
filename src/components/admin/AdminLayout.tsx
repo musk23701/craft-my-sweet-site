@@ -19,6 +19,7 @@ import {
   Wrench,
   ChevronDown,
   Eye,
+  FileStack,
 } from 'lucide-react';
 import automindLogo from '@/assets/automind-labs-logo-new.png';
 import {
@@ -43,6 +44,7 @@ const menuItems = [
 ];
 
 const settingsItems = [
+  { icon: FileStack, label: 'Pages', href: '/admin/pages' },
   { icon: Globe, label: 'Sections', href: '/admin/sections' },
   { icon: Settings, label: 'Header & Footer', href: '/admin/header-footer' },
   { icon: Mail, label: 'Contact Info', href: '/admin/contact' },

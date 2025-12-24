@@ -23,6 +23,7 @@ import ReviewsAdmin from "./pages/admin/ReviewsAdmin";
 import FAQsAdmin from "./pages/admin/FAQsAdmin";
 import ServicesAdmin from "./pages/admin/ServicesAdmin";
 import SectionsAdmin from "./pages/admin/SectionsAdmin";
+import PagesAdmin from "./pages/admin/PagesAdmin";
 import HeaderFooterAdmin from "./pages/admin/HeaderFooterAdmin";
 import ContactAdmin from "./pages/admin/ContactAdmin";
 
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/admin/faqs" element={<ProtectedRoute><FAQsAdmin /></ProtectedRoute>} />
             <Route path="/admin/services" element={<ProtectedRoute><ServicesAdmin /></ProtectedRoute>} />
             <Route path="/admin/sections" element={<ProtectedRoute><SectionsAdmin /></ProtectedRoute>} />
+            <Route path="/admin/pages" element={<ProtectedRoute><PagesAdmin /></ProtectedRoute>} />
             <Route path="/admin/header-footer" element={<ProtectedRoute><HeaderFooterAdmin /></ProtectedRoute>} />
             <Route path="/admin/contact" element={<ProtectedRoute><ContactAdmin /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
