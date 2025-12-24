@@ -7,6 +7,7 @@ interface NavLink {
   label: string;
   href: string;
   external?: boolean;
+  is_visible?: boolean;
 }
 
 const defaultMenuItems: NavLink[] = [

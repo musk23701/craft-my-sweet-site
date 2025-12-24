@@ -1,23 +1,33 @@
 import { Mail, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
-import { useFooterConfig } from "@/hooks/useCMSData";
+import { useSocialLinks } from "@/hooks/useSocialLinks";
+
+const getSocialIcon = (platform: string) => {
+  switch (platform?.toLowerCase()) {
+    case 'instagram': return <Instagram className="w-4 h-4" />;
+    case 'twitter': return <Twitter className="w-4 h-4" />;
+    case 'linkedin': return <Linkedin className="w-4 h-4" />;
+    case 'youtube': return <Youtube className="w-4 h-4" />;
+    default: return null;
+  }
+};
+
+const defaultSocials = [
+  { platform: "Instagram", url: "#" },
+  { platform: "Twitter", url: "#" },
+  { platform: "LinkedIn", url: "#" },
+  { platform: "YouTube", url: "#" },
+];
 
 const Footer = () => {
-  const { footerConfig } = useFooterConfig();
-
-  const companyName = footerConfig?.company_name || "Automind Labs AI";
-  const tagline = footerConfig?.tagline || "Building intelligent systems for modern businesses.";
-  const email = footerConfig?.email || "Info@automindlabs.ai";
-  const socialLinks = (footerConfig?.social_links as any[]) || [];
-
-  const getSocialIcon = (platform: string) => {
-    switch (platform?.toLowerCase()) {
-      case 'instagram': return <Instagram className="w-4 h-4" />;
-      case 'twitter': return <Twitter className="w-4 h-4" />;
-      case 'linkedin': return <Linkedin className="w-4 h-4" />;
-      case 'youtube': return <Youtube className="w-4 h-4" />;
-      default: return null;
-    }
-  };
+  const { socialLinks } = useSocialLinks();
+  
+  const links = socialLinks.length > 0 ? socialLinks : defaultSocials;
+  
+  // Get company info from footer_config - we'll use defaults for now since
+  // we're using useSocialLinks which already fetches from footer_config
+  const companyName = "Automind Labs AI";
+  const tagline = "Building intelligent systems for modern businesses.";
+  const email = "Info@automindlabs.ai";
 
   return (
     <footer className="py-12 bg-primary text-primary-foreground">
@@ -43,34 +53,17 @@ const Footer = () => {
               {email}
             </a>
             <div className="flex items-center gap-3">
-              {socialLinks.length > 0 ? (
-                socialLinks.map((link: any, index: number) => (
-                  <a
-                    key={index}
-                    href={link.url || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-primary-foreground/10 border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
-                  >
-                    {getSocialIcon(link.platform)}
-                  </a>
-                ))
-              ) : (
-                <>
-                  <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                    <Instagram className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                    <Twitter className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                    <Youtube className="w-4 h-4" />
-                  </a>
-                </>
-              )}
+              {links.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url || '#'}
+                  target={link.url && link.url !== '#' ? "_blank" : undefined}
+                  rel={link.url && link.url !== '#' ? "noopener noreferrer" : undefined}
+                  className="w-9 h-9 rounded-full bg-primary-foreground/10 border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
+                >
+                  {getSocialIcon(link.platform)}
+                </a>
+              ))}
             </div>
           </div>
         </div>
