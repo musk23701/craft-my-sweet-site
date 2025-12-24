@@ -11,7 +11,8 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, isAdmin, loading, adminLoading } = useAuth();
 
   // Show loading while auth state is being determined OR admin role is being checked
-  if (loading || adminLoading) {
+  // But only if we're still within a reasonable timeframe
+  if (loading || (user && adminLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
