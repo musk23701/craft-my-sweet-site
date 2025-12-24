@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Clock, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useContactInfo } from "@/hooks/useCMSData";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
 
 const Contact = () => {
   const { toast } = useToast();
+  const { contactInfo, loading: contactLoading } = useContactInfo();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,8 +30,6 @@ const Contact = () => {
         timestamp: new Date().toISOString(),
         source: "automind-contact-form"
       });
-      
-      console.log("Sending to webhook:", formBody.toString());
       
       await fetch("https://hook.eu1.make.com/m7e77kai1bcj7p6i4ck25fii4mfh4t2i", {
         method: "POST",
@@ -57,10 +57,19 @@ const Contact = () => {
     }
   };
 
-  const contactInfo = [
-    { icon: Mail, title: "Email Us", details: "Info@automindlabs.ai", description: "We reply within 24 hours" },
-    { icon: Phone, title: "Call Us", details: "+1 (555) 123-4567", description: "Mon-Fri, 9am-6pm EST" },
-    { icon: MapPin, title: "Visit Us", details: "123 AI Innovation Drive", description: "San Francisco, CA 94105" }
+  // Use data from admin panel or defaults
+  const email = contactInfo?.email || "Info@automindlabs.ai";
+  const phone = contactInfo?.phone || "+1 (555) 123-4567";
+  const address = contactInfo?.address || "123 AI Innovation Drive, San Francisco, CA 94105";
+  const bookingIframe = contactInfo?.booking_iframe_code || "";
+  
+  // Parse map URL from booking iframe or use default
+  const defaultMapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0977906969!2d-122.39568068468195!3d37.78779727975763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807abad77c57%3A0xaf3c3c8c7e3a5b95!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890";
+  
+  const contactItems = [
+    { icon: Mail, title: "Email Us", details: email, description: "We reply within 24 hours" },
+    { icon: Phone, title: "Call Us", details: phone, description: "Mon-Fri, 9am-6pm EST" },
+    { icon: MapPin, title: "Visit Us", details: address.split(',')[0], description: address.split(',').slice(1).join(',').trim() || "San Francisco, CA" }
   ];
 
   return (
@@ -74,7 +83,7 @@ const Contact = () => {
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6 mb-20">
-            {contactInfo.map((item, index) => (
+            {contactItems.map((item, index) => (
               <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-colors">
                 <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mx-auto mb-4">
                   <item.icon className="w-7 h-7 text-primary" />
@@ -123,12 +132,25 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold">Find Us</h2>
               </div>
               <div className="rounded-2xl overflow-hidden border border-border h-[400px] lg:h-[calc(100%-60px)]">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0977906969!2d-122.39568068468195!3d37.78779727975763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807abad77c57%3A0xaf3c3c8c7e3a5b95!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <iframe src={defaultMapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* Booking Section - Show iframe if available */}
+      {bookingIframe && (
+        <section className="py-20 px-6 bg-card/30">
+          <div className="max-w-4xl mx-auto">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Book a Strategy Call</h2>
+              <p className="text-muted-foreground">Schedule a free consultation with our team.</p>
+            </motion.div>
+            <div className="rounded-2xl overflow-hidden border border-border" dangerouslySetInnerHTML={{ __html: bookingIframe }} />
+          </div>
+        </section>
+      )}
 
       <section className="py-20 px-6 bg-card/50">
         <div className="max-w-4xl mx-auto text-center">

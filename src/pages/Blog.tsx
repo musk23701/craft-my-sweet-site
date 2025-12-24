@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ interface BlogPost {
 const POSTS_PER_PAGE = 6;
 
 const BlogCard = ({ post }: { post: BlogPost }) => (
-  <div className="group cursor-pointer">
+  <Link to={`/blog/${post.slug}`} className="group cursor-pointer block">
     <div className="relative overflow-hidden rounded-xl mb-4">
       <img 
         src={post.featured_image || 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop'} 
@@ -39,7 +40,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => (
       </div>
       <span>{new Date(post.created_at).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
     </div>
-  </div>
+  </Link>
 );
 
 const Blog = () => {
