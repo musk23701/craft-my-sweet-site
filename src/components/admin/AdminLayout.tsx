@@ -45,7 +45,6 @@ const menuItems = [
 
 const settingsItems = [
   { icon: FileStack, label: 'Pages', href: '/admin/pages' },
-  { icon: Globe, label: 'Sections', href: '/admin/sections' },
   { icon: Settings, label: 'Header & Footer', href: '/admin/header-footer' },
   { icon: Mail, label: 'Contact Info', href: '/admin/contact' },
 ];
