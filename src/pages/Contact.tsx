@@ -62,9 +62,7 @@ const Contact = () => {
   const phone = contactInfo?.phone || "+1 (555) 123-4567";
   const address = contactInfo?.address || "123 AI Innovation Drive, San Francisco, CA 94105";
   const bookingIframe = contactInfo?.booking_iframe_code || "";
-  
-  // Parse map URL from booking iframe or use default
-  const defaultMapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0977906969!2d-122.39568068468195!3d37.78779727975763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807abad77c57%3A0xaf3c3c8c7e3a5b95!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890";
+  const mapUrl = contactInfo?.map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0977906969!2d-122.39568068468195!3d37.78779727975763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807abad77c57%3A0xaf3c3c8c7e3a5b95!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890";
   
   const contactItems = [
     { icon: Mail, title: "Email Us", details: email, description: "We reply within 24 hours" },
@@ -132,7 +130,7 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold">Find Us</h2>
               </div>
               <div className="rounded-2xl overflow-hidden border border-border h-[400px] lg:h-[calc(100%-60px)]">
-                <iframe src={defaultMapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <iframe src={mapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
               </div>
             </motion.div>
           </div>

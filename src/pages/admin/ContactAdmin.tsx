@@ -15,6 +15,7 @@ interface ContactInfo {
   phone: string | null;
   address: string | null;
   booking_iframe_code: string | null;
+  map_url: string | null;
   social_links: Record<string, string>;
 }
 
@@ -28,6 +29,7 @@ const ContactAdmin = () => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [bookingIframeCode, setBookingIframeCode] = useState('');
+  const [mapUrl, setMapUrl] = useState('');
   const [instagram, setInstagram] = useState('');
   const [twitter, setTwitter] = useState('');
   const [linkedin, setLinkedin] = useState('');
@@ -49,6 +51,7 @@ const ContactAdmin = () => {
         setEmail(data.email || '');
         setPhone(data.phone || '');
         setAddress(data.address || '');
+        setMapUrl((data as any).map_url || '');
         setBookingIframeCode(data.booking_iframe_code || '');
         
         const links = data.social_links as Record<string, string> || {};
@@ -78,6 +81,7 @@ const ContactAdmin = () => {
         phone: phone || null,
         address: address || null,
         booking_iframe_code: bookingIframeCode || null,
+        map_url: mapUrl || null,
         social_links: {
           instagram,
           twitter,
@@ -167,6 +171,18 @@ const ContactAdmin = () => {
                   placeholder="123 Business St, City, Country"
                   className="h-20"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Google Maps URL</Label>
+                <Input
+                  value={mapUrl}
+                  onChange={(e) => setMapUrl(e.target.value)}
+                  placeholder="https://www.google.com/maps/embed?..."
+                />
+                <p className="text-xs text-muted-foreground">
+                  Paste the embed URL from Google Maps (click Share → Embed a map → copy the src URL)
+                </p>
               </div>
             </CardContent>
           </Card>

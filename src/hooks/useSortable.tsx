@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import {
   DndContext,
   closestCenter,
@@ -22,36 +22,9 @@ export interface SortableItem {
   [key: string]: any;
 }
 
-interface UseSortableListProps<T extends SortableItem> {
-  items: T[];
-  onReorder: (items: T[]) => void;
-}
-
-export function useSortableList<T extends SortableItem>({ items, onReorder }: UseSortableListProps<T>) {
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id) {
-      const oldIndex = items.findIndex((item) => item.id === active.id);
-      const newIndex = items.findIndex((item) => item.id === over.id);
-      const newItems = arrayMove(items, oldIndex, newIndex);
-      onReorder(newItems);
-    }
-  };
-
-  return { sensors, handleDragEnd };
-}
-
 interface SortableItemWrapperProps {
   id: string;
-  children: (props: { listeners: any; isDragging: boolean }) => React.ReactNode;
+  children: (props: { listeners: any; attributes: any; isDragging: boolean }) => React.ReactNode;
 }
 
 export function SortableItemWrapper({ id, children }: SortableItemWrapperProps) {
@@ -68,11 +41,12 @@ export function SortableItemWrapper({ id, children }: SortableItemWrapperProps) 
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 1000 : 1,
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes}>
-      {children({ listeners, isDragging })}
+    <div ref={setNodeRef} style={style}>
+      {children({ listeners, attributes, isDragging })}
     </div>
   );
 }
@@ -88,7 +62,27 @@ export function SortableList<T extends SortableItem>({
   onReorder, 
   renderItem 
 }: SortableListProps<T>) {
-  const { sensors, handleDragEnd } = useSortableList({ items, onReorder });
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = items.findIndex((item) => item.id === active.id);
+      const newIndex = items.findIndex((item) => item.id === over.id);
+      const newItems = arrayMove(items, oldIndex, newIndex);
+      onReorder(newItems);
+    }
+  };
 
   return (
     <DndContext
@@ -100,7 +94,11 @@ export function SortableList<T extends SortableItem>({
         <div className="space-y-2">
           {items.map((item) => (
             <SortableItemWrapper key={item.id} id={item.id}>
-              {({ listeners, isDragging }: any) => renderItem(item, listeners, isDragging)}
+              {({ listeners, attributes, isDragging }) => (
+                <div {...attributes}>
+                  {renderItem(item, listeners, isDragging)}
+                </div>
+              )}
             </SortableItemWrapper>
           ))}
         </div>
@@ -109,4 +107,4 @@ export function SortableList<T extends SortableItem>({
   );
 }
 
-export { DndContext, SortableContext, verticalListSortingStrategy, closestCenter };
+export { DndContext, SortableContext, verticalListSortingStrategy, closestCenter, arrayMove };
