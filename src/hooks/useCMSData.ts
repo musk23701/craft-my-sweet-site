@@ -9,30 +9,74 @@ interface Section {
   order_index: number;
 }
 
+// Global cache to prevent refetching on every component mount
+let cachedSections: Section[] | null = null;
+let sectionsFetchPromise: Promise<Section[]> | null = null;
+
+const fetchSectionsData = async (): Promise<Section[]> => {
+  const { data, error } = await supabase
+    .from('sections')
+    .select('*')
+    .order('order_index', { ascending: true });
+  
+  if (error) {
+    console.error('Error fetching sections:', error);
+    return [];
+  }
+  
+  cachedSections = data || [];
+  return cachedSections;
+};
+
 export const useSections = () => {
-  const [sections, setSections] = useState<Section[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [sections, setSections] = useState<Section[]>(cachedSections || []);
+  const [loading, setLoading] = useState(!cachedSections);
 
   useEffect(() => {
-    const fetchSections = async () => {
-      const { data } = await supabase
-        .from('sections')
-        .select('*')
-        .order('order_index', { ascending: true });
-      
-      setSections(data || []);
+    // If we already have cached data, use it
+    if (cachedSections && cachedSections.length > 0) {
+      setSections(cachedSections);
       setLoading(false);
-    };
+      return;
+    }
 
-    fetchSections();
+    // If a fetch is already in progress, wait for it
+    if (sectionsFetchPromise) {
+      sectionsFetchPromise.then(data => {
+        setSections(data);
+        setLoading(false);
+      });
+      return;
+    }
+
+    // Start a new fetch
+    sectionsFetchPromise = fetchSectionsData();
+    sectionsFetchPromise.then(data => {
+      setSections(data);
+      setLoading(false);
+      sectionsFetchPromise = null;
+    });
   }, []);
 
   const isSectionVisible = (name: string) => {
+    // Use the local state sections which will have the latest data
     const section = sections.find(s => s.name === name);
-    return section ? section.is_visible : true; // Default to visible if not found
+    // If section not found in database, default to hidden (safer default)
+    // This prevents showing sections that haven't been configured
+    if (!section) {
+      console.warn(`Section "${name}" not found in database, defaulting to hidden`);
+      return false;
+    }
+    return section.is_visible;
   };
 
   return { sections, loading, isSectionVisible };
+};
+
+// Function to invalidate cache when admin updates sections
+export const invalidateSectionsCache = () => {
+  cachedSections = null;
+  sectionsFetchPromise = null;
 };
 
 export const useFAQs = () => {
