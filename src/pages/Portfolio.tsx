@@ -1,10 +1,10 @@
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
 import AnimatedCounter from "@/components/AnimatedCounter";
-import { Cpu, GraduationCap, Bot, Users, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import FeaturedWinsSection from "@/components/FeaturedWinsSection";
+import ProjectsSection from "@/components/ProjectsSection";
+import { Cpu, GraduationCap, Bot, Users } from "lucide-react";
 import { motion } from "framer-motion";
-import { usePortfolio } from "@/hooks/useCMSData";
 
 const companies = [
   {
@@ -42,85 +42,20 @@ const partners = [
   { name: "Snowflake", icon: "❄️" }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
 const Portfolio = () => {
-  const { portfolio, loading } = usePortfolio();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  // Use portfolio items from database for featured wins
-  const featuredWins = portfolio.length > 0 
-    ? portfolio.map(p => ({
-        id: p.id,
-        thumbnail: p.featured_image || 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop',
-        title: p.title,
-        subtitle: p.category || 'Case Study',
-        testimonial: p.description || '',
-        author: p.client_name || 'Automind Labs',
-        role: p.category || 'Client'
-      }))
-    : [
-        {
-          id: '1',
-          thumbnail: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop",
-          title: "Enterprise Automation Success",
-          subtitle: "Case Study",
-          testimonial: "Automind Labs transformed our entire workflow. We saved 40+ hours per week!",
-          author: "Sarah Johnson",
-          role: "CEO, TechFlow Inc."
-        },
-        {
-          id: '2',
-          thumbnail: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&h=450&fit=crop",
-          title: "Scaling Operations with AI",
-          subtitle: "Client Story",
-          testimonial: "The ROI was incredible. Within 3 months, we doubled our output with half the effort.",
-          author: "Michael Chen",
-          role: "Operations Director, ScaleUp Co."
-        },
-        {
-          id: '3',
-          thumbnail: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=450&fit=crop",
-          title: "Workflow Transformation",
-          subtitle: "Featured Win",
-          testimonial: "Best investment we ever made. The automation systems are game-changers.",
-          author: "Emily Rodriguez",
-          role: "Founder, Creative Agency"
-        }
-      ];
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % featuredWins.length);
-  }, [featuredWins.length]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + featuredWins.length) % featuredWins.length);
-  }, [featuredWins.length]);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(nextSlide, 3000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, nextSlide]);
-
-  const handleManualNav = (action: () => void) => {
-    setIsAutoPlaying(false);
-    action();
-    setTimeout(() => setIsAutoPlaying(true), 5000);
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <div className="min-h-screen w-full bg-background">
       <PageHero 
@@ -184,6 +119,9 @@ const Portfolio = () => {
             </div>
           </div>
         </section>
+
+        {/* Projects Section - New section for portfolio items */}
+        <ProjectsSection />
 
         {/* Stats Section */}
         <section className="py-12 md:py-20 bg-card">
@@ -330,131 +268,8 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* Featured Wins - Carousel with Testimonials */}
-        <section className="py-12 md:py-20 px-4 sm:px-6 bg-background">
-          <div className="max-w-[1300px] mx-auto">
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-2xl sm:text-4xl lg:text-6xl font-black text-center mb-8 md:mb-12"
-            >
-              Featured <br className="lg:hidden" /> <span className="text-primary">Wins</span>
-            </motion.h2>
-
-            {/* Carousel Container */}
-            <div className="relative w-full max-w-[900px] mx-auto">
-              {/* Navigation Arrows */}
-              <button 
-                onClick={() => handleManualNav(prevSlide)}
-                className="absolute -left-2 sm:-left-4 md:-left-16 top-1/3 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
-              </button>
-
-              <button 
-                onClick={() => handleManualNav(nextSlide)}
-                className="absolute -right-2 sm:-right-4 md:-right-16 top-1/3 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 rounded-full bg-primary/20 hover:bg-primary/40 flex items-center justify-center transition-all duration-300 hover:scale-110"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
-              </button>
-
-              {/* Main Slider */}
-              <div className="relative overflow-hidden rounded-2xl">
-                <div 
-                  className="flex transition-transform duration-500 ease-out"
-                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-                >
-                  {featuredWins.map((win) => (
-                    <div key={win.id} className="w-full flex-shrink-0">
-                      <div className="relative w-full pt-[56.25%] overflow-hidden rounded-2xl cursor-pointer group">
-                        <img 
-                          src={win.thumbnail} 
-                          alt={win.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                        
-                        {/* Play Button */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <motion.div 
-                            whileHover={{ scale: 1.1 }}
-                            className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-2xl"
-                          >
-                            <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M8 5v14l11-7z"/>
-                            </svg>
-                          </motion.div>
-                        </div>
-
-                        {/* Badge */}
-                        <div className="absolute top-3 right-3 md:top-4 md:right-4 bg-background/80 backdrop-blur-sm px-2 py-1 md:px-3 rounded-full">
-                          <span className="text-[10px] md:text-xs font-semibold text-primary">{win.subtitle}</span>
-                        </div>
-
-                        {/* Title */}
-                        <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4">
-                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground tracking-wide">
-                            {win.title}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Testimonial Card */}
-              <motion.div 
-                key={currentIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mt-6 md:mt-8 bg-card rounded-2xl p-4 md:p-6 border border-border"
-              >
-                <Quote className="w-6 h-6 md:w-8 md:h-8 text-primary/50 mb-3" />
-                <p className="text-sm md:text-base lg:text-lg text-foreground mb-4 italic">
-                  "{featuredWins[currentIndex]?.testimonial}"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm md:text-base">
-                      {featuredWins[currentIndex]?.author?.charAt(0)}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm md:text-base">{featuredWins[currentIndex]?.author}</p>
-                    <p className="text-xs md:text-sm text-muted-foreground">{featuredWins[currentIndex]?.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Dots */}
-              <div className="flex justify-center gap-2 mt-4 md:mt-6">
-                {featuredWins.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setIsAutoPlaying(false);
-                      setCurrentIndex(index);
-                      setTimeout(() => setIsAutoPlaying(true), 5000);
-                    }}
-                    className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                      index === currentIndex 
-                        ? 'bg-primary w-6 md:w-8' 
-                        : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Featured Wins - Using the BlogsPodcasts style carousel */}
+        <FeaturedWinsSection title="Featured" titleAccent="Wins" />
 
         <Footer />
       </main>

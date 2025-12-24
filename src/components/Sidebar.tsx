@@ -1,7 +1,6 @@
 import { Home, User, Images, FileText, Mail, Calendar, Users, ExternalLink } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useHeaderConfig } from "@/hooks/useHeaderConfig";
 import automindLogo from "@/assets/automind-labs-logo-new.png";
 
 interface NavLink {
@@ -17,7 +16,7 @@ const defaultMenuItems: NavLink[] = [
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
   { label: "Book Call", href: "/booking" },
-  { label: "Skool\nCommunity", href: "https://www.skool.com/automind", external: true },
+  { label: "Skool Community", href: "https://www.skool.com/automind", external: true },
 ];
 
 const getIcon = (label: string) => {
@@ -34,36 +33,18 @@ const getIcon = (label: string) => {
 
 const Sidebar = () => {
   const location = useLocation();
-  const [menuItems, setMenuItems] = useState<NavLink[]>(defaultMenuItems);
-  const [logoUrl, setLogoUrl] = useState<string>(automindLogo);
+  const { logoUrl, navLinks, loading } = useHeaderConfig();
 
-  useEffect(() => {
-    const fetchHeaderConfig = async () => {
-      const { data } = await supabase
-        .from('header_config')
-        .select('nav_links, logo_url')
-        .limit(1)
-        .maybeSingle();
-
-      if (data) {
-        if (data.nav_links && Array.isArray(data.nav_links)) {
-          setMenuItems(data.nav_links as unknown as NavLink[]);
-        }
-        if (data.logo_url) {
-          setLogoUrl(data.logo_url);
-        }
-      }
-    };
-
-    fetchHeaderConfig();
-  }, []);
+  // Use cached/fetched nav links or defaults
+  const menuItems = navLinks.length > 0 ? navLinks : defaultMenuItems;
+  const currentLogo = logoUrl || automindLogo;
 
   return (
     <nav className="hidden lg:flex bg-background w-28 border-r border-border flex-col items-center justify-center py-6 flex-shrink-0 h-screen sticky top-0">
       {/* Logo */}
       <Link to="/" className="mb-10">
         <img 
-          src={logoUrl} 
+          src={currentLogo} 
           alt="Automind Labs" 
           className="w-20 h-auto object-contain"
         />
@@ -82,11 +63,11 @@ const Sidebar = () => {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group"
+                className="flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group w-24 px-1"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <Icon className="w-5 h-5 group-hover:text-primary transition-colors" />
-                <span className="text-[10px] tracking-wide text-center whitespace-pre-line leading-tight">
+                <Icon className="w-5 h-5 group-hover:text-primary transition-colors flex-shrink-0" />
+                <span className="text-[10px] tracking-wide text-center leading-tight line-clamp-2">
                   {item.label}
                 </span>
               </a>
@@ -97,13 +78,13 @@ const Sidebar = () => {
             <Link
               key={item.label + index}
               to={item.href}
-              className={`flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group ${isActive ? "text-primary" : ""}`}
+              className={`flex flex-col items-center gap-1.5 text-foreground hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group w-24 px-1 ${isActive ? "text-primary" : ""}`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <Icon
-                className={`w-5 h-5 group-hover:text-primary transition-colors ${isActive ? "text-primary" : ""}`}
+                className={`w-5 h-5 group-hover:text-primary transition-colors flex-shrink-0 ${isActive ? "text-primary" : ""}`}
               />
-              <span className="text-[10px] tracking-wide text-center whitespace-pre-line leading-tight">
+              <span className="text-[10px] tracking-wide text-center leading-tight line-clamp-2">
                 {item.label}
               </span>
             </Link>
