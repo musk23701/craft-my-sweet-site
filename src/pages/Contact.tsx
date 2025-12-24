@@ -1,11 +1,66 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Clock, MessageSquare } from "lucide-react";
-import DOMPurify from "dompurify";
 import { useToast } from "@/hooks/use-toast";
 import { useContactInfo } from "@/hooks/useCMSData";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+
+// Allowed booking domains for security
+const ALLOWED_BOOKING_DOMAINS = [
+  'calendly.com',
+  'cal.com',
+  'hubspot.com',
+  'acuityscheduling.com',
+  'youcanbook.me',
+  'squareup.com',
+  'schedule.google.com',
+  'outlook.office365.com',
+  'tidycal.com',
+  'savvycal.com',
+];
+
+// Extract and validate iframe src URL from HTML or direct URL
+const extractBookingUrl = (input: string): string | null => {
+  if (!input || !input.trim()) return null;
+  
+  let url = input.trim();
+  
+  // If it looks like an iframe tag, extract the src
+  if (url.toLowerCase().includes('<iframe')) {
+    const srcMatch = url.match(/src=["']([^"']+)["']/i);
+    if (srcMatch && srcMatch[1]) {
+      url = srcMatch[1];
+    } else {
+      return null;
+    }
+  }
+  
+  // Validate URL format
+  try {
+    const parsedUrl = new URL(url);
+    
+    // Only allow https
+    if (parsedUrl.protocol !== 'https:') {
+      return null;
+    }
+    
+    // Check against whitelist of allowed domains
+    const hostname = parsedUrl.hostname.toLowerCase();
+    const isAllowed = ALLOWED_BOOKING_DOMAINS.some(domain => 
+      hostname === domain || hostname.endsWith('.' + domain)
+    );
+    
+    if (!isAllowed) {
+      console.warn('Booking URL domain not in allowlist:', hostname);
+      return null;
+    }
+    
+    return url;
+  } catch {
+    return null;
+  }
+};
 
 const Contact = () => {
   const { toast } = useToast();
@@ -65,14 +120,9 @@ const Contact = () => {
   const bookingIframeRaw = contactInfo?.booking_iframe_code || "";
   const mapUrl = contactInfo?.map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0977906969!2d-122.39568068468195!3d37.78779727975763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807abad77c57%3A0xaf3c3c8c7e3a5b95!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890";
   
-  // Sanitize booking iframe to prevent XSS
-  const bookingIframe = useMemo(() => {
-    if (!bookingIframeRaw) return "";
-    return DOMPurify.sanitize(bookingIframeRaw, {
-      ALLOWED_TAGS: ['iframe'],
-      ALLOWED_ATTR: ['src', 'width', 'height', 'frameborder', 'allow', 'allowfullscreen', 'style', 'class', 'title'],
-      ALLOW_DATA_ATTR: false
-    });
+  // Extract and validate booking URL for security (no dangerouslySetInnerHTML)
+  const bookingUrl = useMemo(() => {
+    return extractBookingUrl(bookingIframeRaw);
   }, [bookingIframeRaw]);
   
   const contactItems = [
@@ -148,15 +198,25 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Booking Section - Show iframe if available */}
-      {bookingIframe && (
+      {/* Booking Section - Show iframe if available (secure: no dangerouslySetInnerHTML) */}
+      {bookingUrl && (
         <section className="py-20 px-6 bg-card/30">
           <div className="max-w-4xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Book a Strategy Call</h2>
               <p className="text-muted-foreground">Schedule a free consultation with our team.</p>
             </motion.div>
-            <div className="rounded-2xl overflow-hidden border border-border" dangerouslySetInnerHTML={{ __html: bookingIframe }} />
+            <div className="rounded-2xl overflow-hidden border border-border">
+              <iframe
+                src={bookingUrl}
+                width="100%"
+                height="700"
+                frameBorder="0"
+                allow="camera; microphone; fullscreen; payment"
+                title="Book a call"
+                loading="lazy"
+              />
+            </div>
           </div>
         </section>
       )}

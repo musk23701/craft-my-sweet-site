@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from 'react';
-import DOMPurify from 'dompurify';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,62 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Save } from 'lucide-react';
+import { Loader2, Save, AlertCircle, CheckCircle } from 'lucide-react';
+
+// Allowed booking domains for security
+const ALLOWED_BOOKING_DOMAINS = [
+  'calendly.com',
+  'cal.com',
+  'hubspot.com',
+  'acuityscheduling.com',
+  'youcanbook.me',
+  'squareup.com',
+  'schedule.google.com',
+  'outlook.office365.com',
+  'tidycal.com',
+  'savvycal.com',
+];
+
+// Extract and validate iframe src URL from HTML or direct URL
+const extractBookingUrl = (input: string): { url: string | null; error: string | null } => {
+  if (!input || !input.trim()) return { url: null, error: null };
+  
+  let url = input.trim();
+  
+  // If it looks like an iframe tag, extract the src
+  if (url.toLowerCase().includes('<iframe')) {
+    const srcMatch = url.match(/src=["']([^"']+)["']/i);
+    if (srcMatch && srcMatch[1]) {
+      url = srcMatch[1];
+    } else {
+      return { url: null, error: 'Could not extract src from iframe code' };
+    }
+  }
+  
+  // Validate URL format
+  try {
+    const parsedUrl = new URL(url);
+    
+    // Only allow https
+    if (parsedUrl.protocol !== 'https:') {
+      return { url: null, error: 'URL must use HTTPS' };
+    }
+    
+    // Check against whitelist of allowed domains
+    const hostname = parsedUrl.hostname.toLowerCase();
+    const isAllowed = ALLOWED_BOOKING_DOMAINS.some(domain => 
+      hostname === domain || hostname.endsWith('.' + domain)
+    );
+    
+    if (!isAllowed) {
+      return { url: null, error: `Domain "${hostname}" not in allowed list. Supported: ${ALLOWED_BOOKING_DOMAINS.join(', ')}` };
+    }
+    
+    return { url, error: null };
+  } catch {
+    return { url: null, error: 'Invalid URL format' };
+  }
+};
 
 const ContactAdmin = () => {
   const [loading, setLoading] = useState(true);
@@ -176,21 +230,41 @@ const ContactAdmin = () => {
                 </p>
               </div>
 
-              {bookingIframeCode && (
-                <div className="space-y-2">
-                  <Label>Preview</Label>
-                  <div 
-                    className="border rounded-lg p-4 bg-muted/50 min-h-[300px]"
-                    dangerouslySetInnerHTML={{ 
-                      __html: DOMPurify.sanitize(bookingIframeCode, {
-                        ALLOWED_TAGS: ['iframe'],
-                        ALLOWED_ATTR: ['src', 'width', 'height', 'frameborder', 'allow', 'allowfullscreen', 'style', 'class', 'title'],
-                        ALLOW_DATA_ATTR: false
-                      }) 
-                    }}
-                  />
-                </div>
-              )}
+              {bookingIframeCode && (() => {
+                const { url, error } = extractBookingUrl(bookingIframeCode);
+                return (
+                  <div className="space-y-2">
+                    <Label>Preview</Label>
+                    {error ? (
+                      <div className="border rounded-lg p-4 bg-destructive/10 border-destructive/30 flex items-start gap-3">
+                        <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-medium text-destructive">Invalid booking URL</p>
+                          <p className="text-sm text-muted-foreground mt-1">{error}</p>
+                        </div>
+                      </div>
+                    ) : url ? (
+                      <>
+                        <div className="flex items-center gap-2 text-sm text-green-600 mb-2">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Valid booking URL detected</span>
+                        </div>
+                        <div className="border rounded-lg overflow-hidden bg-muted/50 min-h-[300px]">
+                          <iframe
+                            src={url}
+                            width="100%"
+                            height="400"
+                            frameBorder="0"
+                            allow="camera; microphone; fullscreen; payment"
+                            title="Booking preview"
+                            loading="lazy"
+                          />
+                        </div>
+                      </>
+                    ) : null}
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         </div>
