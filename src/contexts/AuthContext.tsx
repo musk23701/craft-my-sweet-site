@@ -53,49 +53,63 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     let isMounted = true;
+    let initialSessionChecked = false;
 
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         if (!isMounted) return;
         
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Directly await the admin check - no setTimeout needed since we're not making other supabase calls
-          const isAdminUser = await checkAdminRole(session.user.id);
-          if (isMounted) {
-            setIsAdmin(isAdminUser);
-          }
+          // Use setTimeout to defer the admin check and avoid potential deadlocks
+          setTimeout(async () => {
+            if (!isMounted) return;
+            const isAdminUser = await checkAdminRole(session.user.id);
+            if (isMounted) {
+              setIsAdmin(isAdminUser);
+              setLoading(false);
+            }
+          }, 0);
         } else {
           setIsAdmin(false);
           setAdminLoading(false);
+          setLoading(false);
         }
-        
-        setLoading(false);
       }
     );
 
     // THEN check for existing session
     const initSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!isMounted) return;
-      
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        const isAdminUser = await checkAdminRole(session.user.id);
-        if (isMounted) {
-          setIsAdmin(isAdminUser);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!isMounted) return;
+        
+        initialSessionChecked = true;
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          const isAdminUser = await checkAdminRole(session.user.id);
+          if (isMounted) {
+            setIsAdmin(isAdminUser);
+          }
+        } else {
+          setAdminLoading(false);
         }
-      } else {
-        setAdminLoading(false);
+      } catch (error) {
+        console.error('Error initializing session:', error);
+        if (isMounted) {
+          setAdminLoading(false);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-      
-      setLoading(false);
     };
 
     initSession();
