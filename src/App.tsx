@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import PageSectionsAdmin from "@/pages/admin/PageSectionsAdmin";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -55,6 +56,7 @@ const App = () => (
             <Route path="/admin/services" element={<ProtectedRoute><ServicesAdmin /></ProtectedRoute>} />
             <Route path="/admin/sections" element={<ProtectedRoute><SectionsAdmin /></ProtectedRoute>} />
             <Route path="/admin/pages" element={<ProtectedRoute><PagesAdmin /></ProtectedRoute>} />
+            <Route path="/admin/pages/:pageId" element={<ProtectedRoute><PageSectionsAdmin /></ProtectedRoute>} />
             <Route path="/admin/header-footer" element={<ProtectedRoute><HeaderFooterAdmin /></ProtectedRoute>} />
             <Route path="/admin/contact" element={<ProtectedRoute><ContactAdmin /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
