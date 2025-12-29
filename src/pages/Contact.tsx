@@ -18,6 +18,8 @@ const ALLOWED_BOOKING_DOMAINS = [
   'outlook.office365.com',
   'tidycal.com',
   'savvycal.com',
+  'devtrest.com',
+  'app.devtrest.com',
 ];
 
 // Extract and validate iframe src URL from HTML or direct URL
