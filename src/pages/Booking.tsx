@@ -1,10 +1,79 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Video, CheckCircle } from "lucide-react";
+import { Clock, Video, CheckCircle, Loader2 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+import { useContactInfo } from "@/hooks/useCMSData";
+
+// Allowed booking domains for security
+const ALLOWED_BOOKING_DOMAINS = [
+  'calendly.com',
+  'cal.com',
+  'hubspot.com',
+  'acuityscheduling.com',
+  'youcanbook.me',
+  'squareup.com',
+  'schedule.google.com',
+  'outlook.office365.com',
+  'tidycal.com',
+  'savvycal.com',
+  'devtrest.com',
+  'app.devtrest.com',
+];
+
+// Extract and validate iframe src URL from HTML or direct URL
+const extractBookingUrl = (input: string): string | null => {
+  if (!input || !input.trim()) return null;
+  
+  let url = input.trim();
+  
+  // If it looks like an iframe tag, extract the src
+  if (url.toLowerCase().includes('<iframe')) {
+    const srcMatch = url.match(/src=["']([^"']+)["']/i);
+    if (srcMatch && srcMatch[1]) {
+      url = srcMatch[1];
+    } else {
+      return null;
+    }
+  }
+  
+  // Validate URL format
+  try {
+    const parsedUrl = new URL(url);
+    
+    // Only allow https
+    if (parsedUrl.protocol !== 'https:') {
+      return null;
+    }
+    
+    // Check against whitelist of allowed domains
+    const hostname = parsedUrl.hostname.toLowerCase();
+    const isAllowed = ALLOWED_BOOKING_DOMAINS.some(domain => 
+      hostname === domain || hostname.endsWith('.' + domain)
+    );
+    
+    if (!isAllowed) {
+      console.warn('Booking URL domain not in allowlist:', hostname);
+      return null;
+    }
+    
+    return url;
+  } catch {
+    return null;
+  }
+};
 
 const Booking = () => {
+  const { contactInfo, loading: contactLoading } = useContactInfo();
+  
+  // Get booking URL from database or use default
+  const bookingIframeRaw = contactInfo?.booking_iframe_code || "";
+  const bookingUrl = useMemo(() => {
+    const extractedUrl = extractBookingUrl(bookingIframeRaw);
+    // Fallback to default if no valid URL in database
+    return extractedUrl || "https://app.devtrest.com/widget/booking/Hn1hjHRLhl9BOC7z1PHN";
+  }, [bookingIframeRaw]);
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://app.devtrest.com/js/form_embed.js";
@@ -98,13 +167,19 @@ const Booking = () => {
             >
               <div className="bg-card border border-border rounded-xl sm:rounded-2xl p-3 sm:p-6 min-h-[450px] sm:min-h-[600px]">
                 <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">Select a Date & Time</h2>
-                <iframe
-                  src="https://app.devtrest.com/widget/booking/Hn1hjHRLhl9BOC7z1PHN"
-                  className="w-full border-none overflow-hidden"
-                  style={{ minHeight: "400px" }}
-                  scrolling="no"
-                  id="Hn1hjHRLhl9BOC7z1PHN_1762235387271"
-                />
+                {contactLoading ? (
+                  <div className="flex items-center justify-center h-[400px]">
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                  </div>
+                ) : (
+                  <iframe
+                    src={bookingUrl}
+                    className="w-full border-none overflow-hidden"
+                    style={{ minHeight: "400px" }}
+                    scrolling="no"
+                    title="Booking Calendar"
+                  />
+                )}
               </div>
             </motion.div>
           </div>
