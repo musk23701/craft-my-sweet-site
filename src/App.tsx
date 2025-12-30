@@ -28,7 +28,6 @@ import SectionsAdmin from "./pages/admin/SectionsAdmin";
 import PagesAdmin from "./pages/admin/PagesAdmin";
 import HeaderFooterAdmin from "./pages/admin/HeaderFooterAdmin";
 import ContactAdmin from "./pages/admin/ContactAdmin";
-import DatabaseBackup from "./pages/DatabaseBackup";
 
 const queryClient = new QueryClient();
 
@@ -54,7 +53,6 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/booking" element={<Booking />} />
-            <Route path="/database-backup" element={<DatabaseBackup />} />
             <Route path="/login" element={<AdminLogin />} />
             <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/admin/blogs" element={<ProtectedRoute><BlogsAdmin /></ProtectedRoute>} />
