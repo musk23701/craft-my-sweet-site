@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
+import { useFavicon } from "@/hooks/useFavicon";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
 import Blog from "./pages/Blog";
@@ -30,10 +31,17 @@ import ContactAdmin from "./pages/admin/ContactAdmin";
 
 const queryClient = new QueryClient();
 
+// Component to handle favicon loading
+const FaviconLoader = () => {
+  useFavicon();
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
+        <FaviconLoader />
         <Toaster />
         <Sonner />
         <BrowserRouter>
