@@ -22,10 +22,12 @@ import { useState } from "react";
 
 // Service structured data for homepage
 const homeServices = [
-  { name: 'AI Workflow Automation', description: 'Automate repetitive business processes with intelligent AI systems' },
-  { name: 'Business Process Automation', description: 'Streamline operations and reduce manual work with custom automation' },
-  { name: 'AI Integration Services', description: 'Integrate AI solutions into existing business systems and workflows' },
-  { name: 'Automation Consulting', description: 'Expert consulting to identify automation opportunities and ROI' },
+  { name: 'AI Workflow Automation', description: 'Automate repetitive business processes with intelligent AI systems that learn and adapt' },
+  { name: 'Business Process Automation', description: 'Streamline operations and reduce manual work with custom automation solutions' },
+  { name: 'AI Integration Services', description: 'Seamlessly integrate AI solutions into existing business systems and workflows' },
+  { name: 'AI Chatbot Development', description: 'Build intelligent conversational AI for customer support and engagement' },
+  { name: 'RPA Implementation', description: 'Robotic Process Automation to handle repetitive tasks with precision' },
+  { name: 'Automation Consulting', description: 'Expert consulting to identify automation opportunities and maximize ROI' },
 ];
 
 const Index = () => {
@@ -40,15 +42,28 @@ const Index = () => {
     '@graph': [
       createLocalBusinessSchema(),
       createServiceSchema(homeServices),
+      {
+        '@type': 'WebPage',
+        '@id': 'https://automindlabs.ai/#webpage',
+        url: 'https://automindlabs.ai',
+        name: 'Automind Labs | #1 AI Automation Agency in USA',
+        description: 'America\'s leading AI automation agency. We build custom AI workflow solutions, intelligent automation systems, and business process optimization for enterprises and startups.',
+        isPartOf: { '@id': 'https://automindlabs.ai/#website' },
+        about: { '@id': 'https://automindlabs.ai/#organization' },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: 'https://automindlabs.ai/og-image.png',
+        },
+      },
     ],
   };
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
       <SEO
-        title="AI Automation Agency USA | Workflow Automation & AI Integration"
-        description="Automind Labs is a leading AI automation agency in the United States. We help businesses automate workflows, integrate AI solutions, and scale operations with custom automation systems. Serving California, New York, Texas & nationwide."
-        keywords="AI automation agency USA, workflow automation company, AI integration services, business process automation, automation consulting, AI solutions United States, enterprise automation, small business automation, AI workflow optimization, automation agency California, New York AI services, Texas automation company"
+        title="#1 AI Automation Agency USA | Workflow Automation Experts"
+        description="Automind Labs is America's leading AI automation agency. We help 50+ US businesses automate workflows, integrate AI solutions, and scale operations. Trusted in California, New York, Texas & nationwide. Book a free strategy call!"
+        keywords="AI automation agency, best AI automation company USA, workflow automation, business process automation, AI integration services, automation consulting California, AI solutions New York, automation company Texas, enterprise AI automation, small business automation, RPA services, intelligent automation, machine learning solutions"
         canonical="/"
         structuredData={combinedSchema}
       />

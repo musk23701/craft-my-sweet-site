@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useContactInfo } from "@/hooks/useCMSData";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
-import SEO from "@/components/SEO";
+import SEO, { createContactPageSchema, createLocalBusinessSchema, createBreadcrumbSchema } from "@/components/SEO";
 
 // Allowed booking domains for security
 const ALLOWED_BOOKING_DOMAINS = [
@@ -134,13 +134,26 @@ const Contact = () => {
     { icon: MapPin, title: "Visit Us", details: address.split(',')[0], description: address.split(',').slice(1).join(',').trim() || "San Francisco, CA" }
   ];
 
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      createContactPageSchema(),
+      createLocalBusinessSchema(),
+      createBreadcrumbSchema([
+        { name: 'Home', url: 'https://automindlabs.ai' },
+        { name: 'Contact', url: 'https://automindlabs.ai/contact' },
+      ]),
+    ],
+  };
+
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <SEO
-        title="Contact Us - Get AI Automation Consultation"
-        description="Contact Automind Labs for AI automation consulting and workflow optimization services. Get in touch with our US-based team for a free strategy call. Email: Info@automindlabs.ai"
-        keywords="contact Automind Labs, AI automation consultation, workflow automation inquiry, business automation contact, AI services contact USA, automation consulting request, get AI help, automation agency contact"
+        title="Contact Us | Get Free AI Automation Consultation"
+        description="Contact Automind Labs for AI automation consulting. Email: Info@automindlabs.ai. Our US-based team responds within 24 hours. Book a free strategy call to discuss your automation needs."
+        keywords="contact Automind Labs, AI automation consultation free, workflow automation inquiry, business automation contact USA, AI services California, automation consulting New York, get AI help Texas, automation agency phone, schedule AI meeting"
         canonical="/contact"
+        structuredData={contactSchema}
       />
       <PageHero
         title="Contact Us"

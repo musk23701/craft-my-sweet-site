@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Clock, Video, CheckCircle, Loader2 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
-import SEO from "@/components/SEO";
+import SEO, { createBookingSchema, createBreadcrumbSchema } from "@/components/SEO";
 import { useContactInfo } from "@/hooks/useCMSData";
 
 // Allowed booking domains for security
@@ -91,13 +91,25 @@ const Booking = () => {
     "No commitment, completely free consultation"
   ];
 
+  const bookingSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      createBookingSchema(),
+      createBreadcrumbSchema([
+        { name: 'Home', url: 'https://automindlabs.ai' },
+        { name: 'Book a Call', url: 'https://automindlabs.ai/booking' },
+      ]),
+    ],
+  };
+
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <SEO
-        title="Book Free AI Strategy Call - Schedule Consultation"
-        description="Schedule a free 30-minute AI automation strategy call with Automind Labs experts. Discuss your business automation needs, get personalized AI recommendations, and learn about potential ROI. No obligation consultation."
-        keywords="book AI consultation, free automation strategy call, schedule AI meeting, automation consultation booking, AI expert call, workflow optimization consultation, business automation meeting, free AI assessment"
+        title="Book Free AI Strategy Call | Schedule Your Consultation"
+        description="Book a free 30-minute AI automation strategy call with Automind Labs experts. Get personalized AI recommendations, discuss your workflow challenges, and learn about potential ROI. 100% free, no obligation."
+        keywords="book AI consultation free, automation strategy call, schedule AI meeting USA, automation consultation California, AI expert call New York, workflow optimization meeting Texas, free AI assessment, business automation consultation, no obligation AI call"
         canonical="/booking"
+        structuredData={bookingSchema}
       />
       <PageHero
         title="Book Your Free"

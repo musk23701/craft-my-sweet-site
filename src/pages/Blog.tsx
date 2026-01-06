@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
-import SEO from "@/components/SEO";
+import SEO, { createBlogListSchema, createBreadcrumbSchema } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
@@ -96,13 +96,25 @@ const Blog = () => {
   const latestBlogs = displayedBlogs.slice(3, 6);
   const thoughtLeadershipBlogs = displayedBlogs.slice(6, 9);
 
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      createBlogListSchema(),
+      createBreadcrumbSchema([
+        { name: 'Home', url: 'https://automindlabs.ai' },
+        { name: 'Blog', url: 'https://automindlabs.ai/blog' },
+      ]),
+    ],
+  };
+
   return (
     <div className="min-h-screen w-full bg-background">
       <SEO
-        title="AI Automation Blog - Insights & Trends"
-        description="Stay updated with the latest AI automation trends, workflow optimization tips, and business automation strategies. Expert insights from Automind Labs on artificial intelligence, RPA, and digital transformation."
-        keywords="AI automation blog, automation insights, workflow optimization tips, AI trends, business automation strategies, artificial intelligence articles, RPA news, digital transformation blog, automation best practices, AI industry updates"
+        title="AI Automation Blog | Latest Trends & Expert Insights 2025"
+        description="Stay ahead with Automind Labs' AI automation blog. Get expert insights on workflow optimization, RPA, machine learning, and business automation strategies. Updated weekly with the latest AI industry trends."
+        keywords="AI automation blog 2025, automation insights, workflow optimization tips, AI trends USA, business automation strategies, artificial intelligence articles, RPA best practices, digital transformation blog, automation guides, AI industry updates, machine learning news"
         canonical="/blog"
+        structuredData={blogSchema}
       />
       <PageHero 
         title="Our"
