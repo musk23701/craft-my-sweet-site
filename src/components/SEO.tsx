@@ -14,7 +14,7 @@ interface SEOProps {
   structuredData?: object;
 }
 
-const DEFAULT_TITLE = 'Automind Labs | #1 AI Automation Agency in USA';
+const DEFAULT_TITLE = 'Automind Labs | AI Automation Agency USA';
 const DEFAULT_DESCRIPTION = 'Automind Labs is America\'s leading AI automation agency. We build custom AI workflow solutions, intelligent automation systems, and business process optimization for enterprises and startups. Trusted by 50+ companies in California, New York, Texas & nationwide.';
 const DEFAULT_KEYWORDS = 'AI automation agency USA, AI automation services, business automation company, workflow automation, AI integration, automation consulting, artificial intelligence automation, RPA services, AI workflow optimization, automation agency California, AI services New York, Texas automation, enterprise AI, small business automation, AI chatbot, machine learning solutions, digital transformation';
 const DEFAULT_OG_IMAGE = 'https://automindlabs.ai/og-image.png';
