@@ -61,7 +61,7 @@ const Index = () => {
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
       <SEO
-        title="#1 AI Automation Agency USA | Workflow Automation Experts"
+        title="AI Automation Agency USA | Workflow Automation Experts"
         description="Automind Labs is America's leading AI automation agency. We help 50+ US businesses automate workflows, integrate AI solutions, and scale operations. Trusted in California, New York, Texas & nationwide. Book a free strategy call!"
         keywords="AI automation agency, best AI automation company USA, workflow automation, business process automation, AI integration services, automation consulting California, AI solutions New York, automation company Texas, enterprise AI automation, small business automation, RPA services, intelligent automation, machine learning solutions"
         canonical="/"
