@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import FeaturedWinsSection from "@/components/FeaturedWinsSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import SEO from "@/components/SEO";
+import SEO, { createPortfolioSchema, createBreadcrumbSchema } from "@/components/SEO";
 import { Cpu, GraduationCap, Bot, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -57,13 +57,30 @@ const itemVariants = {
 };
 
 const Portfolio = () => {
+  const portfolioProjects = [
+    { name: 'Automation Institute', description: 'AI-powered educational platform helping entrepreneurs escape the busy loop', url: 'https://automationinstitute.ai/' },
+    { name: 'Hexona Systems', description: 'Globally recognized AI automation platform powering 500+ agencies across 6 continents', url: 'https://www.hexonasystems.com/' },
+  ];
+
+  const portfolioSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      createPortfolioSchema(portfolioProjects),
+      createBreadcrumbSchema([
+        { name: 'Home', url: 'https://automindlabs.ai' },
+        { name: 'Portfolio', url: 'https://automindlabs.ai/portfolio' },
+      ]),
+    ],
+  };
+
   return (
     <div className="min-h-screen w-full bg-background">
       <SEO
-        title="Portfolio - AI Automation Case Studies & Success Stories"
-        description="Explore Automind Labs portfolio of AI automation projects. See how we've helped 50+ US businesses achieve 80,000+ followers, 20,000+ YouTube subscribers through intelligent automation solutions and workflow optimization."
-        keywords="AI automation portfolio, automation case studies, AI project examples, workflow automation success stories, business automation results, AI integration projects, automation ROI examples, enterprise automation cases, small business automation success"
+        title="Portfolio | AI Automation Case Studies & Success Stories"
+        description="See how Automind Labs helped 50+ US businesses transform with AI automation. Our portfolio includes 80,000+ social followers, 20,000+ YouTube subscribers, and enterprise automation solutions. View our success stories."
+        keywords="AI automation portfolio, automation case studies USA, AI project success stories, workflow automation results, business automation ROI, AI integration projects, enterprise automation examples, Automation Institute, Hexona Systems, small business automation"
         canonical="/portfolio"
+        structuredData={portfolioSchema}
       />
       <PageHero 
         title="Our"

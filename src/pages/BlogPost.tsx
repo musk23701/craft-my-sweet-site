@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
-import SEO, { createBlogPostSchema } from "@/components/SEO";
+import SEO, { createBlogPostSchema, createBreadcrumbSchema } from "@/components/SEO";
 
 interface BlogPost {
   id: string;
@@ -92,14 +92,24 @@ const BlogPost = () => {
     );
   }
 
-  const blogSchema = post ? createBlogPostSchema({
-    title: post.title,
-    description: post.excerpt || `Read ${post.title} on Automind Labs blog`,
-    image: post.featured_image || 'https://automindlabs.ai/og-image.png',
-    datePublished: post.created_at,
-    author: post.author || 'Automind Labs',
-    url: `https://automindlabs.ai/blog/${post.slug}`,
-  }) : undefined;
+  const blogSchema = post ? {
+    '@context': 'https://schema.org',
+    '@graph': [
+      createBlogPostSchema({
+        title: post.title,
+        description: post.excerpt || `Read ${post.title} on Automind Labs blog`,
+        image: post.featured_image || 'https://automindlabs.ai/og-image.png',
+        datePublished: post.created_at,
+        author: post.author || 'Automind Labs',
+        url: `https://automindlabs.ai/blog/${post.slug}`,
+      }),
+      createBreadcrumbSchema([
+        { name: 'Home', url: 'https://automindlabs.ai' },
+        { name: 'Blog', url: 'https://automindlabs.ai/blog' },
+        { name: post.title, url: `https://automindlabs.ai/blog/${post.slug}` },
+      ]),
+    ],
+  } : undefined;
 
   return (
     <div className="min-h-screen bg-background">
