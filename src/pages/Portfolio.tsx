@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import FeaturedWinsSection from "@/components/FeaturedWinsSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import SEO from "@/components/SEO";
 import { Cpu, GraduationCap, Bot, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -58,6 +59,12 @@ const itemVariants = {
 const Portfolio = () => {
   return (
     <div className="min-h-screen w-full bg-background">
+      <SEO
+        title="Portfolio - AI Automation Case Studies & Success Stories"
+        description="Explore Automind Labs portfolio of AI automation projects. See how we've helped 50+ US businesses achieve 80,000+ followers, 20,000+ YouTube subscribers through intelligent automation solutions and workflow optimization."
+        keywords="AI automation portfolio, automation case studies, AI project examples, workflow automation success stories, business automation results, AI integration projects, automation ROI examples, enterprise automation cases, small business automation success"
+        canonical="/portfolio"
+      />
       <PageHero 
         title="Our"
         titleAccent="Portfolio"

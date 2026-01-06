@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Target, Eye, Award, Users, Lightbulb, Rocket } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -103,6 +104,12 @@ const About = () => {
 
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
+      <SEO
+        title="About Us - AI Automation Experts"
+        description="Learn about Automind Labs, a leading AI automation agency founded in 2022. We've helped 50+ businesses across the US transform operations with intelligent automation solutions. Meet our team of AI experts."
+        keywords="about Automind Labs, AI automation company, automation experts USA, AI agency story, business automation team, workflow automation specialists, AI consulting firm, automation company history, AI innovation leaders"
+        canonical="/about"
+      />
       <PageHero
         title="About Automind Labs"
         subtitle="Transforming businesses through intelligent automation"

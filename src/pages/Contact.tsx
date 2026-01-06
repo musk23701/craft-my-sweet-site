@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useContactInfo } from "@/hooks/useCMSData";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 // Allowed booking domains for security
 const ALLOWED_BOOKING_DOMAINS = [
@@ -135,6 +136,12 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
+      <SEO
+        title="Contact Us - Get AI Automation Consultation"
+        description="Contact Automind Labs for AI automation consulting and workflow optimization services. Get in touch with our US-based team for a free strategy call. Email: Info@automindlabs.ai"
+        keywords="contact Automind Labs, AI automation consultation, workflow automation inquiry, business automation contact, AI services contact USA, automation consulting request, get AI help, automation agency contact"
+        canonical="/contact"
+      />
       <PageHero
         title="Contact Us"
         subtitle="Let's start a conversation about your automation needs"
