@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Clock, Video, CheckCircle, Loader2 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { useContactInfo } from "@/hooks/useCMSData";
 
 // Allowed booking domains for security
@@ -92,6 +93,12 @@ const Booking = () => {
 
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
+      <SEO
+        title="Book Free AI Strategy Call - Schedule Consultation"
+        description="Schedule a free 30-minute AI automation strategy call with Automind Labs experts. Discuss your business automation needs, get personalized AI recommendations, and learn about potential ROI. No obligation consultation."
+        keywords="book AI consultation, free automation strategy call, schedule AI meeting, automation consultation booking, AI expert call, workflow optimization consultation, business automation meeting, free AI assessment"
+        canonical="/booking"
+      />
       <PageHero
         title="Book Your Free"
         titleAccent="AI Strategy Call"

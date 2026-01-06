@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
+import SEO, { createBlogPostSchema } from "@/components/SEO";
 
 interface BlogPost {
   id: string;
@@ -91,8 +92,30 @@ const BlogPost = () => {
     );
   }
 
+  const blogSchema = post ? createBlogPostSchema({
+    title: post.title,
+    description: post.excerpt || `Read ${post.title} on Automind Labs blog`,
+    image: post.featured_image || 'https://automindlabs.ai/og-image.png',
+    datePublished: post.created_at,
+    author: post.author || 'Automind Labs',
+    url: `https://automindlabs.ai/blog/${post.slug}`,
+  }) : undefined;
+
   return (
     <div className="min-h-screen bg-background">
+      {post && (
+        <SEO
+          title={post.title}
+          description={post.excerpt || `Read ${post.title} - AI automation insights from Automind Labs`}
+          keywords={post.tags?.join(', ') || 'AI automation, workflow optimization, business automation'}
+          canonical={`/blog/${post.slug}`}
+          ogType="article"
+          ogImage={post.featured_image || undefined}
+          author={post.author || 'Automind Labs'}
+          publishedTime={post.created_at}
+          structuredData={blogSchema}
+        />
+      )}
       <PageHero
         title={post.title}
         subtitle={post.excerpt || ''}
