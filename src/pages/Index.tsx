@@ -17,6 +17,7 @@ import LinkedInConnectSection from "@/components/LinkedInConnectSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import SkoolPopup from "@/components/SkoolPopup";
+import SkoolPopupWhite from "@/components/SkoolPopupWhite";
 import { X, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -84,8 +85,11 @@ const Index = () => {
         </div>
       )}
 
-      {/* Skool Community Popup */}
+      {/* Skool Community Popup - Dark Version (shows after 3s) */}
       <SkoolPopup />
+      
+      {/* Skool Community Popup - White Version (shows after 6s for comparison) */}
+      <SkoolPopupWhite />
 
       {/* Hero Section with Sidebar - always visible */}
       <HeroSection />
