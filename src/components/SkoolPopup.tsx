@@ -30,7 +30,7 @@ const SkoolPopup = () => {
 
   const handleJoin = () => {
     localStorage.setItem("skool-popup-seen", "true");
-    window.open("https://www.skool.com/ai-automation-lab", "_blank");
+    window.open("https://www.skool.com/ai-automation-lab-4511/about?ref=d6f3f97bf2bc45f587935b792d948894", "_blank");
     setIsOpen(false);
   };
 
