@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import skoolImage from "@/assets/skool-popup-image.avif";
+import skoolLogo from "@/assets/skool-logo.png";
 
 const SkoolPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +55,7 @@ const SkoolPopup = () => {
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed inset-0 z-[101] flex items-center justify-center p-4"
           >
-            <div className="relative bg-background rounded-2xl shadow-2xl overflow-hidden w-full max-w-[900px] flex flex-col md:flex-row border border-border/30">
+            <div className="relative bg-background rounded-2xl shadow-2xl overflow-hidden w-full max-w-[900px] flex flex-col md:flex-row" style={{ border: '0.5px solid #019CC6' }}>
               
               {/* Close button */}
               <button
@@ -73,12 +74,7 @@ const SkoolPopup = () => {
                   transition={{ delay: 0.1 }}
                   className="mb-6"
                 >
-                  <div className="inline-flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                      <span className="text-primary-foreground font-black text-xl">S</span>
-                    </div>
-                    <span className="text-2xl font-black tracking-tight">skool</span>
-                  </div>
+                  <img src={skoolLogo} alt="Skool" className="h-10 w-auto" />
                 </motion.div>
 
                 {/* Headline */}
@@ -98,7 +94,7 @@ const SkoolPopup = () => {
                   transition={{ delay: 0.3 }}
                   className="text-muted-foreground text-base md:text-lg mb-8"
                 >
-                  Master AI automation with real-world use cases.
+                  Master AI automation with real-world use cases, step-by-step tutorials, expert guidance, and a supportive community of innovators.
                 </motion.p>
 
                 {/* CTA Button */}
@@ -129,6 +125,9 @@ const SkoolPopup = () => {
                 </motion.button>
               </div>
 
+              {/* Divider */}
+              <div className="hidden md:block w-[1px] bg-[#019CC6]/50" />
+
               {/* Right Image */}
               <motion.div 
                 initial={{ opacity: 0, scale: 1.05 }}
@@ -141,8 +140,6 @@ const SkoolPopup = () => {
                   alt="AI Automation"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                {/* Gradient overlay for blend */}
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
               </motion.div>
             </div>
           </motion.div>
