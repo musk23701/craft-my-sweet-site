@@ -8,6 +8,9 @@ const SkoolPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Reset for testing - remove this line after testing
+    localStorage.removeItem("skool-popup-seen");
+    
     const hasSeenPopup = localStorage.getItem("skool-popup-seen");
     
     if (!hasSeenPopup) {
