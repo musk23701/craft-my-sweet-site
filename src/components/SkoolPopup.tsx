@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Users, Zap, ArrowRight } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 
 const SkoolPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if user has already seen the popup
     const hasSeenPopup = localStorage.getItem("skool-popup-seen");
     
     if (!hasSeenPopup) {
-      // Show popup after 3 seconds
       const timer = setTimeout(() => {
         setIsOpen(true);
       }, 3000);
@@ -41,133 +39,95 @@ const SkoolPopup = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100]"
           />
 
           {/* Popup */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-[95%] max-w-lg"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.85 }}
+            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-[90%] max-w-md"
           >
-            <div className="relative bg-gradient-to-br from-background via-background to-primary/5 border border-primary/20 rounded-2xl shadow-2xl overflow-hidden">
-              {/* Glow effects */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl" />
-              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
+            <div className="relative bg-background rounded-3xl shadow-2xl overflow-hidden border border-border/50">
+              {/* Gradient accent top */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-primary/80 to-primary/60" />
 
               {/* Close button */}
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors z-10"
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors z-10"
               >
-                <X className="w-4 h-4 text-muted-foreground" />
+                <X className="w-5 h-5 text-muted-foreground" />
               </button>
 
               {/* Content */}
-              <div className="relative p-6 sm:p-8">
-                {/* Badge */}
+              <div className="p-8 pt-10 text-center">
+                {/* Skool Logo */}
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4"
+                  transition={{ delay: 0.1 }}
+                  className="mb-6"
                 >
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-                    Free Community
-                  </span>
+                  <div className="inline-flex items-center justify-center gap-2">
+                    {/* Skool "S" icon */}
+                    <div className="w-12 h-12 rounded-xl bg-[#5865F2] flex items-center justify-center shadow-lg shadow-[#5865F2]/30">
+                      <span className="text-white font-black text-2xl">S</span>
+                    </div>
+                    <span className="text-3xl font-black tracking-tight">
+                      skool
+                    </span>
+                  </div>
                 </motion.div>
 
-                {/* Title */}
+                {/* Headline */}
                 <motion.h2
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-2xl sm:text-3xl font-bold mb-2"
+                  transition={{ delay: 0.2 }}
+                  className="text-2xl sm:text-3xl font-bold mb-3"
                 >
-                  Join the{" "}
-                  <span className="text-primary">AI Automation Lab</span>
+                  AI Automation Lab
                 </motion.h2>
 
-                {/* Description */}
+                {/* Tagline */}
                 <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-muted-foreground text-sm sm:text-base mb-8"
+                >
+                  Master AI automation with real-world use cases
+                </motion.p>
+
+                {/* CTA Button */}
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-muted-foreground mb-6"
-                >
-                  A practical lab for mastering AI automation through real-world
-                  use cases. Learn, build, and grow with like-minded automation
-                  enthusiasts.
-                </motion.p>
-
-                {/* Features */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="grid grid-cols-2 gap-3 mb-6"
-                >
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Zap className="w-4 h-4 text-primary" />
-                    </div>
-                    <span>Real-world use cases</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Users className="w-4 h-4 text-primary" />
-                    </div>
-                    <span>Active community</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-primary" />
-                    </div>
-                    <span>Expert insights</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ArrowRight className="w-4 h-4 text-primary" />
-                    </div>
-                    <span>Hands-on tutorials</span>
-                  </div>
-                </motion.div>
-
-                {/* CTA Buttons */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex flex-col sm:flex-row gap-3"
                 >
                   <Button
                     onClick={handleJoin}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-xl group"
+                    size="lg"
+                    className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold py-6 rounded-xl text-base group shadow-lg shadow-[#5865F2]/25"
                   >
-                    Join Free Now
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={handleClose}
-                    className="flex-1 py-6 rounded-xl border-muted-foreground/20"
-                  >
-                    Maybe Later
+                    Join Free Community
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </motion.div>
 
-                {/* Footer text */}
-                <motion.p
+                {/* Skip link */}
+                <motion.button
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7 }}
-                  className="text-xs text-muted-foreground text-center mt-4"
+                  transition={{ delay: 0.5 }}
+                  onClick={handleClose}
+                  className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Join 500+ automation enthusiasts • 100% Free
-                </motion.p>
+                  No thanks
+                </motion.button>
               </div>
             </div>
           </motion.div>
