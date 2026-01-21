@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import skoolImage from "@/assets/skool-popup-image.avif";
 import skoolLogo from "@/assets/skool-logo.png";
 
-const SkoolPopupWhite = () => {
+const SkoolPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -150,4 +150,4 @@ const SkoolPopupWhite = () => {
   );
 };
 
-export default SkoolPopupWhite;
+export default SkoolPopup;
