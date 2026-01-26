@@ -16,7 +16,7 @@ import BlogsPodcastsSection from "@/components/BlogsPodcastsSection";
 import LinkedInConnectSection from "@/components/LinkedInConnectSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
-import SkoolPopup from "@/components/SkoolPopup";
+// import SkoolPopup from "@/components/SkoolPopup"; // Temporarily disabled
 import { X, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -84,8 +84,8 @@ const Index = () => {
         </div>
       )}
 
-      {/* Skool Community Popup */}
-      <SkoolPopup />
+      {/* Skool Community Popup - Temporarily disabled */}
+      {/* <SkoolPopup /> */}
 
       {/* Hero Section with Sidebar - always visible */}
       <HeroSection />
