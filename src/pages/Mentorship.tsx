@@ -210,22 +210,22 @@ const Mentorship = () => {
             {/* Text side */}
             <div>
               <Reveal delay={100}>
-                <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-4">The Story</p>
+                <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-4">Meet Your Mentor</p>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-tight">
-                  I Tried Everything.<br />
-                  <span className="text-gradient">Then I Found What Works.</span>
+                  Not a Course.<br />
+                  <span className="text-gradient">A Real Partnership.</span>
                 </h2>
               </Reveal>
               <Reveal delay={200}>
                 <div className="space-y-4 text-muted-foreground text-sm md:text-base leading-relaxed">
                   <p>
-                    I spent years testing every AI tool, automation platform, and business model out there. Most of them were overhyped. Some were outright scams. But through relentless experimentation, I found the <strong className="text-foreground">exact systems that actually work.</strong>
+                    With 50+ businesses automated and hundreds of AI workflows deployed, I've built a <strong className="text-foreground">proven system</strong> that delivers real results — and now I'm sharing it directly with a small group of committed individuals.
                   </p>
                   <p>
-                    Now I've automated 50+ businesses, built hundreds of AI workflows, and helped clients save thousands of hours. And I want to teach you the <strong className="text-foreground">exact same systems</strong> — not theory, not courses, but real 1:1 mentorship.
+                    This isn't a pre-recorded course or a group coaching call with 500 people. This is <strong className="text-foreground">direct, 1:1 mentorship</strong> — tailored to your goals, your pace, and your business.
                   </p>
                   <p>
-                    If you're serious about mastering AI automation — whether to start a business, level up your career, or transform your company — <strong className="text-foreground">this is for you.</strong>
+                    Whether you want to launch an AI automation agency, add AI services to your existing business, or automate your own operations — <strong className="text-foreground">I'll walk you through every step.</strong>
                   </p>
                 </div>
               </Reveal>
