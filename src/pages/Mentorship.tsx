@@ -120,9 +120,8 @@ const Mentorship = () => {
           </Reveal>
 
           <Reveal delay={150}>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] mb-6 tracking-tight">
-              Your <span className="text-gradient italic">1:1</span> AI<br />
-              Automation Mentor
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-6 tracking-tight">
+              Your <span className="text-gradient italic">1:1</span> AI Automation Mentor
             </h1>
           </Reveal>
 
