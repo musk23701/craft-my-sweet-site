@@ -16,6 +16,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Booking from "./pages/Booking";
 import NotFound from "./pages/NotFound";
+import Mentorship from "./pages/Mentorship";
 import AdminLogin from "./pages/AdminLogin";
 import Dashboard from "./pages/admin/Dashboard";
 import BlogsAdmin from "./pages/admin/BlogsAdmin";
@@ -55,6 +56,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/booking" element={<Booking />} />
+            <Route path="/mentorship" element={<Mentorship />} />
             <Route path="/login" element={<AdminLogin />} />
             <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/admin/blogs" element={<ProtectedRoute><BlogsAdmin /></ProtectedRoute>} />
