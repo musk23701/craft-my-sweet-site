@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>1:1 AI Automation Mentorship | Automind Labs</title>
+<meta name="description" content="Get personalized 1:1 mentorship to master AI automation. Learn the exact systems, workflows, and strategies we use to deliver results for 50+ businesses." />
+<link rel="canonical" href="/mentorship" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:0 0% 0%;--fg:0 0% 100%;--card:0 0% 3%;--card-fg:0 0% 100%;
+  --primary:193 100% 43%;--primary-fg:0 0% 100%;
+  --secondary:0 0% 8%;--secondary-fg:0 0% 100%;
+  --muted:0 0% 10%;--muted-fg:0 0% 70%;
+  --border:0 0% 15%;--radius:0.75rem;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',system-ui,sans-serif;background:hsl(var(--bg));color:hsl(var(--fg));-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:inherit}
+
+/* ========== UTILITIES ========== */
+.text-gradient{background:linear-gradient(135deg,hsl(var(--fg)) 0%,hsl(var(--primary)) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.text-primary{color:hsl(var(--primary))}
+.text-muted{color:hsl(var(--muted-fg))}
+.bg-primary{background:hsl(var(--primary))}
+.bg-card{background:hsl(var(--card))}
+
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.container-sm{max-width:900px;margin:0 auto;padding:0 24px}
+.container-xs{max-width:640px;margin:0 auto;padding:0 24px}
+
+.section{padding:80px 24px}
+@media(min-width:768px){.section{padding:112px 24px}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;border:none;border-radius:9999px;transition:all .3s;font-size:14px}
+.btn-primary{background:hsl(var(--primary));color:hsl(var(--primary-fg));padding:14px 40px;font-size:18px;box-shadow:0 0 20px hsl(var(--primary)/.3)}
+.btn-primary:hover{background:hsl(var(--primary)/.9)}
+.btn-sm{padding:8px 24px;font-size:13px}
+.btn-outline{background:transparent;border:1px solid hsl(var(--primary)/.4);color:hsl(var(--primary));padding:10px 24px}
+.btn-outline:hover{background:hsl(var(--primary)/.1)}
+
+.badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:9999px;border:1px solid hsl(var(--primary)/.4);background:hsl(var(--primary)/.1);backdrop-filter:blur(8px);color:hsl(var(--primary));font-size:14px;font-weight:600}
+
+.grid-2{display:grid;gap:24px}
+@media(min-width:768px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+.grid-3{display:grid;gap:20px}
+@media(min-width:640px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+.grid-4{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+@media(min-width:768px){.grid-4{grid-template-columns:repeat(4,1fr)}}
+
+.text-center{text-align:center}
+.uppercase{text-transform:uppercase}
+.tracking-wide{letter-spacing:.1em}
+.font-black{font-weight:900}
+.font-bold{font-weight:700}
+.font-semibold{font-weight:600}
+.italic{font-style:italic}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Pulse glow */
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px hsl(var(--primary)/.3)}50%{box-shadow:0 0 40px hsl(var(--primary)/.6)}}
+.pulse-glow{animation:pulseGlow 2s ease-in-out infinite}
+
+@keyframes bounce{0%,100%{transform:translateY(0) translateX(-50%)}50%{transform:translateY(-10px) translateX(-50%)}}
+
+/* ========== NAV ========== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:hsl(var(--bg)/.6);backdrop-filter:blur(24px);border-bottom:1px solid hsl(var(--border)/.2)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{height:32px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-spots{font-size:12px;color:hsl(var(--muted-fg))}
+.nav-spots strong{color:hsl(var(--primary))}
+@media(max-width:639px){.nav-spots{display:none}}
+
+/* ========== HERO ========== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-bg .overlay1{position:absolute;inset:0;background:linear-gradient(to bottom,hsl(var(--bg)/.7),hsl(var(--bg)/.8),hsl(var(--bg)))}
+.hero-bg .overlay2{position:absolute;inset:0;background:linear-gradient(to right,hsl(var(--bg)/.6),transparent)}
+.hero-glow1{position:absolute;top:25%;left:25%;width:384px;height:384px;background:hsl(var(--primary)/.15);border-radius:50%;filter:blur(150px)}
+.hero-glow2{position:absolute;bottom:25%;right:25%;width:288px;height:288px;background:hsl(var(--primary)/.1);border-radius:50%;filter:blur(120px)}
+.hero-content{position:relative;z-index:10;max-width:1000px;margin:0 auto;padding:96px 24px 80px;text-align:center}
+.hero h1{font-size:clamp(1.875rem,5vw,3.75rem);font-weight:900;line-height:1.1;margin-bottom:24px;letter-spacing:-.02em}
+.hero-desc{font-size:clamp(1rem,2vw,1.5rem);color:hsl(var(--muted-fg));max-width:640px;margin:0 auto 40px;line-height:1.6;font-weight:300}
+
+/* Video */
+.hero-video{max-width:768px;margin:0 auto 40px;border-radius:16px;overflow:hidden;border:1px solid hsl(var(--border)/.3);box-shadow:0 25px 50px -12px hsl(var(--primary)/.2);aspect-ratio:16/9;position:relative;background:hsl(0 0% 0%/.6);backdrop-filter:blur(8px)}
+.hero-video img{width:100%;height:100%;object-fit:cover;opacity:.6;transition:opacity .5s}
+.hero-video:hover img{opacity:.4}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:hsl(var(--primary)/.9);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px hsl(var(--primary)/.4);transition:transform .3s}
+.hero-video:hover .play-btn{transform:translate(-50%,-50%) scale(1.1)}
+.play-icon{width:0;height:0;border-style:solid;border-width:14px 0 14px 24px;border-color:transparent transparent transparent hsl(var(--primary-fg));margin-left:4px}
+.hero-video-label{position:absolute;bottom:16px;left:16px;right:16px;text-align:left;font-size:12px;color:hsl(var(--fg)/.7);font-weight:500}
+
+.hero-cta-note{font-size:14px;color:hsl(var(--muted-fg));margin-top:20px}
+.hero-cta-note strong{color:hsl(var(--primary));font-weight:700}
+
+.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);animation:bounce 2s infinite}
+.scroll-indicator div{width:1px;height:32px;background:linear-gradient(to bottom,transparent,hsl(var(--muted-fg)/.3))}
+
+/* ========== STATS ========== */
+.stats{padding:24px 0;border-top:1px solid hsl(var(--border)/.2);border-bottom:1px solid hsl(var(--border)/.2);background:hsl(var(--card)/.3)}
+.stat-value{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:900;color:hsl(var(--primary))}
+.stat-label{font-size:clamp(.7rem,1.2vw,.875rem);color:hsl(var(--muted-fg));margin-top:4px}
+
+/* ========== MENTOR SECTION ========== */
+.mentor-section{position:relative;overflow:hidden}
+.mentor-img-wrap{position:relative}
+.mentor-img-wrap img{border-radius:24px;width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid hsl(var(--border)/.3);box-shadow:0 25px 50px -12px rgba(0,0,0,.5)}
+.mentor-float-card{position:absolute;bottom:-24px;right:-16px;background:hsl(var(--card));border:1px solid hsl(var(--border)/.5);border-radius:16px;padding:16px;box-shadow:0 20px 40px rgba(0,0,0,.3);backdrop-filter:blur(8px);max-width:200px}
+@media(min-width:768px){.mentor-float-card{right:-32px}}
+.mentor-float-icon{width:32px;height:32px;border-radius:50%;background:hsl(var(--primary)/.2);display:flex;align-items:center;justify-content:center}
+.mentor-grid{display:grid;gap:48px;align-items:center}
+@media(min-width:1024px){.mentor-grid{grid-template-columns:1fr 1fr;gap:64px}}
+.label{color:hsl(var(--primary));font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.section-title{font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;line-height:1.2;margin-bottom:24px}
+.mentor-text p{color:hsl(var(--muted-fg));font-size:clamp(.875rem,1.5vw,1rem);line-height:1.7;margin-bottom:16px}
+.mentor-text strong{color:hsl(var(--fg))}
+
+/* ========== HOW IT WORKS ========== */
+.how-section{background:linear-gradient(to bottom,hsl(var(--secondary)/.3),hsl(var(--bg)));position:relative;overflow:hidden}
+.how-section .dot-bg{position:absolute;inset:0;opacity:.03;background-image:radial-gradient(circle at 1px 1px,hsl(var(--fg)) 1px,transparent 0);background-size:40px 40px}
+.how-card{position:relative;padding:28px 32px;border-radius:16px;border:1px solid hsl(var(--border)/.3);overflow:hidden;height:100%;transition:border-color .5s}
+.how-card:hover{border-color:hsl(var(--primary)/.3)}
+.how-card .big-num{position:absolute;top:0;right:0;font-size:80px;font-weight:900;color:hsl(var(--fg)/.03);line-height:1}
+.how-card-icon{width:56px;height:56px;border-radius:16px;background:hsl(var(--bg)/.8);border:1px solid hsl(var(--border)/.5);display:flex;align-items:center;justify-content:center;color:hsl(var(--primary));margin-bottom:20px;transition:transform .3s;font-size:28px}
+.how-card:hover .how-card-icon{transform:scale(1.1)}
+.how-card h3{font-size:clamp(1rem,1.5vw,1.25rem);font-weight:700;margin-bottom:12px}
+.how-card p{color:hsl(var(--muted-fg));font-size:14px;line-height:1.6;margin-bottom:20px}
+.how-tag{display:inline-block;font-size:12px;font-weight:700;color:hsl(var(--primary));background:hsl(var(--primary)/.1);padding:6px 16px;border-radius:9999px}
+
+.how-card.grad1{background:linear-gradient(135deg,hsl(var(--primary)/.2),hsl(var(--primary)/.05))}
+.how-card.grad2{background:linear-gradient(135deg,hsl(210 100% 50%/.2),hsl(210 100% 50%/.05))}
+.how-card.grad3{background:linear-gradient(135deg,hsl(150 80% 40%/.2),hsl(150 80% 40%/.05))}
+.how-card.grad4{background:linear-gradient(135deg,hsl(40 95% 55%/.2),hsl(40 95% 55%/.05))}
+
+/* ========== WORKFLOW ========== */
+.workflow-grid{display:grid;gap:48px;align-items:center}
+@media(min-width:1024px){.workflow-grid{grid-template-columns:1fr 1fr;gap:48px}}
+.workflow-item{display:flex;align-items:center;gap:16px;padding:12px;border-radius:12px;transition:background .3s}
+.workflow-item:hover{background:hsl(var(--secondary)/.3)}
+.workflow-icon{width:40px;height:40px;border-radius:12px;background:hsl(var(--primary)/.1);display:flex;align-items:center;justify-content:center;color:hsl(var(--primary));flex-shrink:0;font-size:20px}
+.workflow-img{border-radius:24px;overflow:hidden;border:1px solid hsl(var(--border)/.3);box-shadow:0 25px 50px -12px hsl(var(--primary)/.1)}
+.workflow-img img{width:100%;aspect-ratio:1;object-fit:cover}
+
+/* ========== ROADMAP ========== */
+.roadmap-section{background:linear-gradient(to bottom,hsl(var(--secondary)/.3),hsl(var(--bg)))}
+.roadmap{position:relative}
+.roadmap-line{position:absolute;left:22px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,hsl(var(--primary)),hsl(var(--primary)/.4),transparent)}
+@media(min-width:768px){.roadmap-line{left:30px}}
+.roadmap-step{position:relative;padding-left:56px;padding-bottom:40px}
+@media(min-width:768px){.roadmap-step{padding-left:80px}}
+.roadmap-step:last-child{padding-bottom:0}
+.roadmap-dot{position:absolute;left:12px;width:20px;height:20px;border-radius:50%;border:4px solid hsl(var(--bg));box-shadow:0 4px 10px rgba(0,0,0,.3)}
+@media(min-width:768px){.roadmap-dot{left:20px}}
+.dot-primary{background:hsl(var(--primary))}
+.dot-green{background:hsl(150 80% 45%)}
+.dot-amber{background:hsl(40 95% 55%)}
+.roadmap-time{display:inline-block;font-size:12px;font-weight:700;color:hsl(var(--primary));text-transform:uppercase;letter-spacing:.05em;background:hsl(var(--primary)/.1);padding:4px 12px;border-radius:9999px}
+.roadmap-step h3{font-size:clamp(.9rem,1.5vw,1.125rem);font-weight:700;margin:8px 0 4px}
+.roadmap-step p{font-size:14px;color:hsl(var(--muted-fg))}
+
+/* ========== WHAT YOU GET ========== */
+.feature-card{padding:24px;border-radius:16px;border:1px solid hsl(var(--border)/.3);background:hsl(var(--card)/.2);height:100%;transition:all .3s}
+.feature-card:hover{background:hsl(var(--card)/.6);border-color:hsl(var(--border)/.6)}
+.feature-icon{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:24px;transition:transform .3s}
+.feature-card:hover .feature-icon{transform:scale(1.1)}
+.fi-primary{color:hsl(var(--primary));background:hsl(var(--primary)/.1)}
+.fi-blue{color:hsl(210 90% 65%);background:hsl(210 90% 50%/.1)}
+.fi-green{color:hsl(150 70% 55%);background:hsl(150 70% 45%/.1)}
+.fi-amber{color:hsl(40 90% 55%);background:hsl(40 90% 50%/.1)}
+.fi-purple{color:hsl(270 70% 65%);background:hsl(270 70% 55%/.1)}
+.fi-rose{color:hsl(350 70% 60%);background:hsl(350 70% 55%/.1)}
+.feature-card h3{font-weight:700;font-size:clamp(.8rem,1.2vw,1rem);margin-bottom:8px}
+.feature-card p{color:hsl(var(--muted-fg));font-size:clamp(.75rem,1.1vw,.875rem);line-height:1.5}
+
+/* ========== TESTIMONIALS ========== */
+.testimonials-section{background:linear-gradient(to bottom,hsl(var(--secondary)/.3),hsl(var(--bg)));position:relative;overflow:hidden}
+.testimonials-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:500px;background:hsl(var(--primary)/.05);border-radius:50%;filter:blur(200px)}
+.featured-testimonial{border-radius:24px;border:1px solid hsl(var(--primary)/.2);background:linear-gradient(135deg,hsl(var(--primary)/.05),transparent);padding:32px;position:relative;overflow:hidden;margin-bottom:40px}
+@media(min-width:768px){.featured-testimonial{padding:48px}}
+.featured-testimonial .big-quote{position:absolute;top:24px;right:32px;font-size:120px;line-height:1;font-family:serif;color:hsl(var(--primary)/.1)}
+.stars{display:flex;gap:4px;margin-bottom:24px}
+.star{width:20px;height:20px;color:hsl(var(--primary))}
+.star svg{fill:currentColor}
+.featured-testimonial blockquote{font-size:clamp(1rem,2vw,1.25rem);line-height:1.6;margin-bottom:32px;font-weight:500;position:relative;z-index:1}
+.featured-testimonial blockquote strong{color:hsl(var(--primary));font-weight:700}
+.avatar-circle{width:56px;height:56px;border-radius:50%;background:hsl(var(--primary)/.2);display:flex;align-items:center;justify-content:center;color:hsl(var(--primary));font-weight:700;font-size:18px;flex-shrink:0}
+.avatar-sm{width:36px;height:36px;font-size:12px;background:hsl(var(--primary)/.15)}
+.testimonial-author{display:flex;align-items:center;gap:16px}
+
+.win-card{border-radius:16px;overflow:hidden;border:1px solid hsl(var(--border)/.3);background:hsl(var(--card)/.4);transition:all .3s}
+.win-card:hover{border-color:hsl(var(--primary)/.2)}
+.win-card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .5s}
+.win-card:hover img{transform:scale(1.05)}
+.win-card-body{padding:16px}
+.win-badge{display:inline-block;font-size:12px;font-weight:700;color:hsl(var(--primary));background:hsl(var(--primary)/.1);padding:4px 12px;border-radius:9999px}
+.win-card-body p{font-size:14px;font-weight:600;margin-top:8px}
+
+.testimonial-card{padding:24px;border-radius:16px;border:1px solid hsl(var(--border)/.3);background:hsl(var(--card)/.3)}
+.testimonial-card .stars{margin-bottom:12px}
+.testimonial-card .stars .star{width:14px;height:14px}
+.testimonial-card blockquote{font-size:14px;color:hsl(var(--muted-fg));line-height:1.6;margin-bottom:16px;font-style:italic}
+
+/* ========== PRICING ========== */
+.pricing-card{border-radius:24px;border:2px solid hsl(var(--primary)/.4);background:linear-gradient(to bottom,hsl(var(--card)/.8),hsl(var(--card)/.4));padding:32px;position:relative;overflow:hidden;box-shadow:0 25px 50px -12px hsl(var(--primary)/.1)}
+@media(min-width:768px){.pricing-card{padding:40px}}
+.pricing-glow{position:absolute;top:-80px;right:-80px;width:160px;height:160px;background:hsl(var(--primary)/.1);border-radius:50%;filter:blur(80px)}
+.pricing-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:9999px;background:hsl(var(--primary)/.1);color:hsl(var(--primary));font-size:12px;font-weight:700;margin-bottom:24px}
+.pricing-price{font-size:clamp(3rem,6vw,4.5rem);font-weight:900;margin-bottom:8px}
+.pricing-note{font-size:14px;color:hsl(var(--muted-fg));margin-bottom:32px}
+.pricing-list{list-style:none;text-align:left;margin-bottom:32px}
+.pricing-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;margin-bottom:14px}
+.check-icon{width:20px;height:20px;color:hsl(var(--primary));flex-shrink:0;margin-top:2px}
+.pricing-guarantee{font-size:12px;color:hsl(var(--muted-fg));margin-top:16px;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* ========== FAQ ========== */
+.faq-section{background:hsl(var(--secondary)/.2)}
+.faq-item{border:1px solid hsl(var(--border)/.4);border-radius:16px;overflow:hidden;background:hsl(var(--card)/.3);transition:border-color .3s;margin-bottom:12px}
+.faq-item:hover{border-color:hsl(var(--primary)/.2)}
+.faq-btn{width:100%;display:flex;align-items:center;gap:16px;padding:20px 24px;text-align:left;background:none;border:none;color:hsl(var(--fg))}
+.faq-num{color:hsl(var(--primary));font-weight:900;font-size:14px;flex-shrink:0}
+.faq-question{flex:1;font-weight:600;font-size:clamp(.8rem,1.3vw,1rem)}
+.faq-chevron{width:20px;height:20px;flex-shrink:0;color:hsl(var(--primary));transition:transform .3s}
+.faq-item.open .faq-chevron{transform:rotate(180deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-item.open .faq-answer{max-height:200px}
+.faq-answer p{padding:0 24px 20px 56px;color:hsl(var(--muted-fg));font-size:14px;line-height:1.6}
+
+/* ========== CTA ========== */
+.cta-section{position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0}
+.cta-bg img{width:100%;height:100%;object-fit:cover;opacity:.1}
+.cta-bg .overlay{position:absolute;inset:0;background:linear-gradient(to top,hsl(var(--bg)),hsl(var(--bg)/.95),hsl(var(--bg)/.8))}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:hsl(var(--primary)/.1);border-radius:50%;filter:blur(200px)}
+.step-grid{display:grid;gap:32px;margin-bottom:56px}
+@media(min-width:640px){.step-grid{grid-template-columns:repeat(3,1fr)}}
+.step-icon{width:64px;height:64px;border-radius:16px;background:hsl(var(--primary)/.1);border:1px solid hsl(var(--primary)/.3);color:hsl(var(--primary));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:20px}
+
+/* ========== FOOTER ========== */
+.footer{padding:40px 24px;border-top:1px solid hsl(var(--border)/.2);text-align:center}
+.footer img{height:28px;margin:0 auto 16px;opacity:.6;transition:opacity .3s}
+.footer img:hover{opacity:1}
+.footer p{font-size:12px;color:hsl(var(--muted-fg))}
+
+/* SVG icons inline */
+.icon{display:inline-block;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/"><img src="https://craft-my-sweet-site.lovable.app/assets/automind-labs-logo-new-BeSBMvxu.png" alt="Automind Labs" class="nav-logo" /></a>
+    <div class="nav-right">
+      <span class="nav-spots">Only <strong>3 spots</strong> left</span>
+      <a href="#apply" class="btn btn-sm bg-primary" style="color:hsl(var(--primary-fg))">Apply Now →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80" alt="" />
+    <div class="overlay1"></div>
+    <div class="overlay2"></div>
+  </div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-content">
+    <div class="reveal">
+      <div class="badge" style="margin-bottom:32px">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Limited Spots · Money-Back Guarantee
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h1>Your <span class="text-gradient italic">1:1</span> AI Automation Mentor</h1>
+    </div>
+
+    <div class="reveal">
+      <p class="hero-desc">Get hands-on, personalized guidance to build real AI automation systems — with someone who's already done it for 50+ businesses.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="hero-video">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" alt="Mentorship preview" />
+        <div class="play-btn"><div class="play-icon"></div></div>
+        <p class="hero-video-label">Watch: How the 1:1 mentorship program works</p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <a href="#apply" class="btn btn-primary pulse-glow">Book a Free Discovery Call →</a>
+      <p class="hero-cta-note">Only <strong>3 spots</strong> available this month</p>
+    </div>
+  </div>
+
+  <div class="scroll-indicator"><div></div></div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="grid-4 text-center">
+      <div style="padding:16px 0">
+        <p class="stat-value" data-target="50">50+</p>
+        <p class="stat-label">Businesses Automated</p>
+      </div>
+      <div style="padding:16px 0">
+        <p class="stat-value" data-target="200">200+</p>
+        <p class="stat-label">Workflows Built</p>
+      </div>
+      <div style="padding:16px 0">
+        <p class="stat-value" data-target="95">95%</p>
+        <p class="stat-label">Client Satisfaction</p>
+      </div>
+      <div style="padding:16px 0">
+        <p class="stat-value" data-target="10">10x</p>
+        <p class="stat-label">Average ROI</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEET YOUR MENTOR -->
+<section class="section mentor-section">
+  <div class="container">
+    <div class="mentor-grid">
+      <div class="reveal">
+        <div class="mentor-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Your mentor" />
+          <div class="mentor-float-card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div class="mentor-float-icon">
+                <svg width="16" height="16" fill="none" stroke="hsl(193,100%,43%)" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span style="font-size:12px;font-weight:700">50+ Clients</span>
+            </div>
+            <p style="font-size:10px;color:hsl(var(--muted-fg))">Automating businesses across the USA</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="reveal">
+          <p class="label">Meet Your Mentor</p>
+          <h2 class="section-title">Not a Course.<br><span class="text-gradient">A Real Partnership.</span></h2>
+        </div>
+        <div class="reveal mentor-text">
+          <p>With 50+ businesses automated and hundreds of AI workflows deployed, I've built a <strong>proven system</strong> that delivers real results — and now I'm sharing it directly with a small group of committed individuals.</p>
+          <p>This isn't a pre-recorded course or a group coaching call with 500 people. This is <strong>direct, 1:1 mentorship</strong> — tailored to your goals, your pace, and your business.</p>
+          <p>Whether you want to launch an AI automation agency, add AI services to your existing business, or automate your own operations — <strong>I'll walk you through every step.</strong></p>
+        </div>
+        <div class="reveal">
+          <a href="#apply" class="btn btn-outline" style="margin-top:32px">Get Started →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="dot-bg"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="reveal text-center" style="margin-bottom:64px">
+      <p class="label">The Program</p>
+      <h2 class="section-title" style="margin-bottom:16px">How It Works</h2>
+      <p class="text-muted" style="max-width:560px;margin:0 auto">A structured mentorship designed to get you real results — not just information.</p>
+    </div>
+    <div class="grid-2">
+      <div class="reveal">
+        <div class="how-card grad1">
+          <div class="big-num">01</div>
+          <div style="position:relative;z-index:1">
+            <div class="how-card-icon">📅</div>
+            <h3>1:1 Onboarding Call</h3>
+            <p>Deep-dive session to map your goals, assess skills, and build your personalized action plan.</p>
+            <span class="how-tag">Day 1</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="how-card grad2">
+          <div class="big-num">02</div>
+          <div style="position:relative;z-index:1">
+            <div class="how-card-icon">👥</div>
+            <h3>Weekly Inner Circle</h3>
+            <p>Live group sessions — Q&A, hot seats, accountability, and real-time problem solving.</p>
+            <span class="how-tag">Every Week</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="how-card grad3">
+          <div class="big-num">03</div>
+          <div style="position:relative;z-index:1">
+            <div class="how-card-icon">🎯</div>
+            <h3>Monthly 1:1 Check-ins</h3>
+            <p>Review progress, troubleshoot blockers, and adjust your roadmap as you grow.</p>
+            <span class="how-tag">Monthly</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="how-card grad4">
+          <div class="big-num">04</div>
+          <div style="position:relative;z-index:1">
+            <div class="how-card-icon">🛡️</div>
+            <h3>Money-Back Guarantee</h3>
+            <p>Put in the work and don't see results? Full refund. Zero risk, zero questions.</p>
+            <span class="how-tag">100% Risk Free</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU'LL BUILD -->
+<section class="section">
+  <div class="container">
+    <div class="workflow-grid">
+      <div>
+        <div class="reveal">
+          <p class="label">What You'll Build</p>
+          <h2 class="section-title">Real AI Systems. Not Just Theory.</h2>
+        </div>
+        <div class="reveal">
+          <p class="text-muted" style="margin-bottom:32px;line-height:1.7">You'll get hands-on experience building the exact same automation workflows that power real businesses — CRM automations, AI chatbots, lead generation systems, and more.</p>
+        </div>
+        <div class="reveal"><div class="workflow-item"><div class="workflow-icon">🤖</div><p style="font-size:14px;font-weight:500">Pre-built AI agents you can deploy immediately</p></div></div>
+        <div class="reveal"><div class="workflow-item"><div class="workflow-icon">⚡</div><p style="font-size:14px;font-weight:500">Production-ready automation templates</p></div></div>
+        <div class="reveal"><div class="workflow-item"><div class="workflow-icon">📈</div><p style="font-size:14px;font-weight:500">Client acquisition & scaling playbooks</p></div></div>
+        <div class="reveal"><div class="workflow-item"><div class="workflow-icon">📖</div><p style="font-size:14px;font-weight:500">Step-by-step implementation guides</p></div></div>
+      </div>
+      <div class="reveal">
+        <div class="workflow-img">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="AI Automation Workflow" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section roadmap-section">
+  <div class="container-sm">
+    <div class="reveal text-center" style="margin-bottom:64px">
+      <p class="label">Your Journey</p>
+      <h2 class="section-title" style="margin-bottom:16px">The Roadmap</h2>
+      <p class="text-muted" style="max-width:480px;margin:0 auto">From complete beginner to confidently building and delivering AI automation systems.</p>
+    </div>
+    <div class="roadmap">
+      <div class="roadmap-line"></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-primary"></div><span class="roadmap-time">Day 1</span><h3>1:1 Onboarding</h3><p>Goal setting, skill assessment, and your personalized action plan.</p></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-primary"></div><span class="roadmap-time">Weeks 1–4</span><h3>Foundation Phase</h3><p>Build your first AI automations. Understand core tools. Start delivering value.</p></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-green"></div><span class="roadmap-time">Day 30</span><h3>30-Day Milestone</h3><p>Review progress, celebrate first wins, adjust strategy.</p></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-primary"></div><span class="roadmap-time">Weeks 5–8</span><h3>Advanced Systems</h3><p>Complex multi-step automations, client systems, and scaling.</p></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-amber"></div><span class="roadmap-time">Day 60</span><h3>60-Day Review</h3><p>Deep-dive on what's working. Double down on your strengths.</p></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-primary"></div><span class="roadmap-time">Weeks 9–12</span><h3>Mastery Phase</h3><p>Build sustainable, repeatable systems. Graduate with confidence.</p></div>
+      <div class="reveal roadmap-step"><div class="roadmap-dot dot-green"></div><span class="roadmap-time">Day 90</span><h3>Final Review</h3><p>Celebrate your journey. Plan for continued growth.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="section">
+  <div class="container" style="max-width:1000px">
+    <div class="reveal text-center" style="margin-bottom:64px">
+      <p class="label">Everything Included</p>
+      <h2 class="section-title">What You Get</h2>
+    </div>
+    <div class="grid-3">
+      <div class="reveal"><div class="feature-card"><div class="feature-icon fi-primary">📅</div><h3>1:1 Onboarding + Check-ins</h3><p>Personalized coaching at every milestone.</p></div></div>
+      <div class="reveal"><div class="feature-card"><div class="feature-icon fi-blue">👥</div><h3>Weekly Group Sessions</h3><p>Live Q&A, accountability, and strategy.</p></div></div>
+      <div class="reveal"><div class="feature-card"><div class="feature-icon fi-green">📖</div><h3>Full Automation Roadmap</h3><p>Step-by-step playbook to master AI.</p></div></div>
+      <div class="reveal"><div class="feature-card"><div class="feature-icon fi-amber">🤖</div><h3>Pre-Built AI Agents</h3><p>Deploy production-ready systems instantly.</p></div></div>
+      <div class="reveal"><div class="feature-card"><div class="feature-icon fi-purple">💬</div><h3>Async Support</h3><p>Get unstuck anytime with direct access.</p></div></div>
+      <div class="reveal"><div class="feature-card"><div class="feature-icon fi-rose">🛡️</div><h3>Money-Back Guarantee</h3><p>Full refund if you don't see results.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+  <div class="testimonials-glow"></div>
+  <div class="container" style="max-width:1000px;position:relative;z-index:1">
+    <div class="reveal text-center" style="margin-bottom:64px">
+      <p class="label">Real Results</p>
+      <h2 class="section-title" style="margin-bottom:16px">From Mentee to Expert</h2>
+      <p class="text-muted" style="max-width:480px;margin:0 auto">Real stories from real people who went through the program.</p>
+    </div>
+
+    <!-- Featured -->
+    <div class="reveal featured-testimonial">
+      <div class="big-quote">"</div>
+      <div class="stars">
+        <span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        <span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        <span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        <span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        <span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+      </div>
+      <blockquote>"The mentorship completely changed how I approach AI automation. Having someone who's already done it guide you through the exact steps — not just theory but <strong>real implementation</strong> — is invaluable. I went from struggling with basic automations to confidently building complex workflows for clients."</blockquote>
+      <div class="testimonial-author">
+        <div class="avatar-circle">JD</div>
+        <div><p style="font-weight:700">John D.</p><p style="font-size:14px;color:hsl(var(--muted-fg))">1:1 Mentee — Now running AI automation services</p></div>
+      </div>
+    </div>
+
+    <!-- Win screenshots -->
+    <div class="reveal text-center" style="margin-bottom:32px">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:8px">1:1 Chat Wins & Success Stories</h3>
+      <p style="font-size:14px;color:hsl(var(--muted-fg))">Real screenshots from mentorship conversations</p>
+    </div>
+    <div class="grid-3">
+      <div class="reveal"><div class="win-card"><div style="overflow:hidden"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="First AI Client Win" /></div><div class="win-card-body"><span class="win-badge">Mentee Win 🎉</span><p>First AI Client Win</p></div></div></div>
+      <div class="reveal"><div class="win-card"><div style="overflow:hidden"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="$5K Project Landed" /></div><div class="win-card-body"><span class="win-badge">Revenue Milestone 💰</span><p>$5K Project Landed</p></div></div></div>
+      <div class="reveal"><div class="win-card"><div style="overflow:hidden"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Full Workflow Automated" /></div><div class="win-card-body"><span class="win-badge">System Built 🚀</span><p>Full Workflow Automated</p></div></div></div>
+    </div>
+
+    <!-- More testimonials -->
+    <div class="grid-2" style="margin-top:32px">
+      <div class="reveal"><div class="testimonial-card">
+        <div class="stars"><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span></div>
+        <blockquote>"Went from zero knowledge to building automations for paying clients in 6 weeks. The 1:1 guidance made all the difference."</blockquote>
+        <div class="testimonial-author"><div class="avatar-circle avatar-sm">MR</div><p style="font-weight:600;font-size:14px">Mark R.</p></div>
+      </div></div>
+      <div class="reveal"><div class="testimonial-card">
+        <div class="stars"><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span></div>
+        <blockquote>"Best investment I've made. The pre-built templates alone saved me months. Having a mentor to review my work? Priceless."</blockquote>
+        <div class="testimonial-author"><div class="avatar-circle avatar-sm">SK</div><p style="font-weight:600;font-size:14px">Sarah K.</p></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" style="position:relative">
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent,hsl(var(--primary)/.02),transparent)"></div>
+  <div class="container-xs text-center" style="position:relative;z-index:1">
+    <div class="reveal">
+      <p class="label">Investment</p>
+      <h2 class="section-title" style="margin-bottom:48px">One Price. Everything Included.</h2>
+    </div>
+    <div class="reveal">
+      <div class="pricing-card">
+        <div class="pricing-glow"></div>
+        <div class="pricing-badge">🏆 MOST POPULAR</div>
+        <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">1:1 Mentorship Program</h3>
+        <p style="font-size:14px;color:hsl(var(--muted-fg));margin-bottom:32px">Everything you need to master AI automation</p>
+        <div style="margin-bottom:32px">
+          <span class="pricing-price text-gradient">$X,XXX</span>
+          <p class="pricing-note">One-time investment</p>
+        </div>
+        <ul class="pricing-list">
+          <li><span class="check-icon" style="color:hsl(var(--primary))">✓</span> 1:1 onboarding + monthly check-in calls</li>
+          <li><span class="check-icon" style="color:hsl(var(--primary))">✓</span> Weekly Inner Circle group sessions</li>
+          <li><span class="check-icon" style="color:hsl(var(--primary))">✓</span> Complete AI automation roadmap</li>
+          <li><span class="check-icon" style="color:hsl(var(--primary))">✓</span> Pre-built AI agents & templates</li>
+          <li><span class="check-icon" style="color:hsl(var(--primary))">✓</span> Async support & community access</li>
+          <li><span class="check-icon" style="color:hsl(var(--primary))">✓</span> Money-back guarantee</li>
+        </ul>
+        <a href="#apply" class="btn btn-primary" style="width:100%;padding:20px;font-size:16px;box-shadow:0 8px 30px hsl(var(--primary)/.3)">Apply Now →</a>
+        <p class="pricing-guarantee">🛡️ Risk-free — money-back guarantee included</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section">
+  <div class="container-sm">
+    <div class="reveal text-center" style="margin-bottom:48px">
+      <p class="label">Common Questions</p>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+    <div class="faq-item"><button class="faq-btn" onclick="this.parentElement.classList.toggle('open')"><span class="faq-num">01</span><span class="faq-question">Who is this mentorship for?</span><svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-answer"><p>Anyone serious about mastering AI automation — beginners, freelancers adding AI services, or business owners wanting to automate operations. If you're willing to put in the work, this program meets you where you are.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="this.parentElement.classList.toggle('open')"><span class="faq-num">02</span><span class="faq-question">How much time do I need per week?</span><svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-answer"><p>Plan for 5–10 hours per week including the weekly group session, roadmap material, and practice. Designed to work alongside a full-time job.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="this.parentElement.classList.toggle('open')"><span class="faq-num">03</span><span class="faq-question">Do I need coding experience?</span><svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-answer"><p>No. The program includes guides, templates, and pre-built systems you can use without coding. Technical skills let you move faster, but aren't required.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="this.parentElement.classList.toggle('open')"><span class="faq-num">04</span><span class="faq-question">What's the money-back guarantee?</span><svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-answer"><p>Complete the program, do the work, follow the roadmap — if you don't see meaningful results, full refund. No hoops, no fine print.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="this.parentElement.classList.toggle('open')"><span class="faq-num">05</span><span class="faq-question">What happens after the program ends?</span><svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-answer"><p>You keep lifetime access to all resources, templates, and community. The structured calls end, but everything you've built is yours forever.</p></div></div>
+    <div class="faq-item"><button class="faq-btn" onclick="this.parentElement.classList.toggle('open')"><span class="faq-num">06</span><span class="faq-question">How is this different from YouTube courses?</span><svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-answer"><p>Courses give information. This gives 1:1 mentorship, structured accountability, personalized feedback, and the actual systems running in real businesses.</p></div></div>
+  </div>
+</section>
+
+<!-- CTA / APPLY -->
+<section id="apply" class="section cta-section">
+  <div class="cta-bg">
+    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80" alt="" />
+    <div class="overlay"></div>
+  </div>
+  <div class="cta-glow"></div>
+  <div class="container-xs text-center" style="position:relative;z-index:1">
+    <div class="reveal">
+      <p class="label">3 Simple Steps</p>
+      <h2 class="section-title" style="margin-bottom:48px">Ready to Start?</h2>
+    </div>
+    <div class="step-grid">
+      <div class="reveal text-center"><div class="step-icon">📅</div><h3 style="font-weight:700;font-size:14px;margin-bottom:4px">Book a Call</h3><p style="font-size:12px;color:hsl(var(--muted-fg))">Quick discovery call to understand your goals.</p></div>
+      <div class="reveal text-center"><div class="step-icon">🎯</div><h3 style="font-weight:700;font-size:14px;margin-bottom:4px">Get Your Plan</h3><p style="font-size:12px;color:hsl(var(--muted-fg))">Receive a personalized roadmap.</p></div>
+      <div class="reveal text-center"><div class="step-icon">⚡</div><h3 style="font-weight:700;font-size:14px;margin-bottom:4px">Start Building</h3><p style="font-size:12px;color:hsl(var(--muted-fg))">1:1 onboarding kicks off immediately.</p></div>
+    </div>
+    <div class="reveal">
+      <a href="/booking" class="btn btn-primary pulse-glow" style="padding:20px 48px;font-size:18px;box-shadow:0 25px 50px -12px hsl(var(--primary)/.3)">Book Your Free Discovery Call →</a>
+      <p style="font-size:14px;color:hsl(var(--muted-fg));margin-top:20px">No commitment — just a conversation to see if this is right for you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="/"><img src="https://craft-my-sweet-site.lovable.app/assets/automind-labs-logo-new-BeSBMvxu.png" alt="Automind Labs" /></a>
+  <p>&copy; 2026 Automind Labs. All rights reserved.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
