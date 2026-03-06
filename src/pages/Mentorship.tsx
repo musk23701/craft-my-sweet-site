@@ -142,7 +142,7 @@ const Mentorship = () => {
                 </div>
               </div>
               <div className="absolute bottom-4 left-4 right-4 text-left">
-                <p className="text-xs text-foreground/70 font-medium">Watch: My journey from trying everything to finding what actually works</p>
+                <p className="text-xs text-foreground/70 font-medium">Watch: How the 1:1 mentorship program works</p>
               </div>
             </div>
           </Reveal>
