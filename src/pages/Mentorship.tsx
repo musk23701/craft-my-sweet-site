@@ -121,14 +121,14 @@ const Mentorship = () => {
 
           <Reveal delay={150}>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] mb-6 tracking-tight">
-              Master AI<br />
-              Automation <span className="text-gradient italic">1:1</span>
+              Your <span className="text-gradient italic">1:1</span> AI<br />
+              Automation Mentor
             </h1>
           </Reveal>
 
           <Reveal delay={250}>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-              Personal mentorship and the exact playbooks & AI systems I use — structured to take you from zero to confidently automating businesses.
+              Get hands-on, personalized guidance to build real AI automation systems — with someone who's already done it for 50+ businesses.
             </p>
           </Reveal>
 
